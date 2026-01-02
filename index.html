@@ -3,18 +3,955 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="เค้กออนไลน์ — เค้กโทนพาสเทล สั่งง่ายผ่าน LINE @cakeonline" />
   <title>เค้กออนไลน์ | Cake Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+
   <style>
-    body{margin:0;font-family:system-ui;background:#fff8fd}
-    .box{max-width:900px;margin:60px auto;background:#fff;padding:24px;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
-    .btn{display:inline-block;padding:12px 16px;border-radius:999px;background:#ffb8e3;color:#222;text-decoration:none;font-weight:700}
+    :root{
+      --bg:#fff8fd;
+      --paper:#ffffff;
+      --ink:#2f2327;
+      --muted:rgba(47,35,39,.72);
+
+      --pink:#ffb8e3;
+      --pink2:#ffd6ef;
+
+      --lav:#cbb7ff;
+      --lav2:#e5d9ff;
+
+      --blue:#a9d4ff;
+      --blue2:#cfe8ff;
+
+      --yel:#fff1a8;
+      --yel2:#fff7da;
+
+      --shadow-soft: 0 10px 24px rgba(22,12,16,.08);
+      --shadow-main: 0 18px 40px rgba(22,12,16,.10);
+
+      --r-xl:28px;
+      --r-lg:20px;
+      --r-md:16px;
+
+      --container:1120px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"Kanit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
+    .container{max-width:var(--container);margin:0 auto;padding:0 18px}
+
+    /* Reference-style big background */
+    .bg-swoosh{
+      position:fixed; inset:-12% -10% auto -10%;
+      height:66vh; z-index:-5; pointer-events:none;
+      background:
+        radial-gradient(900px 420px at 12% 10%, rgba(255,184,227,.65), transparent 60%),
+        radial-gradient(900px 420px at 88% 20%, rgba(203,183,255,.55), transparent 60%),
+        radial-gradient(900px 420px at 70% 88%, rgba(169,212,255,.45), transparent 62%),
+        radial-gradient(900px 420px at 18% 95%, rgba(255,241,168,.35), transparent 62%);
+      filter: blur(2px);
+    }
+    .bg-strokes{
+      position:fixed; inset:-10% -10% -10% -10%;
+      z-index:-6; pointer-events:none;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(255,184,227,.18), transparent 38%),
+        radial-gradient(circle at 92% 16%, rgba(203,183,255,.16), transparent 38%),
+        radial-gradient(circle at 86% 86%, rgba(169,212,255,.15), transparent 40%),
+        radial-gradient(circle at 10% 88%, rgba(255,241,168,.12), transparent 40%);
+    }
+
+    /* Top bar */
+    .announce{
+      position:sticky; top:0; z-index:60;
+      background: linear-gradient(90deg, rgba(255,184,227,.70), rgba(203,183,255,.55), rgba(169,212,255,.55), rgba(255,241,168,.45));
+      border-bottom:1px solid rgba(47,35,39,.08);
+      backdrop-filter: blur(10px);
+    }
+    .announce .bar{
+      display:flex; gap:10px; justify-content:center; align-items:center;
+      padding:10px 0; flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(47,35,39,.08);
+      box-shadow: 0 8px 20px rgba(22,12,16,.06);
+      font-size:14px; color: rgba(47,35,39,.86);
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:44px; z-index:55;
+      background: rgba(255,255,255,.62);
+      border-bottom:1px solid rgba(47,35,39,.08);
+      backdrop-filter: blur(12px);
+    }
+    .nav{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; padding:12px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width:240px;}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, #fff, rgba(255,184,227,.9) 55%, rgba(203,183,255,.65)),
+        radial-gradient(circle at 80% 90%, rgba(169,212,255,.55), transparent 55%);
+      border:1px solid rgba(47,35,39,.08);
+      box-shadow: var(--shadow-soft);
+      position:relative; overflow:hidden;
+    }
+    .logo:after{
+      content:""; position:absolute; inset:-20%;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0) 0 10px, rgba(255,255,255,.35) 10px 20px);
+      transform: rotate(10deg);
+    }
+    .brand h1{margin:0;font-size:18px;line-height:1.05;letter-spacing:.2px}
+    .brand small{display:block;margin-top:3px;color:var(--muted);font-weight:300}
+
+    nav ul{margin:0;padding:0;list-style:none;display:flex;gap:10px;align-items:center}
+    nav a{
+      display:inline-flex;align-items:center;
+      padding:10px 12px;border-radius:999px;
+      font-size:14px;color:rgba(47,35,39,.85);
+      border:1px solid transparent;transition:.2s ease;
+    }
+    nav a:hover{
+      background: rgba(255,255,255,.78);
+      border-color: rgba(47,35,39,.08);
+      transform: translateY(-1px);
+    }
+    .actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;min-width:240px}
+
+    /* Buttons */
+    .btn{
+      border:0;cursor:pointer;user-select:none;
+      border-radius:999px;padding:10px 14px;font-weight:800;
+      box-shadow: var(--shadow-soft);
+      transition:.18s ease;
+      display:inline-flex;align-items:center;gap:8px;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(203,183,255,.65), rgba(169,212,255,.65));
+      color:#241a1e;
+      border:1px solid rgba(47,35,39,.10);
+    }
+    .btn-line{
+      background: linear-gradient(135deg, rgba(255,241,168,.95), rgba(255,184,227,.75));
+      color:#241a1e;
+      border:1px solid rgba(47,35,39,.10);
+    }
+    .btn-ghost{
+      background: rgba(255,255,255,.74);
+      border:1px solid rgba(47,35,39,.10);
+      color: rgba(47,35,39,.88);
+    }
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:22px;height:22px;padding:0 7px;border-radius:999px;
+      font-size:12px;background: rgba(255,255,255,.90);
+      border:1px solid rgba(47,35,39,.10);
+    }
+
+    /* Sections */
+    section{padding:24px 0}
+    .section-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:12px;margin-bottom:12px;flex-wrap:wrap;
+    }
+    .section-head h3{
+      margin:0;font-size:22px;letter-spacing:.2px;
+      font-family:"Fredoka","Kanit",sans-serif;
+    }
+    .section-head p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Hero */
+    .hero{padding:34px 0 10px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
+    .card{
+      background: rgba(255,255,255,.80);
+      border:1px solid rgba(47,35,39,.10);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-main);
+      overflow:hidden;
+    }
+    .hero-left{padding:26px 24px}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.40), rgba(169,212,255,.40), rgba(255,241,168,.35));
+      border:1px solid rgba(47,35,39,.08);
+      font-size:13px;color:rgba(47,35,39,.86);
+    }
+    .hero-title{
+      font-family:"Fredoka","Kanit",sans-serif;
+      margin:14px 0 6px;
+      font-size:52px;line-height:1.00;letter-spacing:.2px;
+    }
+    .hero-subtitle{
+      margin:0 0 10px;
+      font-family:"Fredoka","Kanit",sans-serif;
+      font-size:18px;color:rgba(47,35,39,.70);
+    }
+    .hero-left p{margin:0;color:var(--muted);font-size:16px;max-width:62ch}
+    .hero-cta{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+
+    /* Marquee ribbon */
+    .ribbon{
+      margin-top:14px;
+      border-radius:999px;
+      border:1px solid rgba(47,35,39,.10);
+      background: rgba(255,255,255,.66);
+      overflow:hidden;
+      box-shadow: 0 12px 26px rgba(22,12,16,.07);
+    }
+    .marquee{
+      display:flex; gap:26px; align-items:center;
+      padding:10px 14px; white-space:nowrap;
+      animation: scroll 16s linear infinite;
+      width:max-content;
+    }
+    .marquee span{font-size:13px;color:rgba(47,35,39,.78)}
+    .dot{
+      width:8px;height:8px;border-radius:999px;display:inline-block;margin-right:8px;
+      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(169,212,255,.75));
+    }
+    @keyframes scroll{
+      from{transform: translateX(0)}
+      to{transform: translateX(-50%)}
+    }
+
+    /* Circle nav */
+    .circle-nav{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+    .circle{
+      border-radius:999px;
+      padding:18px 12px;
+      text-align:center;
+      border:1px solid rgba(47,35,39,.10);
+      box-shadow: 0 12px 26px rgba(22,12,16,.07);
+      background: rgba(255,255,255,.72);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .circle:hover{transform: translateY(-2px)}
+    .circle b{display:block;font-family:"Fredoka","Kanit",sans-serif;font-size:18px}
+    .circle small{color:rgba(47,35,39,.70)}
+    .circle.pink{background: linear-gradient(135deg, rgba(255,184,227,.70), rgba(255,255,255,.72))}
+    .circle.lav {background: linear-gradient(135deg, rgba(203,183,255,.60), rgba(255,255,255,.72))}
+    .circle.blue{background: linear-gradient(135deg, rgba(169,212,255,.55), rgba(255,255,255,.72))}
+    .circle.yel {background: linear-gradient(135deg, rgba(255,241,168,.65), rgba(255,255,255,.72))}
+
+    /* Mission strip */
+    .mission-strip{
+      margin-top:14px;
+      border-radius: var(--r-xl);
+      border:1px solid rgba(47,35,39,.10);
+      background: rgba(169,212,255,.22);
+      box-shadow: var(--shadow-main);
+    }
+    .mission-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      padding:16px;
+    }
+    .mission{
+      border-radius:22px;
+      background: rgba(255,255,255,.76);
+      border:1px solid rgba(47,35,39,.08);
+      padding:14px;
+      text-align:center;
+    }
+    .mission b{display:block;font-family:"Fredoka","Kanit",sans-serif}
+    .mission span{color:rgba(47,35,39,.70);font-size:13px}
+
+    /* Hero right (blob + big text) */
+    .hero-right{padding:0}
+    .blob-frame{
+      position:relative;
+      height:100%;
+      min-height:420px;
+      border-radius: var(--r-xl);
+      overflow:hidden;
+      background:
+        radial-gradient(380px 260px at 28% 30%, rgba(255,184,227,.40), transparent 65%),
+        radial-gradient(380px 260px at 78% 30%, rgba(203,183,255,.35), transparent 65%),
+        radial-gradient(420px 300px at 70% 85%, rgba(169,212,255,.30), transparent 70%),
+        rgba(255,255,255,.72);
+      border:1px solid rgba(47,35,39,.10);
+    }
+    .blob-photo{
+      position:absolute; left:22px; top:56px;
+      width:min(290px,45%); aspect-ratio:1/1;
+      border:1px solid rgba(47,35,39,.10);
+      box-shadow: 0 18px 40px rgba(22,12,16,.12);
+      background: rgba(255,255,255,.70);
+      border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+      overflow:hidden;
+    }
+    .blob-photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.06)}
+    .hero-right-text{
+      position:absolute; right:22px; top:78px; width:56%;
+    }
+    .hero-right-text .spark{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-bottom:10px; color:rgba(47,35,39,.72);
+    }
+    .hero-right-text .spark i{
+      width:10px;height:10px;border-radius:999px;display:inline-block;
+      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(169,212,255,.75));
+    }
+    .hero-right-text h3{
+      margin:0;
+      font-family:"Fredoka","Kanit",sans-serif;
+      font-size:56px; line-height:.96;
+      color: rgba(47,35,39,.92);
+    }
+    .hero-right-text .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .hero-right-text .tiny{margin-top:10px;font-size:12px;color:rgba(47,35,39,.60)}
+
+    /* Filters */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+    .chip{
+      border:1px solid rgba(47,35,39,.10);
+      background: rgba(255,255,255,.78);
+      padding:8px 12px;border-radius:999px;
+      cursor:pointer;font-size:14px;transition:.16s ease;
+    }
+    .chip:hover{transform: translateY(-1px)}
+    .chip.active{
+      background: linear-gradient(135deg, rgba(255,184,227,.70), rgba(203,183,255,.55), rgba(169,212,255,.55), rgba(255,241,168,.45));
+      border-color: rgba(47,35,39,.12);
+      font-weight:800;
+    }
+
+    /* Products */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .product{
+      grid-column: span 4;
+      padding:12px;
+      border-radius: var(--r-lg);
+      background: rgba(255,255,255,.82);
+      border:1px solid rgba(47,35,39,.10);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+      display:flex;flex-direction:column;
+      min-height:392px;
+      position:relative;
+    }
+    .thumb{
+      border-radius:18px;
+      overflow:hidden;
+      aspect-ratio:4/3;
+      border:1px solid rgba(47,35,39,.08);
+      background: linear-gradient(135deg, rgba(255,184,227,.50), rgba(203,183,255,.40), rgba(169,212,255,.40));
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .info{padding:10px 6px 0;display:flex;flex-direction:column;gap:6px;flex:1}
+    .product h4{margin:0;font-size:18px;font-weight:900}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background: rgba(255,247,218,.70);
+      border:1px solid rgba(47,35,39,.08);
+      font-size:12px;width:max-content;
+    }
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px}
+    .price{font-family:"Fredoka","Kanit",sans-serif;font-size:18px;color:#241a1e}
+    .best{
+      position:absolute;top:14px;left:14px;
+      padding:7px 10px;border-radius:999px;
+      background: linear-gradient(135deg, rgba(255,241,168,.92), rgba(255,184,227,.70));
+      border:1px solid rgba(47,35,39,.12);
+      font-size:12px;font-weight:950;
+      box-shadow: 0 10px 22px rgba(22,12,16,.08);
+    }
+    .row{margin-top:auto;display:flex;gap:10px;align-items:center;justify-content:space-between;padding-top:10px}
+    .btn-sm{padding:9px 12px;font-size:14px}
+
+    /* Gallery */
+    .masonry{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .shot{
+      grid-column: span 4;
+      border-radius: var(--r-xl);
+      overflow:hidden;
+      border:1px solid rgba(47,35,39,.10);
+      box-shadow: var(--shadow-soft);
+      background: rgba(255,255,255,.75);
+      position:relative;
+      min-height:210px;
+    }
+    .shot.big{grid-column: span 8; min-height:330px}
+    .shot img{width:100%;height:100%;object-fit:cover}
+    .cap{
+      position:absolute;left:12px;bottom:12px;
+      background: rgba(255,255,255,.84);
+      border:1px solid rgba(47,35,39,.10);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:13px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Subscribe */
+    .big-sub{
+      margin-top:14px;
+      padding:22px;
+      border-radius: var(--r-xl);
+      border:1px solid rgba(47,35,39,.10);
+      background:
+        radial-gradient(380px 180px at 20% 40%, rgba(255,184,227,.40), transparent 65%),
+        radial-gradient(380px 180px at 80% 25%, rgba(203,183,255,.35), transparent 65%),
+        radial-gradient(380px 180px at 70% 85%, rgba(169,212,255,.30), transparent 65%),
+        rgba(255,255,255,.78);
+      box-shadow: var(--shadow-main);
+      text-align:center;
+    }
+    .big-sub h3{
+      margin:0 0 6px;
+      font-family:"Fredoka","Kanit",sans-serif;
+      font-size:44px;
+      letter-spacing:.2px;
+    }
+    .big-sub p{margin:0 0 12px;color:rgba(47,35,39,.72)}
+    .sub-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .input{
+      min-width:240px;
+      padding:12px 14px;border-radius:999px;
+      border:1px solid rgba(47,35,39,.14);
+      background: rgba(255,255,255,.84);
+      outline:none;
+      box-shadow: 0 10px 24px rgba(22,12,16,.05);
+    }
+    .input:focus{border-color: rgba(203,183,255,.95)}
+    .tiny{font-size:12px;color:rgba(47,35,39,.60);margin-top:10px}
+
+    /* Footer */
+    footer{padding:18px 0 30px;color:rgba(47,35,39,.75)}
+    .foot{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px}
+    .box{
+      padding:16px;border-radius: var(--r-xl);
+      border:1px solid rgba(47,35,39,.10);
+      background: rgba(255,255,255,.76);
+      box-shadow: var(--shadow-soft);
+    }
+    .box h5{margin:0 0 8px;font-size:14px}
+    .box a:hover{text-decoration:underline;text-underline-offset:3px}
+
+    /* Cart modal (demo) */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(20,12,14,.35);
+      backdrop-filter: blur(8px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:99;
+    }
+    .overlay.show{display:flex}
+    .modal{
+      width:min(720px, 100%);
+      border-radius: var(--r-xl);
+      border:1px solid rgba(47,35,39,.12);
+      background: rgba(255,255,255,.90);
+      box-shadow: 0 26px 70px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .modal-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(47,35,39,.08);
+      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.45), rgba(169,212,255,.40), rgba(255,241,168,.35));
+    }
+    .modal-head b{font-family:"Fredoka","Kanit",sans-serif}
+    .modal-body{padding:14px 16px}
+    .cart-items{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+    .cart-item{
+      display:flex;align-items:center;gap:12px;
+      padding:10px;border-radius:18px;
+      border:1px solid rgba(47,35,39,.10);
+      background: rgba(255,255,255,.82);
+    }
+    .cart-item img{
+      width:64px;height:64px;border-radius:16px;
+      object-fit:cover;border:1px solid rgba(47,35,39,.10);
+    }
+    .cart-item .grow{flex:1}
+    .qty{
+      display:flex;align-items:center;gap:8px;
+      background: rgba(255,247,218,.72);
+      border:1px solid rgba(47,35,39,.10);
+      border-radius:999px;padding:6px 10px;
+    }
+    .iconbtn{
+      border:0;cursor:pointer;
+      width:28px;height:28px;border-radius:999px;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(47,35,39,.12);
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:950;
+    }
+    .cart-foot{
+      padding:14px 16px;border-top:1px solid rgba(47,35,39,.08);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      flex-wrap:wrap;background: rgba(255,255,255,.64);
+    }
+    .total strong{font-family:"Fredoka","Kanit",sans-serif;font-size:18px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      nav ul{display:none}
+      .hero-grid{grid-template-columns:1fr}
+      .brand,.actions{min-width:auto}
+      .hero-title{font-size:40px}
+      .hero-right-text{position:static;width:100%;padding:14px 16px}
+      .blob-photo{position:relative;left:auto;top:auto;width:72%;margin:18px auto 0}
+      .circle-nav{grid-template-columns:repeat(2,1fr)}
+      .mission-grid{grid-template-columns:1fr}
+      .product{grid-column:span 6}
+      .shot{grid-column:span 6}
+      .shot.big{grid-column:span 12}
+      .foot{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .hero-title{font-size:34px}
+      .product{grid-column:span 12}
+      .shot{grid-column:span 12}
+    }
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>เค้กออนไลน์</h1>
-    <p>เว็บไซต์พร้อมใช้งานแล้ว (ทดสอบ GitHub Pages ผ่าน)</p>
-    <a class="btn" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE @cakeonline</a>
+  <div class="bg-strokes" aria-hidden="true"></div>
+  <div class="bg-swoosh" aria-hidden="true"></div>
+
+  <div class="announce">
+    <div class="container">
+      <div class="bar">
+        <span class="pill">สั่งผ่าน LINE: <b>@cakeonline</b></span>
+        <span class="pill">Top 10 เมนูฮิต + ป้ายขายดี</span>
+        <span class="pill">รูปเป็นตัวอย่าง — เปลี่ยนเป็นรูปจริงทีหลังได้</span>
+      </div>
+    </div>
   </div>
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>เค้กออนไลน์ <small>Pastel • Minimal • Cute</small></h1>
+          </div>
+        </a>
+
+        <nav aria-label="เมนู">
+          <ul>
+            <li><a href="#menu">Top 10</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
+            <li><a href="#contact">สั่งซื้อ</a></li>
+          </ul>
+        </nav>
+
+        <div class="actions">
+          <button class="btn btn-ghost" id="btnCart" type="button">ตะกร้า <span class="badge" id="cartCount">0</span></button>
+          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">แอดไลน์ @cakeonline</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="card hero-left">
+            <span class="kicker">Pastel vibes • New arrivals • Best sellers</span>
+            <h2 class="hero-title">เค้กน่ารักโทนพาสเทล<br>สั่งง่าย แอดไลน์จบ</h2>
+            <div class="hero-subtitle">รับทำเค้กวันเกิด / ของขวัญ / ขนมออกบูธ</div>
+            <p>ส่ง “เมนู + วันรับ + งบ + รูปเรฟ” ทางไลน์ได้เลย เดี๋ยวจัดให้เข้ากับสไตล์ร้านแบบเนี๊ยบ ๆ</p>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#menu">SHOP NOW</a>
+              <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
+              <a class="btn btn-ghost" href="#gallery">ดูตัวอย่าง</a>
+            </div>
+
+            <div class="ribbon">
+              <div class="marquee">
+                <span><i class="dot"></i> โปรหน้าร้าน/บูธ อัปเดตทุกสัปดาห์</span>
+                <span><i class="dot"></i> สั่งผ่าน LINE @cakeonline</span>
+                <span><i class="dot"></i> ขายดี: เค้กพาสเทล • ป๊อปคุกกี้ • Korea • มินิเค้ก</span>
+                <span><i class="dot"></i> โปรหน้าร้าน/บูธ อัปเดตทุกสัปดาห์</span>
+                <span><i class="dot"></i> สั่งผ่าน LINE @cakeonline</span>
+                <span><i class="dot"></i> ขายดี: เค้กพาสเทล • ป๊อปคุกกี้ • Korea • มินิเค้ก</span>
+              </div>
+            </div>
+
+            <div class="circle-nav">
+              <button class="circle pink" type="button" data-jump="cakes"><b>new</b><small>เมนูเค้ก</small></button>
+              <button class="circle lav" type="button" data-jump="snacks"><b>gift ideas</b><small>ขนมชิ้น</small></button>
+              <button class="circle blue" type="button" data-jump="best"><b>best sellers</b><small>ขายดี</small></button>
+              <button class="circle yel" type="button" data-jump="all"><b>hot sale</b><small>ทั้งหมด</small></button>
+            </div>
+
+            <div class="mission-strip">
+              <div class="mission-grid">
+                <div class="mission"><b>โทนพาสเทล</b><span>ชมพู • ม่วง • ฟ้า • เหลือง</span></div>
+                <div class="mission"><b>งานเนี๊ยบ</b><span>ถ่ายรูปขึ้น • เหมาะเป็นของขวัญ</span></div>
+                <div class="mission"><b>สั่งง่าย</b><span>จบที่ LINE @cakeonline</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card hero-right">
+            <div class="blob-frame">
+              <div class="blob-photo">
+                <!-- รูป placeholder: เปลี่ยนทีหลังได้ -->
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=900&q=80" alt="ภาพโปรโมต" loading="lazy">
+              </div>
+
+              <div class="hero-right-text">
+                <div class="spark"><i></i> let’s shop</div>
+                <h3>new<br>arrivals</h3>
+                <div class="cta">
+                  <a class="btn btn-primary" href="#menu">SHOP NOW</a>
+                  <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">LINE @cakeonline</a>
+                </div>
+                <div class="tiny">ทิป: ใส่รูป “เค้กพาสเทลขายดี” ตรงนี้จะปังสุด</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Top 10 ของร้าน</h3>
+            <p>กดหมวดเพื่อกรอง หรือกด “สั่งผ่าน LINE” ได้เลย</p>
+          </div>
+          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE @cakeonline</a>
+        </div>
+
+        <div class="chips" role="tablist" aria-label="ตัวกรอง">
+          <button class="chip active" data-filter="all" type="button">ทั้งหมด</button>
+          <button class="chip" data-filter="cakes" type="button">เค้ก</button>
+          <button class="chip" data-filter="snacks" type="button">ขนมชิ้น/กล่อง</button>
+        </div>
+
+        <div class="grid" id="productGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Gallery (ตัวอย่าง)</h3>
+            <p>ตอนนี้เป็นรูป placeholder — เปลี่ยนเป็นรูปจริงทีหลังได้</p>
+          </div>
+          <span class="pill">ทิป: รูปโทนเดียวกัน เว็บดูแพงขึ้น</span>
+        </div>
+
+        <div class="masonry">
+          <div class="shot big">
+            <img src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1600&q=80" alt="gallery 1" loading="lazy">
+            <div class="cap">โทนพาสเทล</div>
+          </div>
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="gallery 2" loading="lazy">
+            <div class="cap">คาเฟ่ไวบ์</div>
+          </div>
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" alt="gallery 3" loading="lazy">
+            <div class="cap">ของขวัญได้</div>
+          </div>
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=80" alt="gallery 4" loading="lazy">
+            <div class="cap">ขนมชิ้น</div>
+          </div>
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" alt="gallery 5" loading="lazy">
+            <div class="cap">กล่อง/ชิ้น</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="subscribe">
+      <div class="container">
+        <div class="big-sub">
+          <h3>subscribe</h3>
+          <p>รับเมนูใหม่และโปรก่อนใคร</p>
+          <form class="sub-form" id="subForm">
+            <input class="input" id="email" type="email" placeholder="Email" required>
+            <button class="btn btn-primary" type="submit">Sign up</button>
+          </form>
+          <div class="tiny" id="subMsg" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>สั่งซื้อ / ติดต่อ</h3>
+            <p>ช่องทางหลัก: LINE @cakeonline</p>
+          </div>
+          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ทักไลน์ตอนนี้</a>
+        </div>
+
+        <footer>
+          <div class="container">
+            <div class="foot">
+              <div class="box">
+                <h5>เค้กออนไลน์</h5>
+                <div>โทนพาสเทล • มินิมอล • สั่งง่ายผ่าน LINE</div>
+                <div class="tiny">© <span id="year"></span> Cake Online. All rights reserved.</div>
+              </div>
+              <div class="box">
+                <h5>เมนู</h5>
+                <div><a href="#menu">Top 10</a></div>
+                <div><a href="#gallery">Gallery</a></div>
+                <div><a href="#subscribe">Subscribe</a></div>
+              </div>
+              <div class="box">
+                <h5>สั่งซื้อ</h5>
+                <div><a href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">LINE @cakeonline</a></div>
+                <div class="tiny">ส่ง “เมนู + วันรับ + งบ + รูปเรฟ” จะปิดออเดอร์เร็ว</div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="ตะกร้าสินค้า">
+    <div class="modal" id="cartModal">
+      <div class="modal-head">
+        <b>ตะกร้าสินค้า (เดโม)</b>
+        <button class="btn btn-ghost btn-sm" id="btnClose" type="button">ปิด</button>
+      </div>
+      <div class="modal-body">
+        <ul class="cart-items" id="cartItems"></ul>
+        <div class="tiny" id="emptyCartHint">ตะกร้าว่างอยู่ ลองกด “ใส่ตะกร้า” จาก Top 10</div>
+      </div>
+      <div class="cart-foot">
+        <div class="total">รวม: <strong id="cartTotal">0</strong> บาท</div>
+        <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ไปสั่งผ่าน LINE</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Data: Top 10 (เปลี่ยนรูปจริงทีหลังได้ที่ img) =====
+    const products = [
+      { id:"t1", name:"เค้กเบสิค", category:"cakes", tag:"ราคาเริ่มต้น", price:180, best:false,
+        img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t2", name:"เค้กกล่องข้าว", category:"snacks", tag:"ราคาเริ่มต้น", price:120, best:false,
+        img:"https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t3", name:"เค้กพาสเทล", category:"cakes", tag:"ราคาเริ่มต้น", price:450, best:true,
+        img:"https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t4", name:"เค้กป๊อปคุกกี้", category:"cakes", tag:"ราคาเริ่มต้น", price:350, best:true,
+        img:"https://images.unsplash.com/photo-1607478900766-efe13248b125?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t5", name:"เค้กมินิมอล", category:"cakes", tag:"ราคาเริ่มต้น", price:150, best:false,
+        img:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t6", name:"เค้ก korea", category:"cakes", tag:"ราคาเริ่มต้น", price:220, best:true,
+        img:"https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t7", name:"ชอกบอล (1 กล่อง 6 ลูก)", category:"snacks", tag:"ราคาต่อกล่อง", price:35, best:false,
+        img:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t8", name:"บานอฟฟี่", category:"snacks", tag:"ราคาเริ่มต้น", price:35, best:false,
+        img:"https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t9", name:"คอนเฟลคคาราเมล", category:"snacks", tag:"ราคาเริ่มต้น", price:50, best:false,
+        img:"https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t10", name:"มินิเค้ก", category:"cakes", tag:"ราคาเริ่มต้น", price:60, best:true,
+        img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80" },
+    ];
+
+    // ===== Helpers =====
+    const grid = document.getElementById("productGrid");
+    const chips = Array.from(document.querySelectorAll(".chip"));
+    function money(n){ return new Intl.NumberFormat("th-TH").format(n); }
+    function labelCategory(cat){ return ({ cakes:"เค้ก", snacks:"ขนมชิ้น/กล่อง" })[cat] || "อื่น ๆ"; }
+
+    // ===== Render list =====
+    function renderList(list){
+      grid.innerHTML = "";
+      list.forEach(p => {
+        const el = document.createElement("article");
+        el.className = "product";
+        el.innerHTML = `
+          ${p.best ? `<div class="best">ขายดี</div>` : ``}
+          <div class="thumb"><img alt="${p.name}" src="${p.img}" loading="lazy"></div>
+          <div class="info">
+            <div class="tag">${p.tag}</div>
+            <h4>${p.name}</h4>
+            <div class="meta">
+              <span>หมวด: ${labelCategory(p.category)}</span>
+              <span class="price">${money(p.price)}฿</span>
+            </div>
+          </div>
+          <div class="row">
+            <a class="btn btn-line btn-sm" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
+            <button class="btn btn-primary btn-sm" type="button" data-add="${p.id}">ใส่ตะกร้า</button>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+
+      grid.querySelectorAll("[data-add]").forEach(btn=>{
+        btn.addEventListener("click", () => addToCart(btn.dataset.add));
+      });
+    }
+
+    function renderProducts(filter="all"){
+      if(filter === "all") return renderList(products);
+      return renderList(products.filter(p => p.category === filter));
+    }
+
+    // Chips
+    chips.forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        chips.forEach(x=>x.classList.remove("active"));
+        ch.classList.add("active");
+        renderProducts(ch.dataset.filter);
+        location.hash = "#menu";
+      });
+    });
+
+    // Circle jump
+    document.querySelectorAll(".circle[data-jump]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const to = btn.dataset.jump;
+        if(to === "best"){
+          renderList(products.filter(p => p.best));
+          chips.forEach(x=>x.classList.remove("active"));
+          return location.hash = "#menu";
+        }
+        const chip = document.querySelector(`.chip[data-filter="${to}"]`) || document.querySelector(`.chip[data-filter="all"]`);
+        if(chip) chip.click();
+      });
+    });
+
+    // ===== Cart (demo) =====
+    const cart = new Map();
+    const cartCount = document.getElementById("cartCount");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const btnCart = document.getElementById("btnCart");
+    const btnClose = document.getElementById("btnClose");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const emptyCartHint = document.getElementById("emptyCartHint");
+
+    function addToCart(id){
+      cart.set(id, (cart.get(id) || 0) + 1);
+      updateCartUI(true);
+    }
+    function removeFromCart(id){
+      const q = cart.get(id) || 0;
+      if(q <= 1) cart.delete(id);
+      else cart.set(id, q - 1);
+      updateCartUI();
+    }
+
+    function updateCartUI(open=false){
+      let count = 0;
+      cart.forEach(q => count += q);
+      cartCount.textContent = count;
+
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      if(count === 0){
+        emptyCartHint.style.display = "block";
+      }else{
+        emptyCartHint.style.display = "none";
+        cart.forEach((qty, id)=>{
+          const p = products.find(x=>x.id===id);
+          if(!p) return;
+          total += p.price * qty;
+
+          const li = document.createElement("li");
+          li.className = "cart-item";
+          li.innerHTML = `
+            <img alt="${p.name}" src="${p.img}" loading="lazy">
+            <div class="grow">
+              <div style="font-weight:900">${p.name}${p.best ? " • ขายดี" : ""}</div>
+              <div style="color:rgba(47,35,39,.70); font-size:13px">${money(p.price)}฿</div>
+            </div>
+            <div class="qty">
+              <button class="iconbtn" type="button" data-minus="${id}" aria-label="ลด">−</button>
+              <div style="min-width:18px; text-align:center; font-weight:950">${qty}</div>
+              <button class="iconbtn" type="button" data-plus="${id}" aria-label="เพิ่ม">+</button>
+            </div>
+          `;
+          cartItems.appendChild(li);
+        });
+
+        cartItems.querySelectorAll("[data-plus]").forEach(b=>{
+          b.addEventListener("click", ()=> addToCart(b.dataset.plus));
+        });
+        cartItems.querySelectorAll("[data-minus]").forEach(b=>{
+          b.addEventListener("click", ()=> removeFromCart(b.dataset.minus));
+        });
+      }
+
+      cartTotal.textContent = money(total);
+      if(open) openCart();
+    }
+
+    function openCart(){ cartOverlay.classList.add("show"); document.body.style.overflow="hidden"; }
+    function closeCart(){ cartOverlay.classList.remove("show"); document.body.style.overflow=""; }
+
+    btnCart.addEventListener("click", ()=> updateCartUI(true));
+    btnClose.addEventListener("click", closeCart);
+    cartOverlay.addEventListener("click", (e)=>{ if(e.target === cartOverlay) closeCart(); });
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && cartOverlay.classList.contains("show")) closeCart(); });
+
+    // Subscribe (demo)
+    const subForm = document.getElementById("subForm");
+    const subMsg = document.getElementById("subMsg");
+    subForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      subMsg.textContent = `รับทราบ! (${email}) — เดโม: ต่อระบบเมลจริงได้`;
+      subForm.reset();
+    });
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Start
+    renderProducts("all");
+    updateCartUI(false);
+  </script>
 </body>
 </html>
