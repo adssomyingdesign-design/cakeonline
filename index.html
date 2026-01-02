@@ -1,1237 +1,1576 @@
+<!-- index.html | เค้กออนไลน์ (CakeOnline)
+ทำไฟล์เดียวจบ: หน้าแรก + เมนู/แคตตาล็อค + ตะกร้า + จองคิว + สาขา(ใส่ทีหลังได้) + บทความ/รีวิว + หน้าข้อกำหนดแบบลิงก์แยก (ในไฟล์เดียวด้วยระบบ #hash)
+
+วิธีใช้วันนี้:
+1) สร้าง repo บน GitHub → อัปโหลดไฟล์นี้ชื่อ index.html
+2) ไปที่ Settings → Pages → Deploy from branch → main / root
+3) เปลี่ยน LINE OA, รูปสินค้า, รายละเอียดได้ในตัวแปร CONFIG และ PRODUCTS ด้านล่าง
+
+หมายเหตุ: รูปเค้กตอนนี้ใช้ “รูปตัวอย่างออนไลน์” เพื่อให้เว็บรันได้ทันที วันนี้คุณค่อยเปลี่ยนเป็นรูปจริงภายหลังได้
+-->
+
 <!doctype html>
 <html lang="th">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="เค้กออนไลน์ — ร้านขนมพาสเทล มีเมนู/แคตตาล็อค/ตะกร้า สั่งจริงผ่าน LINE @cakeonline" />
-  <title>เค้กออนไลน์ | Cake Online</title>
-
+  <title>เค้กออนไลน์ | สั่งเค้ก เบเกอรี่ อุปกรณ์แต่งเค้ก</title>
+  <meta name="description" content="สั่งเค้ก เบเกอรี่ อุปกรณ์แต่งเค้ก เทียน เค้กมินิมอล เค้กพาสเทล เค้กกล่องข้าว ส่ง LINE @cakeonline" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --ink:#2f2327;
-      --muted:rgba(47,35,39,.72);
-
-      --pink:#ffb8e3;
-      --pink2:#ffd6ef;
-
-      --lav:#cbb7ff;
-      --lav2:#e5d9ff;
-
-      --blue:#a9d4ff;
-      --blue2:#cfe8ff;
-
-      --yel:#fff1a8;
-      --yel2:#fff7da;
-
-      --shadow-soft: 0 10px 24px rgba(22,12,16,.08);
-      --shadow-main: 0 18px 44px rgba(0,0,0,.14);
-
-      --r-xl:28px;
-      --r-lg:20px;
-      --r-md:16px;
-
-      --container:1040px;
-
-      /* ช่องทางสั่งจริง */
-      --line-add: "https://line.me/R/ti/p/@cakeonline";
+      --bg:#fff7f6;
+      --bg2:#ffecef;
+      --card:#ffffff;
+      --ink:#2b2b2b;
+      --muted:#6c6c6c;
+      --pink:#ff7aa5;
+      --pink2:#ffb4c9;
+      --cream:#fff0d8;
+      --mint:#d9f4ef;
+      --lav:#ece6ff;
+      --line:#e8e0e0;
+      --shadow: 0 12px 30px rgba(34, 34, 34, .10);
+      --radius: 22px;
     }
-
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family:"Kanit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family: "Poppins","Itim", system-ui, -apple-system, Segoe UI, sans-serif;
       color:var(--ink);
-      overflow-x:hidden;
-      background:#ffe1f1;
-    }
-    a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
-    button,input{font:inherit}
-
-    /* ===== Outer background like ref (pink big pattern) ===== */
-    .outer-waves{
-      position:fixed; inset:0; z-index:-10; pointer-events:none;
       background:
-        radial-gradient(circle at 25px 25px, rgba(255,255,255,.55) 0 18px, transparent 19px) 0 0/90px 90px,
-        radial-gradient(circle at 65px 65px, rgba(255,255,255,.35) 0 18px, transparent 19px) 0 0/90px 90px,
-        radial-gradient(1000px 520px at 15% 10%, rgba(255,184,227,.55), transparent 60%),
-        radial-gradient(1000px 520px at 85% 12%, rgba(203,183,255,.40), transparent 62%),
-        radial-gradient(1000px 520px at 85% 90%, rgba(169,212,255,.35), transparent 62%),
-        radial-gradient(1000px 520px at 15% 92%, rgba(255,241,168,.30), transparent 62%),
-        #ffb8e3;
-      filter:saturate(1.03);
+        radial-gradient(1200px 500px at 15% 10%, var(--bg2), transparent 60%),
+        radial-gradient(900px 450px at 90% 25%, #f0f7ff, transparent 60%),
+        radial-gradient(900px 450px at 30% 90%, var(--lav), transparent 60%),
+        linear-gradient(180deg, var(--bg), #ffffff);
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 14px;
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(255,255,255,.7);
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+      border-radius: calc(var(--radius) + 6px);
+      backdrop-filter: blur(10px);
+      position:sticky;top:10px;z-index:50;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:220px}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, var(--pink2), var(--cream));
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+      display:grid;place-items:center;font-weight:800;
+    }
+    .brand h1{margin:0;font-size:18px;line-height:1}
+    .brand small{display:block;color:var(--muted);font-weight:400;margin-top:3px}
+    nav{
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+      padding:6px 8px;
+    }
+    .navlink{
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.65);
+      font-size:14px;
+      transition:.15s transform ease, .15s background ease;
+      white-space:nowrap;
+    }
+    .navlink:hover{transform:translateY(-1px);background:#fff}
+    .actions{display:flex;gap:10px;align-items:center}
+    .pill{
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.65);
+      font-size:14px;
+      display:flex;gap:8px;align-items:center;
+    }
+    .btn{
+      cursor:pointer;
+      border:0;
+      padding:11px 14px;
+      border-radius:999px;
+      font-weight:700;
+      background: linear-gradient(135deg, var(--pink), #ff5f97);
+      color:white;
+      box-shadow: 0 12px 26px rgba(255, 90, 148, .25);
+      transition:.15s transform ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{
+      background: linear-gradient(135deg, #ffffff, #ffffff);
+      color:var(--ink);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 12px 26px rgba(0,0,0,.08);
     }
 
-    /* ===== Center page canvas like ref ===== */
-    .page-canvas{
-      width:min(var(--container), 92vw);
-      margin:28px auto 64px;
-      border-radius: var(--r-xl);
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(47,35,39,.10);
-      box-shadow: var(--shadow-main);
+    /* Marquee */
+    .marquee{
+      margin-top:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.7);
       overflow:hidden;
       position:relative;
+      box-shadow: var(--shadow);
     }
-    .page-canvas:before{
-      content:"";
-      position:absolute; right:-52px; top:-52px;
-      width:240px; height:240px; border-radius:999px;
-      background:
-        radial-gradient(circle at 35% 40%, rgba(169,212,255,.90) 0 35%, transparent 36%),
-        radial-gradient(circle at 70% 62%, rgba(255,241,168,.90) 0 32%, transparent 33%),
-        radial-gradient(circle at 62% 28%, rgba(203,183,255,.78) 0 28%, transparent 29%);
-      opacity:.85; pointer-events:none;
+    .marquee .track{
+      display:flex;gap:28px;
+      padding:12px 0;
+      width:max-content;
+      animation: scroll 18s linear infinite;
     }
-    .page-canvas:after{
-      content:"";
-      position:absolute; left:-70px; top:140px;
-      width:260px; height:260px; border-radius:999px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,184,227,.86) 0 26%, transparent 27%),
-        radial-gradient(circle at 65% 45%, rgba(203,183,255,.75) 0 22%, transparent 23%),
-        radial-gradient(circle at 55% 72%, rgba(169,212,255,.75) 0 24%, transparent 25%);
-      opacity:.75; pointer-events:none;
-    }
-
-    .container{max-width:var(--container); margin:0 auto; padding:0 18px;}
-
-    /* ===== Top thin notice ===== */
-    .topline{
-      font-size:12px;
-      text-align:center;
-      padding:10px 12px;
-      color:rgba(47,35,39,.70);
-      background: rgba(255,255,255,.55);
-      border-bottom: 1px solid rgba(47,35,39,.08);
-    }
-
-    /* ===== Header ===== */
-    header{
-      position:sticky; top:0; z-index:50;
-      background: rgba(255,255,255,.62);
-      border-bottom:1px solid rgba(47,35,39,.08);
-      backdrop-filter: blur(12px);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:12px 0;
-    }
-    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
-    .logo{
-      width:44px; height:44px; border-radius:14px;
-      background:
-        radial-gradient(circle at 30% 30%, #fff, rgba(255,184,227,.9) 55%, rgba(203,183,255,.65)),
-        radial-gradient(circle at 80% 90%, rgba(169,212,255,.55), transparent 55%);
-      border:1px solid rgba(47,35,39,.08);
-      box-shadow: var(--shadow-soft);
-      position:relative; overflow:hidden;
-    }
-    .logo:after{
-      content:""; position:absolute; inset:-20%;
-      background: repeating-linear-gradient(45deg, rgba(255,255,255,0) 0 10px, rgba(255,255,255,.35) 10px 20px);
-      transform: rotate(10deg);
-    }
-    .brand h1{margin:0; font-size:18px; line-height:1.05; letter-spacing:.2px;}
-    .brand small{display:block; margin-top:3px; color:var(--muted); font-weight:300;}
-
-    nav ul{margin:0; padding:0; list-style:none; display:flex; gap:10px; align-items:center;}
-    nav a{
-      display:inline-flex; align-items:center;
-      padding:10px 12px; border-radius:999px;
-      font-size:14px; color:rgba(47,35,39,.85);
-      border:1px solid transparent; transition:.2s ease;
+    .marquee:hover .track{animation-play-state:paused}
+    .marquee .item{
+      display:flex;gap:10px;align-items:center;
+      padding:0 18px;
+      color:#2d2d2d;
+      font-weight:600;
       white-space:nowrap;
     }
-    nav a:hover{
-      background: rgba(255,255,255,.78);
-      border-color: rgba(47,35,39,.08);
-      transform: translateY(-1px);
+    .dot{
+      width:10px;height:10px;border-radius:99px;
+      background: linear-gradient(135deg, var(--pink2), var(--cream));
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+    }
+    @keyframes scroll{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
     }
 
-    .actions{display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width:220px;}
-    .btn{
-      border:0; cursor:pointer; user-select:none;
-      border-radius:999px; padding:10px 14px; font-weight:900;
-      box-shadow: var(--shadow-soft);
-      transition:.18s ease;
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap;
+    /* Hero slider */
+    .hero{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:14px;
+      align-items:stretch;
     }
-    .btn:active{transform: translateY(1px)}
-    .btn-primary{
-      background: linear-gradient(135deg, rgba(203,183,255,.90), rgba(169,212,255,.70));
-      color:#241a1e;
-      border:1px solid rgba(47,35,39,.10);
-    }
-    .btn-line{
-      background: linear-gradient(135deg, rgba(255,241,168,.95), rgba(255,184,227,.75));
-      color:#241a1e;
-      border:1px solid rgba(47,35,39,.10);
-    }
-    .btn-ghost{
-      background: rgba(255,255,255,.76);
-      border:1px solid rgba(47,35,39,.10);
-      color: rgba(47,35,39,.88);
-    }
-    .badge{
-      display:inline-flex; align-items:center; justify-content:center;
-      min-width:22px; height:22px; padding:0 7px;
-      border-radius:999px; font-size:12px;
-      background: rgba(255,255,255,.90);
-      border:1px solid rgba(47,35,39,.10);
-    }
-
-    /* ===== Hero / ref layout ===== */
-    section{padding:22px 0}
-    .hero{padding:22px 0 12px}
-    .hero-wrap{
-      border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.70);
-      box-shadow: var(--shadow-soft);
+    .card{
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .hero-inner{padding:18px}
-    .hero-top{
-      display:grid; grid-template-columns: 1.05fr .95fr;
-      gap:14px; align-items:stretch;
-      padding:16px;
-      border-radius: var(--r-xl);
-      background: rgba(255,255,255,.68);
-      border:1px solid rgba(47,35,39,.08);
-    }
-
-    .blob-frame{
+    .slider{
       position:relative;
       min-height:320px;
-      border-radius: var(--r-xl);
-      background:
-        radial-gradient(380px 260px at 28% 30%, rgba(255,184,227,.35), transparent 65%),
-        radial-gradient(380px 260px at 78% 30%, rgba(203,183,255,.30), transparent 65%),
-        radial-gradient(420px 300px at 70% 85%, rgba(169,212,255,.25), transparent 70%),
-        rgba(255,255,255,.72);
-      border:1px solid rgba(47,35,39,.10);
-      overflow:hidden;
+      background: #0e2f2a;
     }
-    .blob-photo{
-      position:absolute; left:18px; top:46px;
-      width:min(250px, 44%); aspect-ratio:1/1;
-      border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
-      overflow:hidden;
-      border:1px solid rgba(47,35,39,.10);
-      box-shadow: 0 18px 40px rgba(22,12,16,.12);
-      background: rgba(255,255,255,.70);
-    }
-    .blob-photo img{width:100%; height:100%; object-fit:cover; transform: scale(1.06);}
-
-    .hero-right{
-      position:absolute; right:18px; top:56px; width:56%;
-    }
-    .spark{
-      display:inline-flex; align-items:center; gap:8px;
-      margin-bottom:10px; color:rgba(47,35,39,.70);
-      font-size:14px;
-    }
-    .spark i{
-      width:10px; height:10px; border-radius:999px; display:inline-block;
-      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(169,212,255,.75));
-    }
-    .hero-right h2{
-      margin:0;
-      font-family:"Fredoka","Kanit",sans-serif;
-      font-size:56px;
-      line-height:.95;
-      color: rgba(47,35,39,.92);
-      letter-spacing:.2px;
-    }
-    .hero-right .cta{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;}
-    .hero-right .note{margin-top:10px; font-size:12px; color:rgba(47,35,39,.60);}
-
-    .kicker{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.40), rgba(169,212,255,.40), rgba(255,241,168,.35));
-      border:1px solid rgba(47,35,39,.08);
-      font-size:13px;color:rgba(47,35,39,.86);
-      width:max-content;
-    }
-
-    /* ===== Slider ===== */
-    .slider{
-      margin-top:14px;
-      border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.66);
-      box-shadow: var(--shadow-soft);
-      overflow:hidden;
-    }
-    .slides{
-      display:flex;
-      transition: transform .45s ease;
-      will-change: transform;
-    }
+    .slides{height:100%;display:flex;transition:transform .35s ease}
     .slide{
       min-width:100%;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:center;
-      padding:14px;
-      background:
-        radial-gradient(420px 220px at 20% 30%, rgba(255,184,227,.22), transparent 70%),
-        radial-gradient(420px 220px at 85% 20%, rgba(169,212,255,.18), transparent 70%),
-        rgba(255,255,255,.70);
+      height:100%;
+      position:relative;
     }
-    .slide .shot{
-      border-radius: var(--r-xl);
-      overflow:hidden;
-      border:1px solid rgba(47,35,39,.10);
-      box-shadow: 0 12px 26px rgba(0,0,0,.10);
-      aspect-ratio: 16/10;
+    .slide img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:saturate(1.05);
     }
-    .slide .shot img{width:100%; height:100%; object-fit:cover}
-    .slide h3{
-      margin:0 0 6px;
-      font-family:"Fredoka","Kanit",sans-serif;
-      font-size:28px;
-      line-height:1.05;
-    }
-    .slide p{margin:0 0 10px; color:var(--muted)}
-    .slider-controls{
-      display:flex; align-items:center; justify-content:space-between;
+    .slide .caption{
+      position:absolute;left:16px;bottom:16px;
+      background:rgba(255,255,255,.75);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:16px;
       padding:10px 12px;
-      border-top:1px solid rgba(47,35,39,.08);
-      background: rgba(255,255,255,.60);
+      max-width:85%;
+      backdrop-filter: blur(8px);
     }
-    .dots{display:flex; gap:8px; align-items:center;}
-    .dotbtn{
-      width:10px; height:10px; border-radius:999px;
-      border:1px solid rgba(47,35,39,.18);
-      background: rgba(255,255,255,.90);
-      cursor:pointer;
-    }
-    .dotbtn.active{
-      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(169,212,255,.75));
-      border-color: rgba(47,35,39,.10);
+    .caption b{display:block}
+    .caption small{color:var(--muted)}
+    .slider .controls{
+      position:absolute;right:12px;bottom:12px;
+      display:flex;gap:8px;
     }
     .iconbtn{
-      border:1px solid rgba(47,35,39,.12);
-      background: rgba(255,255,255,.78);
-      border-radius:999px;
-      padding:8px 12px;
+      width:42px;height:42px;border-radius:999px;border:0;
       cursor:pointer;
-      box-shadow: var(--shadow-soft);
-      font-weight:900;
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+    }
+    .dots{
+      position:absolute;left:50%;transform:translateX(-50%);
+      bottom:12px;display:flex;gap:7px;
+      padding:7px 10px;border-radius:999px;
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(0,0,0,.06);
+      backdrop-filter: blur(8px);
+    }
+    .dots button{
+      width:10px;height:10px;border-radius:99px;border:0;cursor:pointer;
+      background:rgba(0,0,0,.18);
+    }
+    .dots button.active{
+      background:linear-gradient(135deg, var(--pink), #ff4f8d);
     }
 
-    /* Ribbon marquee like ref */
-    .ribbon{
+    /* Side CTA */
+    .cta{
+      padding:16px;
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .cta h2{margin:0;font-size:20px}
+    .cta p{margin:0;color:var(--muted);line-height:1.5}
+    .cta .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .chip{
+      padding:9px 10px;border-radius:999px;
+      background:linear-gradient(135deg, rgba(255, 180, 201, .45), rgba(255, 240, 216, .55));
+      border:1px solid rgba(0,0,0,.06);
+      font-size:13px;
+    }
+    .cta .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+    .cta .qr{
+      margin-top:10px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: 18px;
+      padding:12px;
+      display:flex;gap:12px;align-items:center;
+    }
+    .qrBox{
+      width:72px;height:72px;border-radius:16px;
+      background: conic-gradient(from 180deg, var(--mint), var(--pink2), var(--cream), var(--mint));
+      border:1px solid rgba(0,0,0,.06);
+      display:grid;place-items:center;
+      font-weight:800;color:#1e1e1e;
+    }
+    .qr small{color:var(--muted);display:block}
+
+    /* Section styles */
+    .section{
       margin-top:14px;
-      border-radius:999px;
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.66);
-      overflow:hidden;
-      box-shadow: 0 12px 26px rgba(22,12,16,.07);
-    }
-    .marquee{
-      display:flex; gap:26px; align-items:center;
-      padding:10px 14px;
-      white-space:nowrap;
-      animation: scroll 16s linear infinite;
-      width:max-content;
-    }
-    .marquee span{font-size:13px; color:rgba(47,35,39,.78)}
-    .dot{width:8px;height:8px;border-radius:999px;display:inline-block;margin-right:8px;
-      background: linear-gradient(135deg, rgba(255,184,227,.95), rgba(169,212,255,.75));
-    }
-    @keyframes scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
-
-    /* Circle nav like ref */
-    .circle-nav{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-    }
-    .circle{
-      border-radius:999px;
-      padding:18px 12px;
-      text-align:center;
-      border:1px solid rgba(47,35,39,.10);
-      box-shadow: 0 12px 26px rgba(22,12,16,.07);
-      background: rgba(255,255,255,.72);
-      cursor:pointer;
-      transition:.18s ease;
-    }
-    .circle:hover{transform: translateY(-2px)}
-    .circle b{display:block; font-family:"Fredoka","Kanit",sans-serif; font-size:18px;}
-    .circle small{color: rgba(47,35,39,.70);}
-    .circle.pink{background: linear-gradient(135deg, rgba(255,184,227,.72), rgba(255,255,255,.72))}
-    .circle.lav {background: linear-gradient(135deg, rgba(203,183,255,.62), rgba(255,255,255,.72))}
-    .circle.blue{background: linear-gradient(135deg, rgba(169,212,255,.58), rgba(255,255,255,.72))}
-    .circle.yel {background: linear-gradient(135deg, rgba(255,241,168,.66), rgba(255,255,255,.72))}
-
-    /* Mission strip */
-    .mission-strip{
-      margin-top:16px;
-      border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(169,212,255,.22);
-      box-shadow: var(--shadow-soft);
-    }
-    .mission-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
       padding:16px;
     }
-    .mission{
-      border-radius:22px;
-      background: rgba(255,255,255,.76);
-      border:1px solid rgba(47,35,39,.08);
-      padding:14px;
-      text-align:center;
+    .section h3{margin:0 0 10px 0;font-size:18px}
+    .grid{
+      display:grid;gap:12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    .mission b{display:block;font-family:"Fredoka","Kanit",sans-serif}
-    .mission span{color:rgba(47,35,39,.70);font-size:13px}
-
-    /* ===== Catalog / products ===== */
-    .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:12px; margin-bottom:12px; flex-wrap:wrap;
-      padding:0 18px;
-    }
-    .section-head h3{
-      margin:0; font-size:22px;
-      font-family:"Fredoka","Kanit",sans-serif;
-    }
-    .section-head p{margin:0; color:var(--muted); font-size:14px}
-
-    .chips{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 12px; padding:0 18px;}
-    .chip{
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.78);
-      padding:8px 12px;border-radius:999px;
-      cursor:pointer;font-size:14px;transition:.16s ease;
-    }
-    .chip:hover{transform: translateY(-1px)}
-    .chip.active{
-      background: linear-gradient(135deg, rgba(255,184,227,.70), rgba(203,183,255,.55), rgba(169,212,255,.55), rgba(255,241,168,.45));
-      border-color: rgba(47,35,39,.12);
-      font-weight:900;
-    }
-
-    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:12px; padding:0 18px 18px;}
     .product{
-      grid-column: span 4;
-      padding:12px;
-      border-radius: var(--r-lg);
-      background: rgba(255,255,255,.82);
-      border:1px solid rgba(47,35,39,.10);
-      box-shadow: var(--shadow-soft);
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: 20px;
       overflow:hidden;
-      display:flex; flex-direction:column;
-      min-height:404px;
-      position:relative;
+      display:flex;flex-direction:column;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
-    .thumb{
-      border-radius:18px; overflow:hidden;
-      aspect-ratio:4/3;
-      border:1px solid rgba(47,35,39,.08);
-      background: linear-gradient(135deg, rgba(255,184,227,.50), rgba(203,183,255,.40), rgba(169,212,255,.40));
-    }
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .info{padding:10px 6px 0;display:flex;flex-direction:column;gap:6px;flex:1}
-    .product h4{margin:0;font-size:18px;font-weight:950}
+    .product img{width:100%;height:160px;object-fit:cover;display:block}
+    .product .body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .product .title{font-weight:700}
+    .muted{color:var(--muted)}
+    .priceRow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
+    .price{font-weight:800}
     .tag{
-      display:inline-flex;align-items:center;gap:6px;
+      display:inline-block;
+      font-size:12px;
       padding:6px 10px;border-radius:999px;
-      background: rgba(255,247,218,.70);
-      border:1px solid rgba(47,35,39,.08);
-      font-size:12px;width:max-content;
+      border:1px solid rgba(0,0,0,.06);
+      background:linear-gradient(135deg, rgba(236,230,255,.65), rgba(217,244,239,.65));
+      width:max-content;
     }
-    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px}
-    .price{font-family:"Fredoka","Kanit",sans-serif;font-size:18px;color:#241a1e}
-    .best{
-      position:absolute;top:14px;left:14px;
-      padding:7px 10px;border-radius:999px;
-      background: linear-gradient(135deg, rgba(255,241,168,.92), rgba(255,184,227,.70));
-      border:1px solid rgba(47,35,39,.12);
-      font-size:12px;font-weight:950;
-      box-shadow: 0 10px 22px rgba(22,12,16,.08);
+    .product .add{
+      border:0;cursor:pointer;
+      padding:10px 12px;border-radius:14px;
+      background:rgba(255, 122, 165, .12);
+      border:1px solid rgba(255, 122, 165, .35);
+      font-weight:700;
     }
-    .row{margin-top:auto;display:flex;gap:10px;align-items:center;justify-content:space-between;padding-top:10px}
-    .btn-sm{padding:9px 12px;font-size:14px}
-
-    /* Gallery */
-    .masonry{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;padding:0 18px 18px;}
-    .shot{
-      grid-column: span 4;
-      border-radius: var(--r-xl);
-      overflow:hidden;
-      border:1px solid rgba(47,35,39,.10);
-      box-shadow: var(--shadow-soft);
-      background: rgba(255,255,255,.75);
-      position:relative;
-      min-height:210px;
+    .filters{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px
     }
-    .shot.big{grid-column: span 8; min-height:330px}
-    .shot img{width:100%;height:100%;object-fit:cover}
-    .cap{
-      position:absolute;left:12px;bottom:12px;
-      background: rgba(255,255,255,.84);
-      border:1px solid rgba(47,35,39,.10);
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
-      backdrop-filter: blur(10px);
-    }
-
-    /* Subscribe big */
-    .subscribe-wrap{padding:0 18px 18px;}
-    .big-sub{
-      padding:22px;
-      border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.10);
-      background:
-        radial-gradient(380px 180px at 20% 40%, rgba(255,184,227,.40), transparent 65%),
-        radial-gradient(380px 180px at 80% 25%, rgba(203,183,255,.35), transparent 65%),
-        radial-gradient(380px 180px at 70% 85%, rgba(169,212,255,.30), transparent 65%),
-        rgba(255,255,255,.78);
-      box-shadow: var(--shadow-soft);
-      text-align:center;
-    }
-    .big-sub h3{
-      margin:0 0 6px;
-      font-family:"Fredoka","Kanit",sans-serif;
-      font-size:44px;
-      letter-spacing:.2px;
-    }
-    .big-sub p{margin:0 0 12px;color:rgba(47,35,39,.72)}
-    .sub-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .input{
-      min-width:240px;
-      padding:12px 14px;border-radius:999px;
-      border:1px solid rgba(47,35,39,.14);
-      background: rgba(255,255,255,.84);
+    .input, select{
+      padding:11px 12px;border-radius:14px;
+      border:1px solid rgba(0,0,0,.10);
+      background:rgba(255,255,255,.75);
       outline:none;
-      box-shadow: 0 10px 24px rgba(22,12,16,.05);
+      font-size:14px;
     }
-    .input:focus{border-color: rgba(203,183,255,.95)}
-    .tiny{font-size:12px;color:rgba(47,35,39,.60);margin-top:10px}
+    .row{
+      display:grid;gap:12px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Calendar */
+    .calendar{
+      display:grid;gap:10px;
+      grid-template-columns: 1fr;
+    }
+    .calHeader{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    .calGrid{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap:8px;
+      margin-top:8px;
+    }
+    .dow{
+      text-align:center;
+      font-weight:700;
+      color:#444;
+      padding:8px 0;
+      border-radius:12px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .day{
+      min-height:84px;
+      border-radius:16px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      padding:8px;
+      position:relative;
+      cursor:pointer;
+    }
+    .day.disabled{opacity:.35;cursor:default}
+    .day .num{font-weight:800}
+    .badge{
+      position:absolute;right:8px;top:8px;
+      padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;
+      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.8);
+    }
+    .badge.lock{background:rgba(255, 122, 165, .15);border-color:rgba(255, 122, 165, .35)}
+    .badge.open{background:rgba(217,244,239,.65);border-color:rgba(0,0,0,.06)}
+    .calNote{color:var(--muted);line-height:1.5;margin-top:6px}
+
+    /* Branch table */
+    table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    th{font-size:13px;color:var(--muted);text-align:left;padding:0 10px}
+    td{
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      padding:12px 10px;
+    }
+    td:first-child{border-top-left-radius:14px;border-bottom-left-radius:14px}
+    td:last-child{border-top-right-radius:14px;border-bottom-right-radius:14px}
+    .tableWrap{overflow:auto}
 
     /* Footer */
-    footer{padding:0 18px 24px;}
-    .foot{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px}
-    .box{
-      padding:16px;border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.76);
-      box-shadow: var(--shadow-soft);
-    }
-    .box h5{margin:0 0 8px;font-size:14px}
-    .box a:hover{text-decoration:underline;text-underline-offset:3px}
-
-    /* Cart modal */
-    .overlay{
-      position:fixed; inset:0;
-      background: rgba(20,12,14,.35);
-      backdrop-filter: blur(8px);
-      display:none;
-      align-items:center;
-      justify-content:center;
+    footer{
+      margin-top:14px;
       padding:18px;
-      z-index:99;
+      border-radius: var(--radius);
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow: var(--shadow);
     }
-    .overlay.show{display:flex}
-    .modal{
-      width:min(760px, 100%);
-      border-radius: var(--r-xl);
-      border:1px solid rgba(47,35,39,.12);
-      background: rgba(255,255,255,.92);
-      box-shadow: 0 26px 70px rgba(0,0,0,.22);
-      overflow:hidden;
+    footer .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    footer .links a{
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.65);
+      font-size:14px;
     }
-    .modal-head{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 16px;
-      border-bottom:1px solid rgba(47,35,39,.08);
-      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.45), rgba(169,212,255,.40), rgba(255,241,168,.35));
+
+    /* Drawer cart */
+    .drawerBackdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.35);
+      display:none;align-items:stretch;justify-content:flex-end;
+      z-index:100;
     }
-    .modal-head b{font-family:"Fredoka","Kanit",sans-serif}
-    .modal-body{padding:14px 16px}
-    .cart-items{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
-    .cart-item{
-      display:flex;align-items:center;gap:12px;
-      padding:10px;border-radius:18px;
-      border:1px solid rgba(47,35,39,.10);
-      background: rgba(255,255,255,.84);
+    .drawer{
+      width:min(420px, 92vw);
+      background:rgba(255,255,255,.92);
+      border-left:1px solid rgba(0,0,0,.06);
+      box-shadow:-20px 0 50px rgba(0,0,0,.18);
+      padding:14px;
+      backdrop-filter: blur(10px);
+      overflow:auto;
     }
-    .cart-item img{
-      width:64px;height:64px;border-radius:16px;
-      object-fit:cover;border:1px solid rgba(47,35,39,.10);
-    }
-    .cart-item .grow{flex:1}
-    .qty{
-      display:flex;align-items:center;gap:8px;
-      background: rgba(255,247,218,.72);
-      border:1px solid rgba(47,35,39,.10);
-      border-radius:999px;padding:6px 10px;
-    }
-    .iconbtn-mini{
+    .drawerHeader{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .closeX{
       border:0;cursor:pointer;
-      width:28px;height:28px;border-radius:999px;
-      background: rgba(255,255,255,.80);
-      border:1px solid rgba(47,35,39,.12);
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:950;
+      width:40px;height:40px;border-radius:999px;
+      background:rgba(0,0,0,.06);
     }
-    .cart-foot{
-      padding:14px 16px;border-top:1px solid rgba(47,35,39,.08);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      flex-wrap:wrap;background: rgba(255,255,255,.66);
+    .cartItem{
+      margin-top:10px;
+      padding:10px;border-radius:18px;
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(0,0,0,.06);
+      display:grid;grid-template-columns: 56px 1fr;gap:10px;
+      align-items:center;
     }
-    .total strong{font-family:"Fredoka","Kanit",sans-serif;font-size:18px}
-    .textarea{
+    .cartItem img{width:56px;height:56px;border-radius:14px;object-fit:cover}
+    .qtyRow{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px}
+    .qtyBtns{display:flex;gap:6px;align-items:center}
+    .qbtn{
+      width:34px;height:34px;border-radius:12px;border:1px solid rgba(0,0,0,.10);
+      background:rgba(255,255,255,.75);cursor:pointer;font-weight:800;
+    }
+    .danger{
+      border:1px solid rgba(255, 80, 120, .35);
+      background:rgba(255, 80, 120, .10);
+    }
+    .totalBox{
+      margin-top:12px;
+      padding:12px;border-radius:18px;
+      background:linear-gradient(135deg, rgba(255, 180, 201, .35), rgba(255, 240, 216, .45));
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .totalRow{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+    .small{font-size:13px;color:var(--muted)}
+    .lineBtn{
       width:100%;
-      min-height:110px;
+      margin-top:10px;
+      padding:12px 14px;
       border-radius: 18px;
-      border:1px solid rgba(47,35,39,.14);
-      background: rgba(255,255,255,.84);
-      padding:12px;
-      outline:none;
+      border:0;cursor:pointer;
+      font-weight:800;
+      background: linear-gradient(135deg, #1fd15b, #0fb84a);
+      color:white;
+      box-shadow: 0 14px 26px rgba(23, 196, 78, .22);
     }
+
+    /* Routing sections */
+    .page{display:none}
+    .page.active{display:block}
 
     /* Responsive */
-    @media (max-width:980px){
-      nav ul{display:none}
-      .hero-top{grid-template-columns:1fr}
-      .hero-right{position:static; width:100%}
-      .blob-photo{position:relative; left:auto; top:auto; width:72%; margin:18px auto 0}
-      .circle-nav{grid-template-columns:repeat(2,1fr)}
-      .mission-grid{grid-template-columns:1fr}
-      .slide{grid-template-columns:1fr}
-      .product{grid-column:span 6}
-      .shot{grid-column:span 6}
-      .shot.big{grid-column:span 12}
-      .foot{grid-template-columns:1fr}
+    @media (max-width: 980px){
+      .hero{grid-template-columns: 1fr}
+      .grid{grid-template-columns: repeat(2, minmax(0, 1fr))}
+      .row{grid-template-columns: 1fr}
+      .brand{min-width:auto}
+      nav{justify-content:flex-start}
     }
-    @media (max-width:560px){
-      .hero-right h2{font-size:44px}
-      .product{grid-column:span 12}
-      .shot{grid-column:span 12}
+    @media (max-width: 520px){
+      .grid{grid-template-columns: 1fr}
+      .slider{min-height:260px}
     }
   </style>
 </head>
 
 <body>
-  <div class="outer-waves" aria-hidden="true"></div>
-
-  <div class="page-canvas" id="top">
-    <div class="topline">ข้อความวิ่งอยู่ด้านล่าง • โปร/เมนูใหม่ แจ้งที่ LINE @cakeonline</div>
-
-    <header>
-      <div class="container">
-        <div class="nav">
-          <a class="brand" href="#top">
-            <div class="logo" aria-hidden="true"></div>
-            <div>
-              <h1>เค้กออนไลน์ <small>Cake • Bakery • Tools • Candles</small></h1>
-            </div>
-          </a>
-
-          <nav aria-label="เมนู">
-            <ul>
-              <li><a href="#menu">เมนู Top 10</a></li>
-              <li><a href="#catalog">แคตตาล็อค</a></li>
-              <li><a href="#gallery">รูปเลื่อน</a></li>
-              <li><a href="#subscribe">Subscribe</a></li>
-            </ul>
-          </nav>
-
-          <div class="actions">
-            <button class="btn btn-ghost" id="btnCart" type="button">ตะกร้า <span class="badge" id="cartCount">0</span></button>
-            <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">LINE @cakeonline</a>
-          </div>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" title="โลโก้ชั่วคราว (เปลี่ยนเป็นโลโก้จริงได้)">CO</div>
+        <div>
+          <h1>เค้กออนไลน์</h1>
+          <small>สั่งเค้ก เบเกอรี่ อุปกรณ์แต่งเค้ก</small>
         </div>
+      </div>
+
+      <nav aria-label="เมนูหลัก">
+        <a class="navlink" href="#home">หน้าแรก</a>
+        <a class="navlink" href="#menu">เมนู / แคตตาล็อค</a>
+        <a class="navlink" href="#member">ระบบสมาชิก</a>
+        <a class="navlink" href="#booking">สั่งจองสินค้า (ปฏิทินคิว)</a>
+        <a class="navlink" href="#branches">สาขา</a>
+        <a class="navlink" href="#about">เกี่ยวกับเรา</a>
+        <a class="navlink" href="#blog">บทความ</a>
+        <a class="navlink" href="#reviews">รีวิวสินค้า</a>
+      </nav>
+
+      <div class="actions">
+        <div class="pill" title="ช่องทางสั่งซื้อจริง">
+          LINE: <b id="lineText">@cakeonline</b>
+        </div>
+        <button class="btn secondary" id="openCartBtn" type="button">
+          ตะกร้า <span id="cartCount">0</span>
+        </button>
+        <button class="btn" id="orderNowBtn" type="button">สั่งผ่าน LINE</button>
       </div>
     </header>
 
-    <main>
-      <!-- HERO -->
-      <section class="hero">
-        <div class="container">
-          <div class="hero-wrap">
-            <div class="hero-inner">
-              <div class="hero-top">
-                <div class="blob-frame">
-                  <div class="blob-photo">
-                    <!-- เปลี่ยนรูปเองทีหลังได้ -->
-                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=900&q=80" alt="promo" loading="lazy">
-                  </div>
-
-                  <div class="hero-right">
-                    <div class="spark"><i></i> let’s shop</div>
-                    <h2>new<br>arrivals</h2>
-                    <div class="cta">
-                      <a class="btn btn-primary" href="#menu">SHOP NOW</a>
-                      <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
-                    </div>
-                    <div class="note">สั่งจริง: LINE @cakeonline • ระบบตะกร้าพร้อมใช้</div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="kicker">SUMMER SALE • NEW • BEST SELLERS • PASTEL VIBES</div>
-                  <h3 style="margin:14px 0 6px;font-family:'Fredoka','Kanit',sans-serif;font-size:28px;line-height:1.1">
-                    ขนม เบเกอรี่ เค้ก อุปกรณ์แต่งเค้ก เทียน
-                  </h3>
-                  <p style="margin:0;color:var(--muted)">
-                    เลือกสินค้า → ใส่ตะกร้า → กด “สั่งผ่าน LINE” ระบบจะสร้างข้อความออเดอร์ให้พร้อมส่งทันที
-                  </p>
-
-                  <!-- Marquee (ข้อความวิ่ง) -->
-                  <div class="ribbon" aria-label="ข้อความวิ่ง">
-                    <div class="marquee">
-                      <span><i class="dot"></i> SUMMER SALE</span>
-                      <span><i class="dot"></i> ส่ง “เมนู + วันรับ + งบ + รูปเรฟ” ได้เลย</span>
-                      <span><i class="dot"></i> ขายดี: เค้กพาสเทล • ป๊อปคุกกี้ • Korea • มินิเค้ก</span>
-                      <span><i class="dot"></i> SUMMER SALE</span>
-                      <span><i class="dot"></i> ส่ง “เมนู + วันรับ + งบ + รูปเรฟ” ได้เลย</span>
-                      <span><i class="dot"></i> ขายดี: เค้กพาสเทล • ป๊อปคุกกี้ • Korea • มินิเค้ก</span>
-                    </div>
-                  </div>
-
-                  <!-- Circle nav -->
-                  <div class="circle-nav">
-                    <button class="circle pink" type="button" data-jump="cakes"><b>cakes</b><small>เมนูเค้ก</small></button>
-                    <button class="circle lav" type="button" data-jump="bakery"><b>bakery</b><small>เบเกอรี่</small></button>
-                    <button class="circle blue" type="button" data-jump="tools"><b>tools</b><small>อุปกรณ์แต่งเค้ก</small></button>
-                    <button class="circle yel" type="button" data-jump="candles"><b>candles</b><small>เทียน</small></button>
-                  </div>
-
-                  <!-- Mission strip -->
-                  <div class="mission-strip">
-                    <div class="mission-grid">
-                      <div class="mission"><b>Our mission</b><span>น่ารัก อร่อย และถ่ายรูปขึ้น</span></div>
-                      <div class="mission"><b>Order</b><span>ตะกร้า + ส่ง LINE ได้ทันที</span></div>
-                      <div class="mission"><b>Support</b><span>ช่วยเลือกธีม/โทนตามเรฟ</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- hero-top -->
-
-              <!-- Slider (รูปเลื่อน) -->
-              <div class="slider" id="slider">
-                <div class="slides" id="slides">
-                  <div class="slide">
-                    <div class="shot"><img src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1400&q=80" alt="slide1" loading="lazy"></div>
-                    <div>
-                      <h3>Pastel Cakes</h3>
-                      <p>โทนพาสเทลละมุน เหมาะวันเกิด/ของขวัญ</p>
-                      <a class="btn btn-primary" href="#menu">ดู Top 10</a>
-                    </div>
-                  </div>
-
-                  <div class="slide">
-                    <div class="shot"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1400&q=80" alt="slide2" loading="lazy"></div>
-                    <div>
-                      <h3>Bakery & Desserts</h3>
-                      <p>ขนมชิ้น/ขนมกล่อง เลือกเป็นเซ็ตของขวัญได้</p>
-                      <a class="btn btn-primary" href="#catalog">ดูแคตตาล็อค</a>
-                    </div>
-                  </div>
-
-                  <div class="slide">
-                    <div class="shot"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1400&q=80" alt="slide3" loading="lazy"></div>
-                    <div>
-                      <h3>Tools & Candles</h3>
-                      <p>อุปกรณ์แต่งเค้ก + เทียน เพิ่มยอดต่อบิล</p>
-                      <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ทักไลน์</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="slider-controls">
-                  <button class="iconbtn" id="prev" type="button">←</button>
-                  <div class="dots" id="dots"></div>
-                  <button class="iconbtn" id="next" type="button">→</button>
-                </div>
-              </div>
-
-            </div><!-- hero-inner -->
-          </div><!-- hero-wrap -->
-        </div>
-      </section>
-
-      <!-- Top 10 Menu -->
-      <section id="menu">
-        <div class="section-head">
-          <div>
-            <h3>เมนู Top 10 ของร้าน</h3>
-            <p>มีป้าย “ขายดี” แล้ว และสั่งจริงผ่าน LINE @cakeonline</p>
-          </div>
-          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
-        </div>
-
-        <div class="chips" role="tablist" aria-label="ตัวกรอง">
-          <button class="chip active" data-filter="top10" type="button">Top 10</button>
-          <button class="chip" data-filter="cakes" type="button">เค้ก</button>
-          <button class="chip" data-filter="bakery" type="button">เบเกอรี่/ขนม</button>
-          <button class="chip" data-filter="tools" type="button">อุปกรณ์</button>
-          <button class="chip" data-filter="candles" type="button">เทียน</button>
-          <button class="chip" data-filter="all" type="button">ทั้งหมด</button>
-        </div>
-
-        <div class="grid" id="productGrid" aria-live="polite"></div>
-      </section>
-
-      <!-- Catalog -->
-      <section id="catalog">
-        <div class="section-head">
-          <div>
-            <h3>แคตตาล็อค</h3>
-            <p>รวมหมวด ขนม/เบเกอรี่/อุปกรณ์แต่งเค้ก/เทียน (เพิ่มสินค้าได้เอง)</p>
-          </div>
-          <button class="btn btn-primary" id="btnGoAll" type="button">ดูสินค้าทั้งหมด</button>
-        </div>
-
-        <div class="grid" id="catalogGrid" aria-live="polite"></div>
-      </section>
-
-      <!-- Gallery -->
-      <section id="gallery">
-        <div class="section-head">
-          <div>
-            <h3>รูปตัวอย่าง (เลื่อนได้)</h3>
-            <p>รูปเป็น placeholder เปลี่ยนทีหลังได้</p>
-          </div>
-          <span class="kicker">Pastel • Cute • Minimal</span>
-        </div>
-
-        <div class="masonry">
-          <div class="shot big">
-            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1600&q=80" alt="g1" loading="lazy">
-            <div class="cap">pastel cake</div>
-          </div>
-          <div class="shot">
-            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" alt="g2" loading="lazy">
-            <div class="cap">dessert</div>
-          </div>
-          <div class="shot">
-            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" alt="g3" loading="lazy">
-            <div class="cap">gift</div>
-          </div>
-          <div class="shot">
-            <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80" alt="g4" loading="lazy">
-            <div class="cap">choco</div>
-          </div>
-          <div class="shot">
-            <img src="https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" alt="g5" loading="lazy">
-            <div class="cap">box</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Subscribe -->
-      <section id="subscribe">
-        <div class="section-head">
-          <div>
-            <h3>Subscribe</h3>
-            <p>รับเมนูใหม่และโปรก่อนใคร (เดโม)</p>
-          </div>
-        </div>
-
-        <div class="subscribe-wrap">
-          <div class="big-sub">
-            <h3>subscribe</h3>
-            <p>Be the first to know about new collections and exclusive offers.</p>
-            <form class="sub-form" id="subForm">
-              <input class="input" id="email" type="email" placeholder="Email" required>
-              <button class="btn btn-primary" type="submit">Sign up</button>
-            </form>
-            <div class="tiny" id="subMsg" aria-live="polite"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer -->
-      <section id="contact">
-        <div class="section-head">
-          <div>
-            <h3>สั่งซื้อ / ติดต่อ</h3>
-            <p>ช่องทางสั่งจริง: LINE @cakeonline</p>
-          </div>
-          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ทักไลน์ตอนนี้</a>
-        </div>
-
-        <footer>
-          <div class="foot">
-            <div class="box">
-              <h5>เค้กออนไลน์</h5>
-              <div>Cake • Bakery • Tools • Candles</div>
-              <div class="tiny">© <span id="year"></span> Cake Online. All rights reserved.</div>
-            </div>
-            <div class="box">
-              <h5>ลิงก์</h5>
-              <div><a href="#menu">Top 10</a></div>
-              <div><a href="#catalog">Catalog</a></div>
-              <div><a href="#subscribe">Subscribe</a></div>
-            </div>
-            <div class="box">
-              <h5>สั่งซื้อ</h5>
-              <div><a href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">LINE @cakeonline</a></div>
-              <div class="tiny">ระบบจะสร้างข้อความออเดอร์ในตะกร้าให้พร้อมส่ง</div>
-            </div>
-          </div>
-        </footer>
-      </section>
-    </main>
-
-    <!-- Cart modal -->
-    <div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="ตะกร้าสินค้า">
-      <div class="modal" id="cartModal">
-        <div class="modal-head">
-          <b>ตะกร้าสินค้า</b>
-          <button class="btn btn-ghost btn-sm" id="btnClose" type="button">ปิด</button>
-        </div>
-
-        <div class="modal-body">
-          <ul class="cart-items" id="cartItems"></ul>
-          <div class="tiny" id="emptyCartHint">ตะกร้าว่างอยู่ ลองกด “ใส่ตะกร้า” จากสินค้า</div>
-
-          <div style="height:10px"></div>
-          <b style="font-family:'Fredoka','Kanit',sans-serif;">ข้อความออเดอร์ (คัดลอกส่งไลน์ได้)</b>
-          <div style="height:6px"></div>
-          <textarea class="textarea" id="orderText" readonly></textarea>
-          <div class="tiny">หมายเหตุ: นี่เป็นระบบสั่งผ่าน LINE (ไม่ได้ชำระเงินออนไลน์ในเว็บ)</div>
-        </div>
-
-        <div class="cart-foot">
-          <div class="total">รวม: <strong id="cartTotal">0</strong> บาท</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-primary" id="btnCopy" type="button">คัดลอกข้อความ</button>
-            <a class="btn btn-line" id="btnLineOrder" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
-          </div>
-        </div>
+    <!-- ข้อความวิ่ง -->
+    <div class="marquee" role="note" aria-label="ประกาศร้าน">
+      <div class="track" id="marqueeTrack">
+        <!-- JS will duplicate for smooth loop -->
       </div>
     </div>
 
-  </div><!-- /page-canvas -->
+    <!-- ROUTED PAGES -->
+    <main>
+      <!-- HOME -->
+      <section class="page active" id="page-home">
+        <div class="hero">
+          <div class="card slider" aria-label="สไลด์รูปสินค้า 6 รูป">
+            <div class="slides" id="slides"></div>
 
-  <script>
-    // ====== CONFIG ======
-    const LINE_ADD_URL = "https://line.me/R/ti/p/@cakeonline";
-
-    // ====== Top 10 (ตามที่หญิงให้มา) + Catalog เพิ่มหมวด (อุปกรณ์/เทียน) ======
-    // เปลี่ยนรูปทีหลังได้: แก้ img เป็นลิงก์รูปของร้าน หรือรูปในโฟลเดอร์ images/...
-    const top10 = [
-      { id:"t1", name:"เค้กเบสิค", category:"cakes", tag:"ราคาเริ่มต้น", price:180, best:false,
-        img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t2", name:"เค้กกล่องข้าว", category:"bakery", tag:"ราคาเริ่มต้น", price:120, best:false,
-        img:"https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t3", name:"เค้กพาสเทล", category:"cakes", tag:"สินค้าแนะนำ", price:450, best:true,
-        img:"https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t4", name:"เค้กป๊อปคุกกี้", category:"cakes", tag:"สินค้าแนะนำ", price:350, best:true,
-        img:"https://images.unsplash.com/photo-1607478900766-efe13248b125?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t5", name:"เค้กมินิมอล", category:"cakes", tag:"ราคาเริ่มต้น", price:150, best:false,
-        img:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t6", name:"เค้ก korea", category:"cakes", tag:"สินค้าแนะนำ", price:220, best:true,
-        img:"https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t7", name:"ชอกบอล (1 กล่อง 6 ลูก)", category:"bakery", tag:"ราคาต่อกล่อง", price:35, best:false,
-        img:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t8", name:"บานอฟฟี่", category:"bakery", tag:"ราคาเริ่มต้น", price:35, best:false,
-        img:"https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t9", name:"คอนเฟลคคาราเมล", category:"bakery", tag:"ราคาเริ่มต้น", price:50, best:false,
-        img:"https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=80" },
-      { id:"t10", name:"มินิเค้ก", category:"cakes", tag:"สินค้าแนะนำ", price:60, best:true,
-        img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80" },
-    ];
-
-    // Catalog เพิ่มเติม (ตัวอย่าง) — หญิงแก้ชื่อ/ราคา/รูปได้
-    const catalogExtra = [
-      // Bakery
-      { id:"b1", name:"บราวนี่ชิ้น", category:"bakery", tag:"เบเกอรี่", price:45, best:false,
-        img:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" },
-      { id:"b2", name:"คุกกี้เนย", category:"bakery", tag:"เบเกอรี่", price:35, best:false,
-        img:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80" },
-
-      // Tools (อุปกรณ์แต่งเค้ก)
-      { id:"tl1", name:"หัวบีบครีม (ชุด)", category:"tools", tag:"อุปกรณ์", price:89, best:false,
-        img:"https://images.unsplash.com/photo-1520975958225-96d5a1aa6c8a?auto=format&fit=crop&w=1200&q=80" },
-      { id:"tl2", name:"สปาตูล่าแต่งหน้าเค้ก", category:"tools", tag:"อุปกรณ์", price:69, best:false,
-        img:"https://images.unsplash.com/photo-1516542076529-1ea3854896f2?auto=format&fit=crop&w=1200&q=80" },
-
-      // Candles (เทียน)
-      { id:"c1", name:"เทียนวันเกิด (คละสี)", category:"candles", tag:"เทียน", price:29, best:false,
-        img:"https://images.unsplash.com/photo-1520975682038-6b3b6a0a6c4c?auto=format&fit=crop&w=1200&q=80" },
-      { id:"c2", name:"เทียนตัวเลข 0-9", category:"candles", tag:"เทียน", price:35, best:false,
-        img:"https://images.unsplash.com/photo-1600478924434-2c2a9c0d8a2f?auto=format&fit=crop&w=1200&q=80" },
-    ];
-
-    const allProducts = [...top10, ...catalogExtra];
-
-    // ===== Helpers =====
-    const grid = document.getElementById("productGrid");
-    const catalogGrid = document.getElementById("catalogGrid");
-    const chips = Array.from(document.querySelectorAll(".chip"));
-
-    function money(n){ return new Intl.NumberFormat("th-TH").format(n); }
-    function labelCategory(cat){
-      return ({
-        top10:"Top 10",
-        cakes:"เค้ก",
-        bakery:"เบเกอรี่/ขนม",
-        tools:"อุปกรณ์แต่งเค้ก",
-        candles:"เทียน"
-      })[cat] || "สินค้า";
-    }
-
-    function productCard(p){
-      return `
-        <article class="product">
-          ${p.best ? `<div class="best">ขายดี</div>` : ``}
-          <div class="thumb"><img alt="${p.name}" src="${p.img}" loading="lazy"></div>
-          <div class="info">
-            <div class="tag">${p.tag}</div>
-            <h4>${p.name}</h4>
-            <div class="meta">
-              <span>หมวด: ${labelCategory(p.category)}</span>
-              <span class="price">${money(p.price)}฿</span>
+            <div class="dots" id="dots" aria-label="เลือกสไลด์"></div>
+            <div class="controls" aria-label="ควบคุมสไลด์">
+              <button class="iconbtn" id="prevBtn" aria-label="ก่อนหน้า">‹</button>
+              <button class="iconbtn" id="nextBtn" aria-label="ถัดไป">›</button>
             </div>
           </div>
-          <div class="row">
-            <a class="btn btn-line btn-sm" href="${LINE_ADD_URL}" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
-            <button class="btn btn-primary btn-sm" type="button" data-add="${p.id}">ใส่ตะกร้า</button>
+
+          <aside class="card cta">
+            <h2>สั่งง่าย ส่งไว (และหวานแบบมีศักดิ์ศรี)</h2>
+            <p>
+              เว็บนี้มีแคตตาล็อค + ตะกร้า + ปฏิทินจองคิว<br>
+              แต่ “สั่งจริง” ผ่าน LINE OA เท่านั้น เพื่อคอนเฟิร์มแบบ/สี/ข้อความหน้าขนมได้เป๊ะ
+            </p>
+
+            <div class="chips" aria-label="ไฮไลต์">
+              <span class="chip">เค้กพาสเทล / ขายดี</span>
+              <span class="chip">เค้กป๊อปคุกกี้ / ขายดี</span>
+              <span class="chip">เค้ก korea / ขายดี</span>
+              <span class="chip">มินิเค้ก / ขายดี</span>
+              <span class="chip">อุปกรณ์แต่งเค้ก</span>
+            </div>
+
+            <div class="qr" aria-label="สั่งซื้อผ่าน LINE">
+              <div class="qrBox">QR</div>
+              <div>
+                <b>สั่งซื้อผ่าน LINE OA</b>
+                <small>แอดไลน์: <span id="lineText2">@cakeonline</span></small>
+                <small>กดปุ่ม “สั่งผ่าน LINE” ได้เลย</small>
+              </div>
+            </div>
+
+            <div class="ctaRow">
+              <button class="btn" id="orderNowBtn2" type="button">สั่งผ่าน LINE</button>
+              <a class="btn secondary" href="#menu">ดูแคตตาล็อค</a>
+            </div>
+          </aside>
+        </div>
+
+        <section class="card section" aria-label="Top 10 ของร้าน">
+          <h3>Top 10 ของร้าน</h3>
+          <div class="filters">
+            <input class="input" id="searchTop" placeholder="ค้นหา Top 10 เช่น พาสเทล, มินิเค้ก, ชอกบอล..." />
+            <span class="muted">ทิป: กด “เพิ่มลงตะกร้า” แล้วไปเช็คเอาต์ผ่าน LINE</span>
           </div>
-        </article>
+          <div class="grid" id="topGrid"></div>
+        </section>
+
+        <section class="card section" aria-label="หมวดหมู่แนะนำ">
+          <h3>หมวดหมู่สินค้า</h3>
+          <div class="row">
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">เค้ก & เบเกอรี่</h3>
+              <p class="muted">เค้กวันเกิด เค้กมินิมอล เค้กพาสเทล เค้กกล่องข้าว มินิเค้ก และของหวานพร้อมกิน</p>
+              <a class="btn secondary" href="#menu">ไปหน้าเมนู</a>
+            </div>
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">อุปกรณ์แต่งเค้ก</h3>
+              <p class="muted">เทียน อุปกรณ์ตกแต่ง เค้กท็อปเปอร์ (เตรียมพื้นที่ให้ลงสินค้าเพิ่มได้)</p>
+              <a class="btn secondary" href="#menu">ดูหมวดอุปกรณ์</a>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- MENU / CATALOG -->
+      <section class="page" id="page-menu">
+        <section class="card section">
+          <h3>เมนู / แคตตาล็อค</h3>
+          <div class="filters">
+            <input class="input" id="searchAll" placeholder="ค้นหาสินค้า เช่น เทียน, พาสเทล, korea..." />
+            <select id="categoryFilter" aria-label="เลือกหมวดหมู่">
+              <option value="all">ทุกหมวดหมู่</option>
+            </select>
+            <select id="sortFilter" aria-label="เรียงลำดับ">
+              <option value="popular">เรียง: ยอดนิยม</option>
+              <option value="priceAsc">เรียง: ราคาต่ำ → สูง</option>
+              <option value="priceDesc">เรียง: ราคาสูง → ต่ำ</option>
+              <option value="nameAsc">เรียง: ชื่อ A → Z</option>
+            </select>
+            <button class="btn secondary" id="clearFiltersBtn" type="button">ล้างตัวกรอง</button>
+          </div>
+          <div class="grid" id="allGrid"></div>
+        </section>
+      </section>
+
+      <!-- MEMBER -->
+      <section class="page" id="page-member">
+        <section class="card section">
+          <h3>ระบบสมาชิก (เวอร์ชันพร้อมใช้วันนี้: บันทึกในเครื่องผู้ใช้)</h3>
+          <p class="muted">
+            วันนี้ใช้แบบ “Light Member” ได้ทันที: ลูกค้ากดบันทึกชื่อ/เบอร์ เพื่อให้ตะกร้า/คิวจองจำค่าไว้ในเครื่อง<br>
+            ถ้าต้องการสมาชิกจริง (ล็อกอิน/แต้ม/คูปอง) ค่อยต่อหลังบ้านภายหลังได้
+          </p>
+
+          <div class="row">
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">สมัคร/บันทึกข้อมูลสมาชิก</h3>
+              <div class="filters">
+                <input class="input" id="memName" placeholder="ชื่อ-นามสกุล" />
+                <input class="input" id="memPhone" placeholder="เบอร์โทร" />
+                <input class="input" id="memLine" placeholder="ไอดีไลน์ (ถ้ามี)" />
+                <button class="btn" id="saveMemberBtn" type="button">บันทึก</button>
+              </div>
+              <p class="small" id="memberSavedHint"></p>
+            </div>
+
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">สิทธิพิเศษ (ใส่ทีหลังได้)</h3>
+              <ul class="muted" style="margin:0;padding-left:18px;line-height:1.8">
+                <li>คูปองวันเกิด / ส่วนลดสั่งซ้ำ</li>
+                <li>แจ้งโปรผ่านบทความ/รีวิว</li>
+                <li>ประวัติการจองคิว/ออเดอร์</li>
+              </ul>
+              <button class="btn secondary" type="button" onclick="location.hash='#menu'">ไปเลือกสินค้า</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- BOOKING CALENDAR -->
+      <section class="page" id="page-booking">
+        <section class="card section">
+          <h3>ปฏิทินจองคิว (ดูวันว่าง / ล็อคคิว)</h3>
+          <div class="calendar">
+            <div class="calHeader">
+              <div class="filters" style="margin:0">
+                <button class="btn secondary" id="prevMonthBtn" type="button">เดือนก่อน</button>
+                <div class="pill"><b id="monthLabel">-</b></div>
+                <button class="btn secondary" id="nextMonthBtn" type="button">เดือนถัดไป</button>
+              </div>
+              <div class="filters" style="margin:0">
+                <button class="btn secondary" id="toggleAdminBtn" type="button">โหมดแอดมิน: ปิด</button>
+                <span class="small">โหมดแอดมินใช้ “ล็อค/ปลดล็อควัน” (บันทึกในเครื่องนี้)</span>
+              </div>
+            </div>
+
+            <div class="calGrid" id="calGrid">
+              <!-- JS calendar -->
+            </div>
+
+            <p class="calNote" id="calHint"></p>
+
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">วิธีจองจริง</h3>
+              <ol class="muted" style="margin:0;padding-left:18px;line-height:1.9">
+                <li>เลือกสินค้าใส่ตะกร้า</li>
+                <li>มาที่ปฏิทิน ดูวันที่ยังว่าง</li>
+                <li>กดปุ่มเช็คเอาต์ผ่าน LINE → ระบบจะส่งรายการสินค้า + วันที่ที่เลือกไปให้ร้าน</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- BRANCHES -->
+      <section class="page" id="page-branches">
+        <section class="card section">
+          <h3>สาขา (รองรับ 100 สาขา ใส่ทีหลังได้)</h3>
+          <p class="muted">
+            ตอนนี้มีโครงให้ครบ: ชื่อสาขา, จังหวัด, ที่อยู่สั้น, ลิงก์ Google Maps, เบอร์โทร, ไอดีไลน์, QR ไลน์<br>
+            คุณสามารถเริ่มจาก 1 สาขา แล้วค่อย ๆ เติมเป็น 100 สาขาได้ภายหลัง
+          </p>
+
+          <div class="filters">
+            <input class="input" id="branchSearch" placeholder="ค้นหาสาขา เช่น โรบินสัน, สมุทรสงคราม..." />
+            <button class="btn secondary" id="addDummyBranchesBtn" type="button">สร้างตัวอย่าง 100 สาขา (ชั่วคราว)</button>
+            <button class="btn" id="clearBranchesBtn" type="button">ล้างสาขาตัวอย่าง</button>
+          </div>
+
+          <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+            <h3 style="margin-top:0">เพิ่มสาขา (บันทึกในเครื่องนี้)</h3>
+            <div class="filters">
+              <input class="input" id="bName" placeholder="ชื่อสาขา" />
+              <input class="input" id="bProvince" placeholder="จังหวัด" />
+              <input class="input" id="bAddr" placeholder="ที่อยู่สั้น" />
+              <input class="input" id="bMaps" placeholder="ลิงก์ Google Maps" />
+              <input class="input" id="bPhone" placeholder="เบอร์โทร" />
+              <input class="input" id="bLine" placeholder="ไอดีไลน์" />
+              <input class="input" id="bQr" placeholder="ลิงก์รูป QR ไลน์ (ถ้ามี)" />
+              <button class="btn" id="saveBranchBtn" type="button">บันทึกสาขา</button>
+            </div>
+            <p class="small muted">ถ้าจะทำให้เป็นระบบ “กลาง” สำหรับทุกคน ให้ต่อฐานข้อมูลภายหลัง (วันนี้เอาให้เว็บวิ่งก่อน)</p>
+          </div>
+
+          <div class="tableWrap">
+            <table aria-label="ตารางสาขา">
+              <thead>
+                <tr>
+                  <th>ชื่อสาขา</th>
+                  <th>จังหวัด</th>
+                  <th>ที่อยู่สั้น</th>
+                  <th>Google Maps</th>
+                  <th>โทร</th>
+                  <th>LINE</th>
+                  <th>QR LINE</th>
+                </tr>
+              </thead>
+              <tbody id="branchTbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="page" id="page-about">
+        <section class="card section">
+          <h3>เกี่ยวกับเรา</h3>
+          <div class="row">
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">เค้กออนไลน์</h3>
+              <p class="muted" style="line-height:1.8;margin:0">
+                เราทำขนมและเค้กที่ “น่ารักแบบไม่ง้อคำอธิบาย” เน้นโทนมินิมอล พาสเทล และงานแต่งหน้าเค้กตามสไตล์ลูกค้า<br>
+                จุดแข็งของเรา: สั่งง่ายผ่าน LINE, มีแคตตาล็อคชัด, มีคิวจองให้ดูวันว่าง
+              </p>
+            </div>
+            <div class="card section" style="box-shadow:none;background:rgba(255,255,255,.55);">
+              <h3 style="margin-top:0">เกี่ยวกับพนักงานและบริษัท</h3>
+              <p class="muted" style="line-height:1.8;margin:0">
+                หน้านี้เป็นพื้นที่สำหรับเล่าเรื่องทีมงาน/มาตรฐานการผลิต/ช่องทางร่วมงาน<br>
+                คุณสามารถเพิ่มรูปทีม รูปหน้าร้าน และไทม์ไลน์แบรนด์ได้ทีหลัง
+              </p>
+              <a class="btn secondary" href="#join">ร่วมงานกับเรา</a>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- BLOG -->
+      <section class="page" id="page-blog">
+        <section class="card section">
+          <h3>บทความ</h3>
+          <div class="grid" id="blogGrid"></div>
+        </section>
+      </section>
+
+      <!-- REVIEWS -->
+      <section class="page" id="page-reviews">
+        <section class="card section">
+          <h3>รีวิวสินค้า</h3>
+          <div class="grid" id="reviewGrid"></div>
+        </section>
+      </section>
+
+      <!-- POLICY PAGES (links separate) -->
+      <section class="page" id="page-refund">
+        <section class="card section">
+          <h3>เงื่อนไขการคืนเงิน</h3>
+          <p class="muted" style="line-height:1.8">
+            (ตัวอย่างข้อความ) ร้านขอสงวนสิทธิ์คืนเงินในกรณีเริ่มผลิตแล้ว/งานสั่งทำเฉพาะบุคคล ยกเว้นกรณีร้านผิดพลาดชัดเจน<br>
+            แนะนำ: ใส่รายละเอียดจริงของร้าน เช่น ระยะเวลาแจ้ง, วิธีตรวจสอบ, ข้อยกเว้น
+          </p>
+        </section>
+      </section>
+
+      <section class="page" id="page-return">
+        <section class="card section">
+          <h3>เงื่อนไขการเปลี่ยนคืนสินค้า</h3>
+          <p class="muted" style="line-height:1.8">
+            (ตัวอย่างข้อความ) หากสินค้าเสียหายจากการขนส่ง โปรดถ่ายวิดีโอ/รูปทันทีเมื่อได้รับ และแจ้งภายใน 2 ชั่วโมง<br>
+            แนะนำ: ระบุเงื่อนไขการเคลม, ช่องทางติดต่อ, ระยะเวลาตอบกลับ
+          </p>
+        </section>
+      </section>
+
+      <section class="page" id="page-privacy">
+        <section class="card section">
+          <h3>นโยบายความเป็นส่วนตัว</h3>
+          <p class="muted" style="line-height:1.8">
+            (ตัวอย่างข้อความ) เราเก็บข้อมูลเท่าที่จำเป็นสำหรับการติดต่อและจัดส่ง ไม่ขายข้อมูลให้บุคคลที่สาม<br>
+            แนะนำ: ระบุประเภทข้อมูล, วัตถุประสงค์, ระยะเวลาเก็บรักษา, วิธีขอลบข้อมูล
+          </p>
+        </section>
+      </section>
+
+      <section class="page" id="page-terms">
+        <section class="card section">
+          <h3>ข้อตกลงและเงื่อนไข</h3>
+          <p class="muted" style="line-height:1.8">
+            (ตัวอย่างข้อความ) การสั่งซื้อถือว่ายอมรับเงื่อนไขสินค้า/การชำระเงิน/การจัดส่งของร้าน<br>
+            แนะนำ: ระบุการมัดจำ, เวลา cutoff, การเลื่อนรับสินค้า, การแก้ข้อความบนเค้ก
+          </p>
+        </section>
+      </section>
+
+      <section class="page" id="page-join">
+        <section class="card section">
+          <h3>ร่วมงานกับเรา</h3>
+          <p class="muted" style="line-height:1.8">
+            ฝากอีเมล/แบบฟอร์มสมัครงานไว้ที่นี่ หรือให้ติดต่อผ่าน LINE OA<br>
+            (วันนี้ทำให้เป็นหน้าแยกพร้อมใช้งานก่อน)
+          </p>
+          <button class="btn" type="button" id="joinLineBtn">ติดต่อผ่าน LINE</button>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <b>เงื่อนไขและข้อตกลง</b>
+      <div class="links" aria-label="ลิงก์เงื่อนไข">
+        <a href="#refund">เงื่อนไขการคืนเงิน</a>
+        <a href="#return">เงื่อนไขการเปลี่ยนคืนสินค้า</a>
+        <a href="#privacy">นโยบายความเป็นส่วนตัว</a>
+        <a href="#terms">ข้อตกลงและเงื่อนไข</a>
+        <a href="#join">ร่วมงานกับเรา</a>
+      </div>
+      <div class="small" style="margin-top:12px">
+        ช่องทางสั่งซื้อจริง: <b id="lineText3">@cakeonline</b> | © <span id="year"></span> เค้กออนไลน์
+      </div>
+    </footer>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="drawerBackdrop" id="drawerBackdrop" aria-hidden="true">
+    <div class="drawer" role="dialog" aria-label="ตะกร้าสินค้า">
+      <div class="drawerHeader">
+        <div>
+          <b style="font-size:18px">ตะกร้าสินค้า</b>
+          <div class="small">เช็คเอาต์ผ่าน LINE เพื่อคอนเฟิร์มแบบ/สี/ข้อความ</div>
+        </div>
+        <button class="closeX" id="closeCartBtn" aria-label="ปิด">✕</button>
+      </div>
+
+      <div id="cartList"></div>
+
+      <div class="totalBox">
+        <div class="totalRow">
+          <span class="small">ยอดรวมโดยประมาณ</span>
+          <b id="cartTotal">0 ฿</b>
+        </div>
+        <div class="small" style="margin-top:6px">
+          หมายเหตุ: ราคาเป็น “เริ่มต้น” ตามรายการ Top 10 (งานสั่งทำอาจมีปรับตามแบบ/ขนาด)
+        </div>
+        <button class="lineBtn" id="checkoutLineBtn" type="button">เช็คเอาต์ผ่าน LINE</button>
+        <button class="btn secondary" id="clearCartBtn" type="button" style="width:100%;margin-top:8px">ล้างตะกร้า</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * CONFIG (แก้ตรงนี้)
+     ***********************/
+    const CONFIG = {
+      brandName: "เค้กออนไลน์",
+      lineHandle: "@cakeonline",
+      lineLink: "https://line.me/R/ti/p/@cakeonline", // ถ้าคุณมีลิงก์ OA อื่น เปลี่ยนได้
+      marqueeMessages: [
+        "สั่งจริงผ่าน LINE OA เท่านั้น เพื่อคอนเฟิร์มแบบ/สี/ข้อความบนเค้ก",
+        "รับออเดอร์ล่วงหน้า แนะนำจองคิวก่อน โดยเฉพาะวันหยุด/เทศกาล",
+        "งานสั่งทำ: ระบุสีธีม ชื่อ/อายุ ข้อความที่ต้องการได้เลย",
+        "มีตะกร้าสินค้า + ปฏิทินคิว ให้เลือกวันว่างก่อนทักไลน์",
+        "อุปกรณ์แต่งเค้ก/เทียน สามารถเพิ่มสินค้าได้ในหมวด 'อุปกรณ์'"
+      ],
+      slider: [
+        {
+          img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1600&q=80",
+          title: "เค้กพาสเทล (ขายดี)",
+          desc: "โทนหวานละมุน ถ่ายรูปขึ้นทุกมุม"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1543764477-646365e11da3?auto=format&fit=crop&w=1600&q=80",
+          title: "เค้กมินิมอล",
+          desc: "เรียบแต่โก้ เหมาะทุกโอกาส"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&w=1600&q=80",
+          title: "เค้กเบสิค",
+          desc: "เริ่มต้นคุ้ม ๆ อร่อยแน่นอน"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&fit=crop&w=1600&q=80",
+          title: "เค้กกล่องข้าว",
+          desc: "พกง่าย แบ่งง่าย เหมาะให้เป็นของขวัญ"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1541599468348-e96984315921?auto=format&fit=crop&w=1600&q=80",
+          title: "ชอกบอล / ของหวานชิ้นเล็ก",
+          desc: "อร่อยไว หยิบเพลิน"
+        },
+        {
+          img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1600&q=80",
+          title: "อุปกรณ์แต่งเค้ก & เทียน",
+          desc: "พร้อมเพิ่มสินค้ากลุ่มอุปกรณ์ในแคตตาล็อค"
+        }
+      ],
+    };
+
+    /***********************
+     * PRODUCTS (แก้/เพิ่มสินค้าได้)
+     * - priceMin = ราคาเริ่มต้น
+     * - popular = ใช้จัดลำดับ/Top
+     * - best = แปะป้ายขายดี
+     ***********************/
+    const PRODUCTS = [
+      // Top 10 ตามที่ให้มา
+      { id:"basic-cake", name:"เค้กเบสิค", category:"เค้ก", priceMin:180, best:false, popular:70,
+        img:"https://images.unsplash.com/photo-1559628233-100c798642d4?auto=format&fit=crop&w=1200&q=80",
+        desc:"ราคาเริ่มต้น 180฿" },
+      { id:"lunchbox-cake", name:"เค้กกล่องข้าว", category:"เค้ก", priceMin:120, best:false, popular:75,
+        img:"https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&w=1200&q=80",
+        desc:"ราคาเริ่มต้น 120฿" },
+      { id:"pastel-cake", name:"เค้กพาสเทล", category:"เค้ก", priceMin:450, best:true, popular:95,
+        img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80",
+        desc:"ขายดี • ราคาเริ่มต้น 450฿" },
+      { id:"popcookie-cake", name:"เค้กป๊อปคุกกี้", category:"เค้ก", priceMin:350, best:true, popular:90,
+        img:"https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80",
+        desc:"ขายดี • ราคาเริ่มต้น 350฿" },
+      { id:"minimal-cake", name:"เค้กมินิมอล", category:"เค้ก", priceMin:150, best:false, popular:85,
+        img:"https://images.unsplash.com/photo-1541976844346-f18aeac57b06?auto=format&fit=crop&w=1200&q=80",
+        desc:"ราคาเริ่มต้น 150฿" },
+      { id:"korea-cake", name:"เค้ก korea", category:"เค้ก", priceMin:220, best:true, popular:92,
+        img:"https://images.unsplash.com/photo-1541599468348-e96984315921?auto=format&fit=crop&w=1200&q=80",
+        desc:"ขายดี • ราคาเริ่มต้น 220฿" },
+      { id:"icecream-cake", name:"เค้กไอศครีม", category:"เค้ก", priceMin:299, best:false, popular:78,
+        img:"https://images.unsplash.com/photo-1515037028865-0a2a82603f7c?auto=format&fit=crop&w=1200&q=80",
+        desc:"ราคาเริ่มต้น 299฿" },
+      { id:"chocball", name:"ชอกบอล 1 กล่อง 6 ลูก", category:"เบเกอรี่", priceMin:35, best:false, popular:72,
+        img:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1200&q=80",
+        desc:"35฿" },
+      { id:"banoffee", name:"บานอฟฟี่", category:"เบเกอรี่", priceMin:35, best:false, popular:74,
+        img:"https://images.unsplash.com/photo-1601972602237-8c79241e468b?auto=format&fit=crop&w=1200&q=80",
+        desc:"35฿" },
+      { id:"mini-cake", name:"มินิเค้ก", category:"เค้ก", priceMin:60, best:true, popular:88,
+        img:"https://images.unsplash.com/photo-1551404973-7c92cd2eeb33?auto=format&fit=crop&w=1200&q=80",
+        desc:"ขายดี • 60฿" },
+
+      // เพิ่มหมวด “อุปกรณ์แต่งเค้ก/เทียน” ให้พร้อมขาย (ตัวอย่าง)
+      { id:"candle-set", name:"เทียนวันเกิด (เซ็ต)", category:"อุปกรณ์", priceMin:39, best:false, popular:60,
+        img:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0ea?auto=format&fit=crop&w=1200&q=80",
+        desc:"ตัวอย่างสินค้าอุปกรณ์ • ราคาเริ่มต้น 39฿" },
+      { id:"cake-topper", name:"Cake Topper (ป้ายปัก)", category:"อุปกรณ์", priceMin:49, best:false, popular:62,
+        img:"https://images.unsplash.com/photo-1607920591413-4ec007e70023?auto=format&fit=crop&w=1200&q=80",
+        desc:"ตัวอย่างสินค้าอุปกรณ์ • ราคาเริ่มต้น 49฿" },
+      { id:"sprinkles", name:"สปริงเกิลส์ (โรยหน้าเค้ก)", category:"อุปกรณ์", priceMin:59, best:false, popular:58,
+        img:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80",
+        desc:"ตัวอย่างสินค้าอุปกรณ์ • ราคาเริ่มต้น 59฿" },
+
+      // ของหวานอื่น (ตัวอย่าง)
+      { id:"cornflake-caramel", name:"คอนเฟลคคาราเมล", category:"เบเกอรี่", priceMin:50, best:false, popular:68,
+        img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1200&q=80",
+        desc:"50฿" },
+    ];
+
+    /***********************
+     * BLOG & REVIEWS (ตัวอย่าง)
+     ***********************/
+    const BLOGS = [
+      { title:"ไอเดียเลือกโทนสีเค้กให้เข้ากับงาน", img:"https://images.unsplash.com/photo-1541976844346-f18aeac57b06?auto=format&fit=crop&w=1200&q=80", desc:"พาสเทล มินิมอล หรือธีมสีจัด เลือกยังไงให้ถ่ายรูปขึ้น?" },
+      { title:"จองคิวเค้กยังไงไม่พลาดวันสำคัญ", img:"https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&w=1200&q=80", desc:"ดูวันว่างในปฏิทินก่อน แล้วค่อยทัก LINE คอนเฟิร์ม" },
+      { title:"คู่มือสั่งเค้กแบบสั้น ๆ แต่ได้งานตรงใจ", img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80", desc:"เตรียมข้อมูล 5 อย่าง: โทนสี/ข้อความ/ขนาด/วันรับ/งบ" },
+      { title:"อุปกรณ์แต่งเค้กที่ควรมีติดบ้าน", img:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0ea?auto=format&fit=crop&w=1200&q=80", desc:"เทียน/ท็อปเปอร์/สปริงเกิลส์ เพิ่มความน่ารักใน 10 วินาที" },
+    ];
+
+    const REVIEWS = [
+      { title:"เค้กพาสเทลน่ารักมากกก", img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80", desc:"สีละมุน ถ่ายรูปออกมาสวยมาก รสชาติดี" },
+      { title:"มินิเค้กคือทางรอดของคนอยากฉลองแบบไม่ใหญ่", img:"https://images.unsplash.com/photo-1551404973-7c92cd2eeb33?auto=format&fit=crop&w=1200&q=80", desc:"ชิ้นพอดี อร่อย ไม่เลี่ยน" },
+      { title:"เค้ก korea งานเนี๊ยบ", img:"https://images.unsplash.com/photo-1541599468348-e96984315921?auto=format&fit=crop&w=1200&q=80", desc:"แต่งหน้าเรียบหรู คุมโทนเป๊ะ" },
+      { title:"ชอกบอลกินเพลิน", img:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1200&q=80", desc:"เหมาะซื้อไปเป็นของฝาก" },
+    ];
+
+    /***********************
+     * Utilities
+     ***********************/
+    const TH_DOW = ["อา","จ","อ","พ","พฤ","ศ","ส"];
+    const money = (n)=> new Intl.NumberFormat("th-TH").format(n) + " ฿";
+    const qs = (s)=> document.querySelector(s);
+    const qsa = (s)=> [...document.querySelectorAll(s)];
+    const store = {
+      get(key, fallback){
+        try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch{ return fallback; }
+      },
+      set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+    };
+
+    /***********************
+     * Marquee
+     ***********************/
+    function initMarquee(){
+      const track = qs("#marqueeTrack");
+      track.innerHTML = "";
+      const items = CONFIG.marqueeMessages.map(msg => `
+        <div class="item"><span class="dot"></span>${msg}</div>
+      `).join("");
+      // duplicate twice for smooth loop
+      track.innerHTML = items + items;
+    }
+
+    /***********************
+     * Slider (6 images)
+     ***********************/
+    let slideIndex = 0;
+    let sliderTimer = null;
+
+    function renderSlider(){
+      const slidesEl = qs("#slides");
+      slidesEl.innerHTML = CONFIG.slider.map(s => `
+        <div class="slide">
+          <img src="${s.img}" alt="${s.title}">
+          <div class="caption">
+            <b>${s.title}</b>
+            <small>${s.desc}</small>
+          </div>
+        </div>
+      `).join("");
+
+      const dotsEl = qs("#dots");
+      dotsEl.innerHTML = CONFIG.slider.map((_, i)=>`
+        <button aria-label="ไปสไลด์ ${i+1}" data-i="${i}" class="${i===0?'active':''}"></button>
+      `).join("");
+
+      dotsEl.addEventListener("click", (e)=>{
+        const b = e.target.closest("button[data-i]");
+        if(!b) return;
+        goToSlide(Number(b.dataset.i));
+      });
+
+      qs("#prevBtn").onclick = ()=> goToSlide(slideIndex - 1);
+      qs("#nextBtn").onclick = ()=> goToSlide(slideIndex + 1);
+
+      startAutoSlide();
+      goToSlide(0, true);
+    }
+
+    function goToSlide(i, noRestart){
+      const n = CONFIG.slider.length;
+      slideIndex = (i % n + n) % n;
+      qs("#slides").style.transform = `translateX(${-slideIndex * 100}%)`;
+      qsa("#dots button").forEach((d, idx)=> d.classList.toggle("active", idx===slideIndex));
+      if(!noRestart) startAutoSlide();
+    }
+    function startAutoSlide(){
+      if(sliderTimer) clearInterval(sliderTimer);
+      sliderTimer = setInterval(()=> goToSlide(slideIndex + 1, true), 4500);
+    }
+
+    /***********************
+     * Product rendering
+     ***********************/
+    function productCard(p){
+      return `
+        <div class="product">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="body">
+            <div class="title">${p.name}</div>
+            ${p.best ? `<span class="tag">ขายดี</span>` : `<span class="tag">${p.category}</span>`}
+            <div class="muted">${p.desc}</div>
+            <div class="priceRow">
+              <div>
+                <div class="small">ราคาเริ่มต้น</div>
+                <div class="price">${money(p.priceMin)}</div>
+              </div>
+              <button class="add" data-add="${p.id}">เพิ่มลงตะกร้า</button>
+            </div>
+          </div>
+        </div>
       `;
     }
 
-    function bindAddButtons(root){
-      root.querySelectorAll("[data-add]").forEach(btn=>{
-        btn.addEventListener("click", ()=> addToCart(btn.dataset.add));
+    function initTop10(){
+      const top = [...PRODUCTS].sort((a,b)=> b.popular - a.popular).slice(0,10);
+      qs("#topGrid").innerHTML = top.map(productCard).join("");
+      qs("#topGrid").addEventListener("click", onAddToCart);
+      qs("#searchTop").addEventListener("input", (e)=>{
+        const q = e.target.value.trim().toLowerCase();
+        const filtered = top.filter(p => (p.name+p.category+p.desc).toLowerCase().includes(q));
+        qs("#topGrid").innerHTML = filtered.map(productCard).join("");
       });
     }
 
-    function renderTopSection(filter){
-      let list;
-      if(filter === "top10") list = top10;
-      else if(filter === "all") list = allProducts;
-      else list = allProducts.filter(p => p.category === filter);
+    function initCatalog(){
+      // categories
+      const cats = ["all", ...new Set(PRODUCTS.map(p=>p.category))];
+      const sel = qs("#categoryFilter");
+      sel.innerHTML = cats.map(c => `<option value="${c}">${c==="all" ? "ทุกหมวดหมู่" : c}</option>`).join("");
 
-      grid.innerHTML = list.map(productCard).join("");
-      bindAddButtons(grid);
-    }
+      function renderAll(){
+        const q = qs("#searchAll").value.trim().toLowerCase();
+        const cat = sel.value;
+        const sort = qs("#sortFilter").value;
 
-    function renderCatalog(){
-      // แสดงแบบรวมทุกหมวด (ยกเว้น top10 ที่มีอยู่แล้ว)
-      const list = allProducts;
-      catalogGrid.innerHTML = list.map(productCard).join("");
-      bindAddButtons(catalogGrid);
-    }
+        let list = PRODUCTS.filter(p=>{
+          const okQ = (p.name+p.category+p.desc).toLowerCase().includes(q);
+          const okC = (cat==="all" || p.category===cat);
+          return okQ && okC;
+        });
 
-    // ===== Filter chips =====
-    chips.forEach(ch=>{
-      ch.addEventListener("click", ()=>{
-        chips.forEach(x=>x.classList.remove("active"));
-        ch.classList.add("active");
-        renderTopSection(ch.dataset.filter);
-        location.hash = "#menu";
-      });
-    });
+        if(sort==="popular") list.sort((a,b)=> b.popular - a.popular);
+        if(sort==="priceAsc") list.sort((a,b)=> a.priceMin - b.priceMin);
+        if(sort==="priceDesc") list.sort((a,b)=> b.priceMin - a.priceMin);
+        if(sort==="nameAsc") list.sort((a,b)=> a.name.localeCompare(b.name));
 
-    // ===== Circle jump =====
-    document.querySelectorAll(".circle[data-jump]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const to = btn.dataset.jump;
-        // เลือก chip ที่ตรง
-        const chip = document.querySelector(`.chip[data-filter="${to}"]`) || document.querySelector(`.chip[data-filter="all"]`);
-        if(chip) chip.click();
-      });
-    });
-
-    // ===== Slider =====
-    const slidesEl = document.getElementById("slides");
-    const dotsEl = document.getElementById("dots");
-    const prev = document.getElementById("prev");
-    const next = document.getElementById("next");
-    let slideIndex = 0;
-    const slideCount = slidesEl.children.length;
-
-    function goSlide(i){
-      slideIndex = (i + slideCount) % slideCount;
-      slidesEl.style.transform = `translateX(-${slideIndex * 100}%)`;
-      Array.from(dotsEl.children).forEach((d, idx)=> d.classList.toggle("active", idx === slideIndex));
-    }
-
-    function initDots(){
-      dotsEl.innerHTML = "";
-      for(let i=0;i<slideCount;i++){
-        const b = document.createElement("button");
-        b.className = "dotbtn" + (i===0 ? " active" : "");
-        b.type = "button";
-        b.addEventListener("click", ()=> goSlide(i));
-        dotsEl.appendChild(b);
+        qs("#allGrid").innerHTML = list.map(productCard).join("");
       }
-    }
 
-    let slideTimer = null;
-    function startAuto(){
-      stopAuto();
-      slideTimer = setInterval(()=> goSlide(slideIndex + 1), 4500);
-    }
-    function stopAuto(){
-      if(slideTimer) clearInterval(slideTimer);
-      slideTimer = null;
-    }
-
-    prev.addEventListener("click", ()=> { goSlide(slideIndex - 1); startAuto(); });
-    next.addEventListener("click", ()=> { goSlide(slideIndex + 1); startAuto(); });
-    document.getElementById("slider").addEventListener("mouseenter", stopAuto);
-    document.getElementById("slider").addEventListener("mouseleave", startAuto);
-
-    // ===== Cart system =====
-    const cart = new Map(); // id -> qty
-    const cartCount = document.getElementById("cartCount");
-    const cartOverlay = document.getElementById("cartOverlay");
-    const btnCart = document.getElementById("btnCart");
-    const btnClose = document.getElementById("btnClose");
-    const cartItems = document.getElementById("cartItems");
-    const cartTotal = document.getElementById("cartTotal");
-    const emptyCartHint = document.getElementById("emptyCartHint");
-    const orderText = document.getElementById("orderText");
-    const btnCopy = document.getElementById("btnCopy");
-    const btnLineOrder = document.getElementById("btnLineOrder");
-
-    function openCart(){ cartOverlay.classList.add("show"); document.body.style.overflow="hidden"; }
-    function closeCart(){ cartOverlay.classList.remove("show"); document.body.style.overflow=""; }
-
-    btnCart.addEventListener("click", ()=> { updateCartUI(true); });
-    btnClose.addEventListener("click", closeCart);
-    cartOverlay.addEventListener("click", (e)=>{ if(e.target === cartOverlay) closeCart(); });
-    window.addEventListener("keydown", (e)=>{ if(e.key==="Escape" && cartOverlay.classList.contains("show")) closeCart(); });
-
-    function addToCart(id){
-      cart.set(id, (cart.get(id)||0)+1);
-      updateCartUI(true);
-    }
-    function inc(id){ addToCart(id); }
-    function dec(id){
-      const q = cart.get(id)||0;
-      if(q<=1) cart.delete(id);
-      else cart.set(id, q-1);
-      updateCartUI();
-    }
-
-    function buildOrderMessage(total){
-      const lines = [];
-      lines.push("สวัสดีค่ะ ขอสอบถาม/สั่งซื้อจากเว็บ เค้กออนไลน์");
-      lines.push("รายการสินค้า:");
-      cart.forEach((qty, id)=>{
-        const p = allProducts.find(x=>x.id===id);
-        if(!p) return;
-        lines.push(`- ${p.name} x${qty} = ${money(p.price*qty)}฿`);
+      ["input","change"].forEach(evt=>{
+        qs("#searchAll").addEventListener(evt, renderAll);
+        sel.addEventListener(evt, renderAll);
+        qs("#sortFilter").addEventListener(evt, renderAll);
       });
-      lines.push(`รวมประมาณ: ${money(total)}฿`);
-      lines.push("");
-      lines.push("รบกวนแจ้ง:");
-      lines.push("1) วัน/เวลารับสินค้า:");
-      lines.push("2) ชื่อ/เบอร์:");
-      lines.push("3) หมายเหตุ (ถ้ามี):");
+
+      qs("#clearFiltersBtn").onclick = ()=>{
+        qs("#searchAll").value = "";
+        sel.value = "all";
+        qs("#sortFilter").value = "popular";
+        renderAll();
+      };
+
+      qs("#allGrid").addEventListener("click", onAddToCart);
+
+      renderAll();
+    }
+
+    /***********************
+     * Cart (localStorage)
+     ***********************/
+    function getCart(){ return store.get("cakeonline_cart", []); }
+    function setCart(v){ store.set("cakeonline_cart", v); updateCartBadge(); }
+    function updateCartBadge(){
+      const cart = getCart();
+      const count = cart.reduce((s,it)=> s+it.qty, 0);
+      qs("#cartCount").textContent = count;
+    }
+    function onAddToCart(e){
+      const btn = e.target.closest("[data-add]");
+      if(!btn) return;
+      const id = btn.dataset.add;
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+
+      const cart = getCart();
+      const found = cart.find(x=>x.id===id);
+      if(found) found.qty += 1;
+      else cart.push({ id, qty:1 });
+
+      setCart(cart);
+      openCart();
+    }
+
+    function renderCart(){
+      const cart = getCart();
+      const list = qs("#cartList");
+      if(cart.length===0){
+        list.innerHTML = `<p class="muted" style="margin-top:12px">ตะกร้าว่างอยู่ค่ะ เลือกสินค้าแล้วกด “เพิ่มลงตะกร้า” ได้เลย</p>`;
+        qs("#cartTotal").textContent = money(0);
+        return;
+      }
+
+      let total = 0;
+      list.innerHTML = cart.map(it=>{
+        const p = PRODUCTS.find(x=>x.id===it.id);
+        if(!p) return "";
+        const sub = p.priceMin * it.qty;
+        total += sub;
+        return `
+          <div class="cartItem">
+            <img src="${p.img}" alt="${p.name}">
+            <div>
+              <b>${p.name}</b>
+              <div class="small">ราคาเริ่มต้น ${money(p.priceMin)}</div>
+              <div class="qtyRow">
+                <div class="qtyBtns">
+                  <button class="qbtn" data-dec="${p.id}">−</button>
+                  <b>${it.qty}</b>
+                  <button class="qbtn" data-inc="${p.id}">+</button>
+                </div>
+                <button class="qbtn danger" title="ลบรายการ" data-del="${p.id}">ลบ</button>
+              </div>
+              <div class="small">รวมรายการ: <b>${money(sub)}</b></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      qs("#cartTotal").textContent = money(total);
+
+      list.onclick = (e)=>{
+        const inc = e.target.closest("[data-inc]");
+        const dec = e.target.closest("[data-dec]");
+        const del = e.target.closest("[data-del]");
+        if(!inc && !dec && !del) return;
+
+        const id = (inc||dec||del).dataset.inc || (inc||dec||del).dataset.dec || (inc||dec||del).dataset.del;
+        let cart2 = getCart();
+
+        if(inc){
+          cart2 = cart2.map(x=> x.id===id ? ({...x, qty:x.qty+1}) : x);
+        } else if(dec){
+          cart2 = cart2.map(x=> x.id===id ? ({...x, qty:Math.max(1, x.qty-1)}) : x);
+        } else if(del){
+          cart2 = cart2.filter(x=> x.id!==id);
+        }
+
+        setCart(cart2);
+        renderCart();
+      };
+    }
+
+    function openCart(){
+      const back = qs("#drawerBackdrop");
+      back.style.display = "flex";
+      back.setAttribute("aria-hidden","false");
+      renderCart();
+    }
+    function closeCart(){
+      const back = qs("#drawerBackdrop");
+      back.style.display = "none";
+      back.setAttribute("aria-hidden","true");
+    }
+
+    function buildLineMessage(extra){
+      const cart = getCart();
+      const mem = store.get("cakeonline_member", null);
+      const date = store.get("cakeonline_selected_date", null);
+
+      const lines = [];
+      lines.push(`สวัสดีค่ะ ขอออเดอร์จากเว็บไซต์ ${CONFIG.brandName}`);
+      if(mem?.name) lines.push(`ชื่อ: ${mem.name}`);
+      if(mem?.phone) lines.push(`เบอร์: ${mem.phone}`);
+      if(mem?.line) lines.push(`LINE ID: ${mem.line}`);
+      if(date) lines.push(`ต้องการรับ/ส่งวันที่: ${date}`);
+
+      lines.push(`รายการสินค้า (ราคาเริ่มต้น):`);
+      let total = 0;
+      cart.forEach(it=>{
+        const p = PRODUCTS.find(x=>x.id===it.id);
+        if(!p) return;
+        const sub = p.priceMin * it.qty;
+        total += sub;
+        lines.push(`- ${p.name} x${it.qty} = ${money(sub)}`);
+      });
+      lines.push(`ยอดรวมโดยประมาณ: ${money(total)}`);
+      lines.push(`หมายเหตุ: ขอคอนเฟิร์มแบบ/สี/ข้อความบนเค้ก + สรุปราคาจริงด้วยค่ะ`);
+      if(extra) lines.push(extra);
+
       return lines.join("\n");
     }
 
-    function updateCartUI(open=false){
-      // badge
-      let count=0;
-      cart.forEach(q=>count+=q);
-      cartCount.textContent = count;
-
-      // items
-      cartItems.innerHTML = "";
-      let total=0;
-
-      if(count===0){
-        emptyCartHint.style.display="block";
-        orderText.value = "";
-      }else{
-        emptyCartHint.style.display="none";
-        cart.forEach((qty, id)=>{
-          const p = allProducts.find(x=>x.id===id);
-          if(!p) return;
-          total += p.price*qty;
-
-          const li=document.createElement("li");
-          li.className="cart-item";
-          li.innerHTML=`
-            <img alt="${p.name}" src="${p.img}" loading="lazy">
-            <div class="grow">
-              <div style="font-weight:950">${p.name}${p.best ? " • ขายดี" : ""}</div>
-              <div style="color:rgba(47,35,39,.70);font-size:13px">${money(p.price)}฿</div>
-            </div>
-            <div class="qty">
-              <button class="iconbtn-mini" type="button" data-dec="${id}" aria-label="ลด">−</button>
-              <div style="min-width:18px;text-align:center;font-weight:950">${qty}</div>
-              <button class="iconbtn-mini" type="button" data-inc="${id}" aria-label="เพิ่ม">+</button>
-            </div>
-          `;
-          cartItems.appendChild(li);
-        });
-
-        cartItems.querySelectorAll("[data-inc]").forEach(b=>b.addEventListener("click", ()=>inc(b.dataset.inc)));
-        cartItems.querySelectorAll("[data-dec]").forEach(b=>b.addEventListener("click", ()=>dec(b.dataset.dec)));
-
-        orderText.value = buildOrderMessage(total);
-      }
-
-      cartTotal.textContent = money(total);
-
-      // สั่งผ่าน LINE: เปิดแชท OA + ผู้ใช้วางข้อความจากปุ่มคัดลอก
-      btnLineOrder.href = LINE_ADD_URL;
-
-      if(open) openCart();
+    function checkoutToLine(extra){
+      const msg = encodeURIComponent(buildLineMessage(extra));
+      // LINE deep link - ถ้าเปิดในมือถือจะเข้า LINE ง่ายขึ้น
+      const url = `${CONFIG.lineLink}?text=${msg}`;
+      window.open(url, "_blank");
     }
 
-    btnCopy.addEventListener("click", async ()=>{
-      if(!orderText.value) return alert("ตะกร้ายังว่างอยู่ค่ะ");
-      try{
-        await navigator.clipboard.writeText(orderText.value);
-        alert("คัดลอกข้อความออเดอร์แล้ว ✅ ไปวางใน LINE ได้เลย");
-      }catch{
-        orderText.select();
-        document.execCommand("copy");
-        alert("คัดลอกข้อความออเดอร์แล้ว ✅ ไปวางใน LINE ได้เลย");
+    /***********************
+     * Member (local)
+     ***********************/
+    function initMember(){
+      const saved = store.get("cakeonline_member", null);
+      if(saved){
+        qs("#memName").value = saved.name || "";
+        qs("#memPhone").value = saved.phone || "";
+        qs("#memLine").value = saved.line || "";
+        qs("#memberSavedHint").textContent = "บันทึกข้อมูลสมาชิกไว้แล้ว";
       }
-    });
+      qs("#saveMemberBtn").onclick = ()=>{
+        const data = {
+          name: qs("#memName").value.trim(),
+          phone: qs("#memPhone").value.trim(),
+          line: qs("#memLine").value.trim()
+        };
+        store.set("cakeonline_member", data);
+        qs("#memberSavedHint").textContent = "บันทึกเรียบร้อย (เก็บในเครื่องนี้)";
+      };
+    }
 
-    // Subscribe demo
-    const subForm = document.getElementById("subForm");
-    const subMsg  = document.getElementById("subMsg");
-    subForm.addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      subMsg.textContent = `รับทราบ! (${email}) — เดโม: ต่อระบบเมลจริงได้`;
-      subForm.reset();
-    });
+    /***********************
+     * Calendar booking (local lock)
+     ***********************/
+    let calCursor = new Date();
+    let adminMode = false;
 
-    // misc
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("btnGoAll").addEventListener("click", ()=>{ location.hash="#menu"; renderTopSection("all"); });
+    function fmtDateKey(d){
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const day = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${day}`;
+    }
 
-    // init
-    initDots();
-    goSlide(0);
-    startAuto();
-    renderTopSection("top10");
-    renderCatalog();
-    updateCartUI(false);
+    function getLockedSet(){
+      return new Set(store.get("cakeonline_locked_dates", []));
+    }
+    function setLockedSet(set){
+      store.set("cakeonline_locked_dates", [...set]);
+    }
+
+    function renderCalendar(){
+      const y = calCursor.getFullYear();
+      const m = calCursor.getMonth();
+      qs("#monthLabel").textContent = calCursor.toLocaleDateString("th-TH", { year:"numeric", month:"long" });
+
+      // build grid
+      const first = new Date(y, m, 1);
+      const last = new Date(y, m+1, 0);
+      const startDow = first.getDay();
+      const totalDays = last.getDate();
+
+      const locked = getLockedSet();
+      const selected = store.get("cakeonline_selected_date", null);
+
+      const grid = qs("#calGrid");
+      grid.innerHTML = "";
+
+      // DOW headers
+      TH_DOW.forEach(d=>{
+        const el = document.createElement("div");
+        el.className = "dow";
+        el.textContent = d;
+        grid.appendChild(el);
+      });
+
+      // empty cells
+      for(let i=0;i<startDow;i++){
+        const el = document.createElement("div");
+        el.className = "day disabled";
+        el.innerHTML = `<div class="num"></div>`;
+        grid.appendChild(el);
+      }
+
+      for(let day=1; day<=totalDays; day++){
+        const d = new Date(y, m, day);
+        const key = fmtDateKey(d);
+        const isLocked = locked.has(key);
+
+        const el = document.createElement("div");
+        el.className = "day";
+        el.dataset.key = key;
+        el.innerHTML = `
+          <div class="num">${day}</div>
+          <div class="badge ${isLocked ? "lock" : "open"}">
+            ${isLocked ? "เต็ม/ปิดคิว" : "ว่าง"}
+          </div>
+          ${selected===key ? `<div class="small" style="margin-top:10px"><b>เลือกแล้ว</b></div>` : `<div class="small muted" style="margin-top:10px">กดเพื่อเลือก</div>`}
+        `;
+
+        if(isLocked && !adminMode){
+          el.style.opacity = "0.5";
+          el.title = "วันนี้เต็ม/ปิดคิว";
+        }
+        grid.appendChild(el);
+      }
+
+      qs("#calHint").textContent =
+        adminMode
+        ? "โหมดแอดมิน: คลิกวันที่เพื่อสลับ ล็อค/ปลดล็อค (บันทึกในเครื่องนี้)"
+        : "ลูกค้า: คลิกวันที่เพื่อเลือกวันรับ/ส่ง จากนั้นเช็คเอาต์ผ่าน LINE";
+
+      grid.onclick = (e)=>{
+        const cell = e.target.closest(".day[data-key]");
+        if(!cell) return;
+        const key = cell.dataset.key;
+        const locked2 = getLockedSet();
+        const isLocked2 = locked2.has(key);
+
+        if(adminMode){
+          if(isLocked2) locked2.delete(key);
+          else locked2.add(key);
+          setLockedSet(locked2);
+          renderCalendar();
+          return;
+        }
+
+        if(isLocked2){
+          alert("วันนี้เต็ม/ปิดคิวแล้วค่ะ เลือกวันอื่นได้เลย");
+          return;
+        }
+
+        store.set("cakeonline_selected_date", key);
+        renderCalendar();
+      };
+    }
+
+    function initCalendar(){
+      qs("#prevMonthBtn").onclick = ()=>{ calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth()-1, 1); renderCalendar(); };
+      qs("#nextMonthBtn").onclick = ()=>{ calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth()+1, 1); renderCalendar(); };
+      qs("#toggleAdminBtn").onclick = ()=>{
+        adminMode = !adminMode;
+        qs("#toggleAdminBtn").textContent = `โหมดแอดมิน: ${adminMode ? "เปิด" : "ปิด"}`;
+        renderCalendar();
+      };
+      renderCalendar();
+    }
+
+    /***********************
+     * Branches (local)
+     ***********************/
+    function getBranches(){ return store.get("cakeonline_branches", []); }
+    function setBranches(v){ store.set("cakeonline_branches", v); renderBranches(); }
+
+    function renderBranches(){
+      const q = qs("#branchSearch").value.trim().toLowerCase();
+      const list = getBranches().filter(b => (b.name+b.province+b.addr).toLowerCase().includes(q));
+      const tb = qs("#branchTbody");
+      tb.innerHTML = list.map(b=>`
+        <tr>
+          <td><b>${escapeHtml(b.name||"-")}</b></td>
+          <td>${escapeHtml(b.province||"-")}</td>
+          <td>${escapeHtml(b.addr||"-")}</td>
+          <td>${b.maps ? `<a href="${b.maps}" target="_blank" rel="noreferrer">เปิดแผนที่</a>` : "-"}</td>
+          <td>${escapeHtml(b.phone||"-")}</td>
+          <td>${escapeHtml(b.line||"-")}</td>
+          <td>${b.qr ? `<a href="${b.qr}" target="_blank" rel="noreferrer">ดู QR</a>` : "-"}</td>
+        </tr>
+      `).join("");
+
+      if(list.length===0){
+        tb.innerHTML = `<tr><td colspan="7" class="muted">ยังไม่มีข้อมูลสาขา (สามารถเพิ่มด้านบนได้)</td></tr>`;
+      }
+    }
+
+    function initBranches(){
+      qs("#branchSearch").addEventListener("input", renderBranches);
+
+      qs("#saveBranchBtn").onclick = ()=>{
+        const b = {
+          name: qs("#bName").value.trim(),
+          province: qs("#bProvince").value.trim(),
+          addr: qs("#bAddr").value.trim(),
+          maps: qs("#bMaps").value.trim(),
+          phone: qs("#bPhone").value.trim(),
+          line: qs("#bLine").value.trim(),
+          qr: qs("#bQr").value.trim(),
+        };
+        const branches = getBranches();
+        branches.unshift(b);
+        setBranches(branches);
+
+        ["#bName","#bProvince","#bAddr","#bMaps","#bPhone","#bLine","#bQr"].forEach(id=> qs(id).value="");
+      };
+
+      qs("#addDummyBranchesBtn").onclick = ()=>{
+        const demo = [];
+        for(let i=1;i<=100;i++){
+          demo.push({
+            name:`สาขา ${i}`,
+            province:"(ใส่ทีหลัง)",
+            addr:"(ใส่ทีหลัง)",
+            maps:"",
+            phone:"",
+            line:"",
+            qr:""
+          });
+        }
+        setBranches(demo);
+      };
+
+      qs("#clearBranchesBtn").onclick = ()=>{
+        if(confirm("ล้างข้อมูลสาขาในเครื่องนี้ทั้งหมด?")){
+          setBranches([]);
+        }
+      };
+
+      renderBranches();
+    }
+
+    function escapeHtml(s){
+      return (s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+    }
+
+    /***********************
+     * Blog / Reviews
+     ***********************/
+    function initBlogReview(){
+      qs("#blogGrid").innerHTML = BLOGS.map(b=>`
+        <div class="product">
+          <img src="${b.img}" alt="${b.title}">
+          <div class="body">
+            <div class="title">${b.title}</div>
+            <div class="muted">${b.desc}</div>
+            <div class="priceRow">
+              <span class="tag">บทความ</span>
+              <button class="add" type="button" onclick="checkoutToLine('ขอสอบถามเพิ่มเติมเกี่ยวกับบทความ: ${b.title}')">ถามใน LINE</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      qs("#reviewGrid").innerHTML = REVIEWS.map(r=>`
+        <div class="product">
+          <img src="${r.img}" alt="${r.title}">
+          <div class="body">
+            <div class="title">${r.title}</div>
+            <div class="muted">${r.desc}</div>
+            <div class="priceRow">
+              <span class="tag">รีวิว</span>
+              <button class="add" type="button" onclick="location.hash='#menu'">ไปเลือกสินค้า</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    /***********************
+     * Simple hash routing
+     ***********************/
+    const ROUTES = {
+      "#home":"page-home",
+      "#menu":"page-menu",
+      "#member":"page-member",
+      "#booking":"page-booking",
+      "#branches":"page-branches",
+      "#about":"page-about",
+      "#blog":"page-blog",
+      "#reviews":"page-reviews",
+      "#refund":"page-refund",
+      "#return":"page-return",
+      "#privacy":"page-privacy",
+      "#terms":"page-terms",
+      "#join":"page-join",
+    };
+
+    function route(){
+      const hash = location.hash || "#home";
+      const target = ROUTES[hash] || "page-home";
+      qsa(".page").forEach(p=> p.classList.toggle("active", p.id===target));
+      // optional: scroll top
+      window.scrollTo({ top:0, behavior:"smooth" });
+    }
+
+    /***********************
+     * Global init
+     ***********************/
+    function init(){
+      // set config texts
+      qsa("#lineText,#lineText2,#lineText3").forEach(el=> el.textContent = CONFIG.lineHandle);
+      qs("#year").textContent = new Date().getFullYear();
+
+      initMarquee();
+      renderSlider();
+      initTop10();
+      initCatalog();
+      initMember();
+      initCalendar();
+      initBranches();
+      initBlogReview();
+      updateCartBadge();
+
+      // Buttons
+      qs("#openCartBtn").onclick = openCart;
+      qs("#closeCartBtn").onclick = closeCart;
+      qs("#drawerBackdrop").addEventListener("click", (e)=>{
+        if(e.target.id==="drawerBackdrop") closeCart();
+      });
+
+      qs("#clearCartBtn").onclick = ()=>{
+        if(confirm("ล้างตะกร้าทั้งหมด?")){
+          setCart([]);
+          renderCart();
+        }
+      };
+
+      const orderBtns = ["#orderNowBtn","#orderNowBtn2","#joinLineBtn"];
+      orderBtns.forEach(id=>{
+        const el = qs(id);
+        if(el) el.onclick = ()=> window.open(CONFIG.lineLink, "_blank");
+      });
+
+      qs("#checkoutLineBtn").onclick = ()=>{
+        const cart = getCart();
+        if(cart.length===0){
+          alert("ตะกร้ายังว่างอยู่ค่ะ เลือกสินค้าก่อนน้า");
+          return;
+        }
+        checkoutToLine();
+      };
+
+      // Routing
+      window.addEventListener("hashchange", route);
+      route();
+    }
+
+    // Expose for inline buttons
+    window.checkoutToLine = checkoutToLine;
+
+    init();
   </script>
 </body>
 </html>
