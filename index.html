@@ -2,959 +2,1065 @@
 <html lang="th">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>เค้กออนไลน์ | สั่งเค้กวันเกิด เค้กมินิมอล ส่งไว</title>
-  <meta name="description" content="เค้กออนไลน์ — เค้กวันเกิด เค้กมินิมอล เค้กชิ้น ขนมคาเฟ่ รับทำตามแบบ ส่งด่วน" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="เค้กออนไลน์ — เค้กวันเกิด ขนมโฮมเมด มินิมอลน่ารัก สั่งง่ายผ่าน LINE @cakeonline" />
+  <title>เค้กออนไลน์ | Cake Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#fff7fb;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --brand:#ec4899;
-      --brand2:#a855f7;
-      --line:#22c55e;
-      --stroke: rgba(17,24,39,.10);
-      --shadow: 0 10px 30px rgba(17,24,39,.08);
-      --radius: 18px;
+      /* Pastel Palette: Pink / Purple / Blue / White / Yellow */
+      --bg: #fff8fd;
+      --paper: #ffffff;
+      --ink: #3a2a2f;
+      --muted: rgba(58,42,47,.72);
+
+      --pink-1:#ffd6ef;
+      --pink-2:#ffb8e3;
+
+      --lilac:#e5d9ff;
+      --purple:#cbb7ff;
+
+      --sky:#cfe8ff;
+      --blue:#a9d4ff;
+
+      --butter:#fff1a8;
+      --cream:#fff7da;
+
+      --shadow: 0 18px 40px rgba(22, 12, 16, .10);
+      --shadow-soft: 0 10px 24px rgba(22, 12, 16, .08);
+
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+
+      --container: 1120px;
     }
-    *{ box-sizing:border-box; }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans Thai", "Noto Sans", Arial, sans-serif;
-      color:var(--text);
-      background: radial-gradient(1200px 600px at 10% 0%, rgba(236,72,153,.18), transparent 60%),
-                  radial-gradient(1000px 700px at 90% 10%, rgba(168,85,247,.16), transparent 60%),
-                  var(--bg);
+      background:
+        radial-gradient(900px 420px at 12% 0%, rgba(255,184,227,.55), transparent 60%),
+        radial-gradient(820px 520px at 92% 8%, rgba(203,183,255,.45), transparent 65%),
+        radial-gradient(820px 520px at 60% 110%, rgba(169,212,255,.40), transparent 60%),
+        radial-gradient(700px 500px at 15% 115%, rgba(255,241,168,.30), transparent 65%),
+        var(--bg);
+      color:var(--ink);
+      font-family: "Kanit", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
       line-height:1.55;
+      overflow-x:hidden;
     }
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width:1160px; margin:0 auto; padding:20px; }
 
-    /* Top bar */
-    .topbar{
-      position:sticky; top:0; z-index:20;
-      backdrop-filter:saturate(140%) blur(10px);
-      background: rgba(255,247,251,.75);
-      border-bottom:1px solid var(--stroke);
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input{font:inherit}
+
+    .container{
+      max-width:var(--container);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    /* Top announcement */
+    .announce{
+      background: linear-gradient(90deg, rgba(255,184,227,.75), rgba(203,183,255,.55), rgba(169,212,255,.55), rgba(255,241,168,.45));
+      border-bottom: 1px solid rgba(58,42,47,.08);
+      backdrop-filter: blur(10px);
+      position:sticky; top:0; z-index:50;
+    }
+    .announce .bar{
+      display:flex; gap:10px; align-items:center; justify-content:center;
+      padding:10px 0;
+      color:rgba(58,42,47,.86);
+      font-size:14px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.65);
+      border:1px solid rgba(58,42,47,.08);
+      box-shadow: 0 8px 20px rgba(22,12,16,.06);
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:44px; z-index:40;
+      background: rgba(255,255,255,.55);
+      border-bottom:1px solid rgba(58,42,47,.08);
+      backdrop-filter: blur(12px);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:14px 20px;
-      max-width:1160px; margin:0 auto;
+      padding:12px 0;
+      gap:12px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800;
-      letter-spacing:.2px;
+      display:flex; align-items:center; gap:12px; min-width: 240px;
     }
     .logo{
-      width:36px; height:36px; border-radius:12px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: var(--shadow);
+      width:44px; height:44px; border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, #fff, rgba(255,184,227,.9) 55%, rgba(203,183,255,.65)),
+        radial-gradient(circle at 80% 90%, rgba(169,212,255,.55), transparent 55%);
+      border:1px solid rgba(58,42,47,.08);
+      box-shadow: var(--shadow-soft);
       position:relative;
+      overflow:hidden;
     }
     .logo:after{
-      content:""; position:absolute; inset:9px;
-      border-radius:10px; background:rgba(255,255,255,.85);
-      transform: rotate(12deg);
+      content:"";
+      position:absolute; inset:-20%;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,.0) 0 10px, rgba(255,255,255,.35) 10px 20px);
+      transform: rotate(10deg);
     }
-    .navlinks{ display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
-    .navlinks a{
-      padding:8px 10px; border-radius:12px;
-      color:var(--muted); font-weight:600; font-size:14px;
+    .brand h1{
+      margin:0; font-size:18px; line-height:1.05;
+      letter-spacing:.2px;
     }
-    .navlinks a:hover{ background: rgba(236,72,153,.10); color:var(--text); }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px;
-      border:1px solid var(--stroke);
+    .brand small{
+      display:block; margin-top:3px; color:var(--muted); font-weight:300;
+    }
+
+    nav ul{
+      margin:0; padding:0; list-style:none;
+      display:flex; gap:10px; align-items:center; justify-content:center;
+    }
+    nav a{
+      display:inline-flex; align-items:center;
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:14px;
+      color:rgba(58,42,47,.85);
+      border:1px solid transparent;
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
       background: rgba(255,255,255,.75);
-      box-shadow: 0 6px 16px rgba(17,24,39,.06);
-      font-weight:700; font-size:14px;
+      border-color: rgba(58,42,47,.08);
+      transform: translateY(-1px);
     }
-    .pill .dot{ width:10px; height:10px; border-radius:50%; background: var(--line); }
+
+    .actions{
+      display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width: 240px;
+    }
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: var(--card);
-      box-shadow: 0 8px 20px rgba(17,24,39,.08);
-      font-weight:800;
+      border:0;
       cursor:pointer;
-      transition: transform .08s ease;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:600;
+      box-shadow: var(--shadow-soft);
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:8px;
       user-select:none;
     }
-    .btn:active{ transform: translateY(1px); }
-    .btn.primary{
-      border:none;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      color:white;
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--pink-2), var(--lilac), var(--sky));
+      color:#2c1d22;
+      border:1px solid rgba(58,42,47,.10);
     }
-    .btn.line{
-      border:none;
-      background: linear-gradient(135deg, #16a34a, #22c55e);
-      color:white;
+    .btn-line{
+      background: linear-gradient(135deg, rgba(255,241,168,.85), rgba(255,184,227,.70));
+      border:1px solid rgba(58,42,47,.10);
+      color:#2c1d22;
     }
-    .btn.small{ padding:10px 12px; border-radius:12px; font-weight:800; font-size:14px; }
+    .btn-ghost{
+      background: rgba(255,255,255,.70);
+      border:1px solid rgba(58,42,47,.10);
+      color: rgba(58,42,47,.88);
+    }
+    .badge{
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:22px; height:22px;
+      padding:0 7px;
+      border-radius:999px;
+      font-size:12px;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(58,42,47,.10);
+    }
 
     /* Hero */
-    .hero{ padding:26px 20px 6px; }
-    .heroGrid{
+    .hero{ padding:40px 0 10px; position:relative; }
+    .hero-grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.05fr .95fr;
       gap:18px;
       align-items:stretch;
     }
     .card{
-      background: rgba(255,255,255,.82);
-      border:1px solid var(--stroke);
-      border-radius: var(--radius);
+      background: rgba(255,255,255,.76);
+      border:1px solid rgba(58,42,47,.10);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .heroMain{ padding:22px; }
-    h1{
-      margin: 10px 0 10px;
-      font-size: clamp(26px, 3.2vw, 44px);
-      line-height:1.1;
-      letter-spacing:-.4px;
+    .hero-left{ padding:26px 24px; position:relative; }
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.40), rgba(169,212,255,.40), rgba(255,241,168,.35));
+      border:1px solid rgba(58,42,47,.08);
+      font-size:13px;
+      color:rgba(58,42,47,.86);
     }
-    .sub{
+    .hero h2{
+      font-family:"Fredoka", "Kanit", sans-serif;
+      margin:14px 0 8px;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin:0;
       color:var(--muted);
-      font-weight:600;
-      font-size: 15px;
+      font-size:16px;
       max-width: 60ch;
     }
-    .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
-    .badge{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.78);
-      font-weight:800;
-      font-size: 13px;
-    }
-    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .hero-cta{ margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
 
-    /* Hero side */
-    .heroSide{ padding:16px; display:flex; flex-direction:column; gap:12px; }
-    .imgMock{
-      border-radius: 16px;
-      border: 1px solid var(--stroke);
-      background:
-        radial-gradient(250px 120px at 30% 20%, rgba(236,72,153,.22), transparent 60%),
-        radial-gradient(260px 150px at 70% 30%, rgba(168,85,247,.18), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.75));
-      height: 210px;
-      position:relative;
-      overflow:hidden;
+    .hero-stats{
+      margin-top:18px;
+      display:grid; grid-template-columns: repeat(3, 1fr);
+      gap:10px;
     }
-    .imgMock:before{
-      content:"";
-      position:absolute; left:-30px; top:40px;
-      width: 220px; height: 220px; border-radius: 46px;
+    .stat{
+      padding:12px 12px;
+      border-radius: 18px;
       background: rgba(255,255,255,.65);
-      transform: rotate(18deg);
-      border:1px solid rgba(17,24,39,.08);
+      border:1px solid rgba(58,42,47,.08);
+      box-shadow: 0 10px 24px rgba(22,12,16,.06);
     }
-    .imgMock:after{
-      content:"เค้กมินิมอล • เค้กวันเกิด • ส่งด่วน";
-      position:absolute; left:14px; bottom:14px;
-      background: rgba(255,255,255,.86);
-      border:1px solid var(--stroke);
-      border-radius: 999px;
-      padding:10px 12px;
-      font-weight:900;
-      font-size:13px;
+    .stat strong{
+      display:block;
+      font-size:18px;
+      font-family:"Fredoka", "Kanit", sans-serif;
     }
-    .miniRow{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
+    .stat span{color:var(--muted); font-size:13px}
+
+    .hero-right{ position:relative; min-height: 360px; }
+    .hero-visual{ height:100%; display:grid; grid-template-rows: 1fr; position:relative; }
+    .hero-visual .imgwrap{
+      position:relative;
+      height:100%;
+      overflow:hidden;
+      border-radius: var(--radius-xl);
+    }
+    .hero-visual img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: saturate(1.05) contrast(1.02);
+      transform: scale(1.02);
+    }
+    .floaty{
+      position:absolute;
+      inset:auto 18px 18px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-width: 360px;
     }
     .mini{
-      padding:14px;
-      border-radius: 16px;
-      border:1px solid var(--stroke);
       background: rgba(255,255,255,.80);
-    }
-    .mini .k{ font-weight:900; }
-    .mini .v{ color:var(--muted); font-weight:700; font-size:13px; margin-top:4px; }
-
-    /* Section */
-    section{ padding: 18px 20px; }
-    .sectionTitle{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-      margin-bottom: 12px;
-    }
-    h2{ margin:0; font-size: 22px; letter-spacing:-.2px; }
-    .hint{ color:var(--muted); font-weight:700; font-size:13px; }
-
-    /* Products */
-    .tools{
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
-      margin: 10px 0 14px;
-    }
-    .search{
-      flex:1; min-width:220px;
-      display:flex; gap:10px; align-items:center;
+      border:1px solid rgba(58,42,47,.10);
+      border-radius: 18px;
       padding:12px 12px;
-      border-radius:14px;
-      background: rgba(255,255,255,.85);
-      border:1px solid var(--stroke);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
     }
-    .search input{
-      width:100%;
-      border:none;
-      outline:none;
-      background:transparent;
+    .mini b{display:block}
+    .mini small{color:var(--muted)}
+    .mini a{ text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Scallop separators */
+    .scallop{ --c: rgba(255,255,255,.92); position:relative; height:44px; margin: 14px 0 0; }
+    .scallop:before{
+      content:"";
+      position:absolute; left:0; right:0; top:-1px; height:46px;
+      background: radial-gradient(circle at 22px 0, var(--c) 21px, transparent 22px) 0 0/44px 44px repeat-x;
+      filter: drop-shadow(0 10px 18px rgba(22,12,16,.06));
+    }
+
+    section{ padding: 24px 0; }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .section-head h3{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+      font-family:"Fredoka","Kanit",sans-serif;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
       font-size:14px;
-      font-weight:700;
-    }
-    select{
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.85);
-      font-weight:800;
-      outline:none;
-      cursor:pointer;
     }
 
+    /* Category chips */
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; margin: 8px 0 12px; }
+    .chip{
+      border:1px solid rgba(58,42,47,.10);
+      background: rgba(255,255,255,.75);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:14px;
+      transition:.16s ease;
+    }
+    .chip:hover{transform: translateY(-1px)}
+    .chip.active{
+      background: linear-gradient(135deg, rgba(255,184,227,.70), rgba(203,183,255,.55), rgba(169,212,255,.55), rgba(255,241,168,.45));
+      border-color: rgba(58,42,47,.12);
+      font-weight:600;
+    }
+
+    /* Product grid */
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
     }
-    .p{
-      padding:14px;
-      border-radius: var(--radius);
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.85);
-      box-shadow: 0 10px 22px rgba(17,24,39,.06);
-      display:flex; flex-direction:column; gap:10px;
-      min-height: 220px;
+    .product{
+      grid-column: span 4;
+      padding:12px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(58,42,47,.10);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 392px;
+      position:relative;
     }
-    .pTop{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    .product .thumb{
+      border-radius: 18px;
+      overflow:hidden;
+      aspect-ratio: 4/3;
+      border:1px solid rgba(58,42,47,.08);
+      background: linear-gradient(135deg, rgba(255,184,227,.50), rgba(203,183,255,.40), rgba(169,212,255,.40));
     }
-    .pName{ font-weight:1000; letter-spacing:-.2px; }
-    .tag{
-      font-weight:900; font-size:12px;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(236,72,153,.10);
-      white-space:nowrap;
+    .product .thumb img{ width:100%; height:100%; object-fit:cover; }
+    .product .info{
+      padding:10px 6px 0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:1;
     }
-    .pDesc{ color:var(--muted); font-weight:650; font-size:13px; }
-    .priceRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; }
-    .price{ font-weight:1000; font-size:16px; }
-    .pActions{ display:flex; gap:10px; flex-wrap:wrap; }
-    .ghost{
-      background: rgba(255,255,255,.85);
-      border:1px solid var(--stroke);
-      box-shadow: none;
-      font-weight:900;
-    }
-
-    /* Cart */
-    .cartGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:start;
-    }
-    .cartBox{ padding:16px; }
-    .cartItems{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
-    .ci{
-      display:flex; gap:10px; align-items:center; justify-content:space-between;
-      padding:12px; border-radius:16px;
-      background: rgba(255,255,255,.85);
-      border:1px solid var(--stroke);
-    }
-    .ci .left{ display:flex; flex-direction:column; gap:2px; }
-    .ci .name{ font-weight:1000; }
-    .ci .meta{ color:var(--muted); font-weight:750; font-size:12px; }
-    .qty{
-      display:flex; gap:8px; align-items:center;
-      font-weight:1000;
-    }
-    .iconBtn{
-      width:34px; height:34px;
-      border-radius:12px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.92);
-      cursor:pointer;
-      font-weight:1000;
-    }
-    .sumRow{
-      display:flex; align-items:center; justify-content:space-between;
-      margin-top:12px;
-      padding-top:12px;
-      border-top:1px dashed rgba(17,24,39,.16);
-      font-weight:1000;
-    }
-    .sumRow .muted{ color:var(--muted); font-weight:900; }
-    .form{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    .field{ display:flex; flex-direction:column; gap:6px; }
-    .field label{ font-weight:900; font-size:12px; color:var(--muted); }
-    .field input, .field textarea{
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      padding:12px 12px;
-      background: rgba(255,255,255,.92);
-      outline:none;
-      font-weight:750;
-      font-size:14px;
-    }
-    .field textarea{ min-height:96px; resize:vertical; }
-    .form .full{ grid-column: 1 / -1; }
-
-    /* Footer */
-    footer{
-      padding:24px 20px 40px;
-      color: var(--muted);
-      font-weight:700;
+    .product h4{ margin:0; font-size:18px; font-weight:700; }
+    .meta{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color:var(--muted);
       font-size:13px;
     }
-    .footerCard{ padding:16px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
-    .smallprint{ color: rgba(107,114,128,.95); }
-
-    /* Toast */
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 16px;
-      transform: translateX(-50%);
-      background: rgba(17,24,39,.92);
-      color:white;
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-weight:900;
-      font-size: 13px;
-      box-shadow: 0 14px 34px rgba(0,0,0,.25);
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
-      z-index: 50;
-      max-width: 92vw;
-      text-align:center;
+    .price{
+      font-family:"Fredoka","Kanit",sans-serif;
+      font-size:18px;
+      color:#2c1d22;
     }
-    .toast.show{ opacity:1; transform: translateX(-50%) translateY(-2px); }
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,247,218,.70);
+      border:1px solid rgba(58,42,47,.08);
+      font-size:12px;
+      width:max-content;
+    }
+    .best{
+      position:absolute;
+      top:14px; left:14px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(255,241,168,.92), rgba(255,184,227,.70));
+      border:1px solid rgba(58,42,47,.12);
+      font-size:12px;
+      font-weight:700;
+      box-shadow: 0 10px 22px rgba(22,12,16,.08);
+    }
+    .product .row{
+      margin-top:auto;
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      padding-top:10px;
+    }
+    .btn-sm{
+      padding:9px 12px;
+      font-size:14px;
+      box-shadow: 0 10px 22px rgba(22,12,16,.08);
+    }
 
+    /* Feature banner */
+    .feature{
+      padding: 18px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(420px 180px at 15% 20%, rgba(255,184,227,.55), transparent 60%),
+        radial-gradient(420px 220px at 80% 10%, rgba(203,183,255,.45), transparent 65%),
+        radial-gradient(420px 220px at 90% 90%, rgba(169,212,255,.40), transparent 65%),
+        rgba(255,255,255,.72);
+      border:1px solid rgba(58,42,47,.10);
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .feature b{ font-size:18px; font-family:"Fredoka","Kanit",sans-serif; }
+    .feature span{color:var(--muted)}
+
+    /* Gallery */
+    .masonry{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .shot{
+      grid-column: span 4;
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      border:1px solid rgba(58,42,47,.10);
+      box-shadow: var(--shadow-soft);
+      background: rgba(255,255,255,.75);
+      position:relative;
+      min-height: 210px;
+    }
+    .shot.big{grid-column: span 8; min-height: 330px;}
+    .shot img{width:100%; height:100%; object-fit:cover;}
+    .shot .cap{
+      position:absolute; left:12px; bottom:12px;
+      background: rgba(255,255,255,.82);
+      border:1px solid rgba(58,42,47,.10);
+      border-radius: 999px;
+      padding:8px 12px;
+      font-size:13px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Testimonials */
+    .quotes{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .quote{
+      grid-column: span 4;
+      padding:16px;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.76);
+      border:1px solid rgba(58,42,47,.10);
+      box-shadow: var(--shadow-soft);
+    }
+    .quote p{margin:0 0 10px; color:rgba(58,42,47,.82)}
+    .quote .who{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Subscribe / Contact */
+    .subscribe{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    .sub-left{padding:18px}
+    .sub-left h3{margin:0 0 6px}
+    .sub-left p{margin:0; color:var(--muted)}
+    .sub-form{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .input{
+      flex:1;
+      min-width: 220px;
+      padding:12px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(58,42,47,.14);
+      background: rgba(255,255,255,.80);
+      outline:none;
+      box-shadow: 0 10px 24px rgba(22,12,16,.05);
+    }
+    .input:focus{border-color: rgba(203,183,255,.95)}
+    .sub-right{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:10px;
+      background:
+        radial-gradient(320px 170px at 25% 25%, rgba(255,184,227,.50), transparent 60%),
+        radial-gradient(320px 190px at 85% 15%, rgba(169,212,255,.45), transparent 65%),
+        radial-gradient(280px 180px at 60% 90%, rgba(255,241,168,.35), transparent 60%),
+        rgba(255,255,255,.72);
+    }
+
+    /* Footer */
+    footer{ padding: 20px 0 32px; color: rgba(58,42,47,.75); }
+    .foot{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap:12px;
+    }
+    .foot .box{
+      padding:16px;
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(58,42,47,.10);
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow-soft);
+    }
+    .foot h5{margin:0 0 8px; font-size:14px}
+    .foot a{color: rgba(58,42,47,.78)}
+    .foot a:hover{color: rgba(58,42,47,.95)}
+    .tiny{font-size:12px; color: rgba(58,42,47,.60); margin-top:12px}
+
+    /* Modal cart */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(20,12,14,.35);
+      backdrop-filter: blur(8px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:99;
+    }
+    .overlay.show{display:flex}
+    .modal{
+      width:min(720px, 100%);
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(58,42,47,.12);
+      background: rgba(255,255,255,.90);
+      box-shadow: 0 26px 70px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(58,42,47,.08);
+      background: linear-gradient(90deg, rgba(255,184,227,.55), rgba(203,183,255,.45), rgba(169,212,255,.40), rgba(255,241,168,.35));
+    }
+    .modal-head b{font-family:"Fredoka","Kanit",sans-serif}
+    .modal-body{padding:14px 16px}
+    .cart-items{display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none}
+    .cart-item{
+      display:flex; align-items:center; gap:12px;
+      padding:10px;
+      border-radius: 18px;
+      border:1px solid rgba(58,42,47,.10);
+      background: rgba(255,255,255,.80);
+    }
+    .cart-item img{
+      width:64px; height:64px; border-radius: 16px;
+      object-fit:cover; border:1px solid rgba(58,42,47,.10);
+    }
+    .cart-item .grow{flex:1}
+    .qty{
+      display:flex; align-items:center; gap:8px;
+      background: rgba(255,247,218,.70);
+      border:1px solid rgba(58,42,47,.10);
+      border-radius:999px;
+      padding:6px 10px;
+    }
+    .iconbtn{
+      border:0; cursor:pointer;
+      width:28px; height:28px;
+      border-radius:999px;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(58,42,47,.12);
+      display:inline-flex; align-items:center; justify-content:center;
+    }
+    .cart-foot{
+      padding:14px 16px;
+      border-top:1px solid rgba(58,42,47,.08);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      flex-wrap:wrap;
+      background: rgba(255,255,255,.62);
+    }
+    .total strong{font-family:"Fredoka","Kanit",sans-serif; font-size:18px}
+
+    /* Responsive */
     @media (max-width: 980px){
-      .heroGrid{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
-      .cartGrid{ grid-template-columns: 1fr; }
+      .hero-grid{grid-template-columns: 1fr; }
+      .actions, .brand{min-width:auto}
+      nav ul{display:none}
+      .hero h2{font-size:38px}
+      .product{grid-column: span 6}
+      .subscribe{grid-template-columns: 1fr}
+      .foot{grid-template-columns: 1fr}
+      .shot{grid-column: span 6}
+      .shot.big{grid-column: span 12}
+      .quote{grid-column: span 6}
     }
     @media (max-width: 560px){
-      .grid{ grid-template-columns: 1fr; }
-      .navlinks{ display:none; }
-      .form{ grid-template-columns: 1fr; }
+      .hero h2{font-size:34px}
+      .hero-stats{grid-template-columns: 1fr}
+      .product{grid-column: span 12}
+      .shot{grid-column: span 12}
+      .quote{grid-column: span 12}
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <div id="shopName" style="font-size:15px;">เค้กออนไลน์</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:800;margin-top:2px;">เค้กวันเกิด • มินิมอล • ส่งไว</div>
-        </div>
-      </div>
-
-      <div class="navlinks">
-        <a href="#menu">เมนู</a>
-        <a href="#order">สั่งซื้อ</a>
-        <a href="#how">วิธีสั่ง</a>
-        <a href="#contact">ติดต่อ</a>
-      </div>
-
-      <div style="display:flex; gap:10px; align-items:center;">
-        <div class="pill" title="สถานะวันนี้">
-          <span class="dot"></span>
-          <span id="todayStatus">รับออเดอร์วันนี้</span>
-        </div>
-        <button class="btn line small" id="lineBtn" type="button">แชต LINE</button>
+  <div class="announce">
+    <div class="container">
+      <div class="bar">
+        <span class="pill">สั่งผ่าน LINE: <b>@cakeonline</b></span>
+        <span class="pill">เมนูขายดีอัปเดตตลอด</span>
+        <span class="pill">รูปตอนนี้เป็นตัวอย่าง — เปลี่ยนรูปจริงทีหลังได้</span>
       </div>
     </div>
   </div>
 
-  <main class="wrap">
-    <div class="hero">
-      <div class="heroGrid">
-        <div class="card heroMain">
-          <div class="badge" style="display:inline-flex;gap:8px;align-items:center;">
-            <span aria-hidden="true">●</span>
-            <span id="heroBadge">ทำสดตามออเดอร์ • น่ารักแบบไม่ตะโกน</span>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="กลับไปหน้าแรก">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>เค้กออนไลน์ <small>โทนพาสเทล น่ารัก กินได้จริง</small></h1>
           </div>
+        </a>
 
-          <h1>
-            เค้กวันเกิดที่ “น่ารักพอดี”
-            <span style="background:linear-gradient(135deg,var(--brand),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent;">
-              สั่งง่าย ส่งไว
-            </span>
-          </h1>
+        <nav aria-label="เมนูหลัก">
+          <ul>
+            <li><a href="#menu">Top 10</a></li>
+            <li><a href="#gallery">แกลเลอรี่</a></li>
+            <li><a href="#reviews">รีวิว</a></li>
+            <li><a href="#contact">สั่งซื้อ</a></li>
+          </ul>
+        </nav>
 
-          <div class="sub" id="heroSub">
-            รับทำเค้กมินิมอล เค้กชิ้น ขนมคาเฟ่ และเค้กตามแบบ เลือกสินค้าด้านล่าง ใส่ตะกร้า แล้วกดคัดลอกข้อความส่งแชตได้ทันที
-          </div>
-
-          <div class="badges">
-            <div class="badge">ครึ่งปอนด์ / 1 ปอนด์</div>
-            <div class="badge">เขียนข้อความบนหน้าเค้กได้</div>
-            <div class="badge">รับเร่งด่วน (เช็กคิว)</div>
-            <div class="badge">จัดเซ็ตของขวัญได้</div>
-          </div>
-
-          <div class="ctaRow">
-            <a class="btn primary" href="#menu">ดูเมนูและราคา</a>
-            <a class="btn" href="#order">สรุปออเดอร์</a>
-            <button class="btn ghost" type="button" id="copyPromoBtn">คัดลอกโปรโมชันวันนี้</button>
-          </div>
-        </div>
-
-        <div class="card heroSide">
-          <div class="imgMock" aria-label="ภาพตัวอย่างธีมร้าน"></div>
-          <div class="miniRow">
-            <div class="mini">
-              <div class="k">ส่งไว</div>
-              <div class="v" id="fastText">ในพื้นที่/เรียกรถส่ง</div>
-            </div>
-            <div class="mini">
-              <div class="k">จองคิว</div>
-              <div class="v" id="queueText">แนะนำจองล่วงหน้า 1–3 วัน</div>
-            </div>
-          </div>
-          <div class="mini">
-            <div class="k">เวลารับออเดอร์</div>
-            <div class="v" id="openText">ทุกวัน 10:00–20:00</div>
-          </div>
+        <div class="actions">
+          <button class="btn btn-ghost" id="btnCart" type="button" aria-haspopup="dialog" aria-controls="cartModal">
+            ตะกร้า <span class="badge" id="cartCount">0</span>
+          </button>
+          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">แอดไลน์ @cakeonline</a>
         </div>
       </div>
     </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="card hero-left">
+            <span class="kicker">Top 10 เมนูฮิต • มีป้าย “ขายดี” ให้แล้ว</span>
+            <h2>เค้กน่ารักโทนพาสเทล<br/>สั่งง่าย แอดไลน์จบ</h2>
+            <p>
+              อยากได้แบบไหน ส่งเรฟมาได้เลย เราช่วยจัดให้เข้ากับงบและโอกาส
+              (เว็บนี้พร้อมใช้งานทันที แล้วค่อยเปลี่ยนเป็นรูปจริงของร้านได้)
+            </p>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#menu">ดู Top 10</a>
+              <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
+            </div>
+
+            <div class="hero-stats" aria-label="จุดเด่น">
+              <div class="stat">
+                <strong>โทนพาสเทล</strong>
+                <span>ชมพู • ม่วง • ฟ้า • เหลือง</span>
+              </div>
+              <div class="stat">
+                <strong>ขายดี</strong>
+                <span>มีป้ายไฮไลต์แล้ว</span>
+              </div>
+              <div class="stat">
+                <strong>เปลี่ยนรูปง่าย</strong>
+                <span>แค่แก้ลิงก์รูป</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card hero-right">
+            <div class="hero-visual">
+              <div class="imgwrap" aria-label="ภาพหน้าปก (เปลี่ยนรูปทีหลังได้)">
+                <img
+                  alt="เค้กโทนพาสเทล"
+                  src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1200&q=80"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="floaty">
+                <div class="mini">
+                  <b>สั่งซื้อจริง</b>
+                  <small>กดแอดไลน์: <a href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">@cakeonline</a></small>
+                </div>
+                <div class="mini">
+                  <b>เปลี่ยนรูปทีหลังได้</b>
+                  <small>รูปตอนนี้เป็น placeholder เพื่อความเร็ว</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scallop" aria-hidden="true"></div>
+      </div>
+    </section>
 
     <section id="menu">
-      <div class="sectionTitle">
-        <h2>เมนูขายดี</h2>
-        <div class="hint">ค้นหา/กรอง แล้วกด “ใส่ตะกร้า” ได้เลย</div>
-      </div>
-
-      <div class="tools">
-        <div class="search" role="search">
-          <span aria-hidden="true" style="font-weight:1000;color:var(--muted);">ค้นหา</span>
-          <input id="q" placeholder="เช่น เค้กมินิมอล, ชีสเค้ก, ครัวซอง..." />
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Top 10 ของร้าน</h3>
+            <p>กดหมวดเพื่อกรอง แล้วกด “ใส่ตะกร้า” (เดโม) หรือกด “สั่งผ่าน LINE” (ของจริง)</p>
+          </div>
+          <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE @cakeonline</a>
         </div>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <select id="cat">
-            <option value="all">ทุกหมวด</option>
-            <option value="cake">เค้กปอนด์</option>
-            <option value="slice">เค้กชิ้น</option>
-            <option value="bakery">เบเกอรี่</option>
-            <option value="set">เซ็ตของขวัญ</option>
-          </select>
-          <select id="sort">
-            <option value="pop">แนะนำ</option>
-            <option value="low">ราคาน้อย→มาก</option>
-            <option value="high">ราคามาก→น้อย</option>
-            <option value="name">เรียงชื่อ</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid" id="productGrid"></div>
-    </section>
-
-    <section id="order">
-      <div class="sectionTitle">
-        <h2>ตะกร้าและสรุปออเดอร์</h2>
-        <div class="hint">กดคัดลอกข้อความ แล้วส่งแชตเพื่อยืนยันคิว</div>
-      </div>
-
-      <div class="cartGrid">
-        <div class="card cartBox">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-            <div>
-              <div style="font-weight:1000;">ตะกร้าสินค้า</div>
-              <div class="hint">แก้จำนวนได้ แล้วระบบสรุปราคาให้อัตโนมัติ</div>
-            </div>
-            <button class="btn small ghost" id="clearCartBtn" type="button">ล้างตะกร้า</button>
-          </div>
-
-          <div class="cartItems" id="cartItems"></div>
-
-          <div class="sumRow">
-            <span class="muted">ยอดรวมโดยประมาณ</span>
-            <span id="grandTotal">0 บาท</span>
-          </div>
-          <div class="hint" style="margin-top:8px;">
-            หมายเหตุ: ราคาจริงอาจเปลี่ยนตาม “ป้าย/ท็อปปิ้ง/ความเร่งด่วน/ค่าจัดส่ง”
-          </div>
+        <div class="chips" role="tablist" aria-label="หมวดเมนู">
+          <button class="chip active" data-filter="all" type="button">ทั้งหมด</button>
+          <button class="chip" data-filter="cakes" type="button">เค้ก</button>
+          <button class="chip" data-filter="snacks" type="button">ขนมกล่อง/ขนมชิ้น</button>
         </div>
 
-        <div class="card cartBox">
-          <div style="font-weight:1000;">รายละเอียดลูกค้า (ช่วยให้ตอบไวขึ้น)</div>
-          <div class="hint">กรอกเท่าที่สะดวก</div>
+        <div class="grid" id="productGrid" aria-live="polite"></div>
 
-          <div class="form">
-            <div class="field">
-              <label>ชื่อลูกค้า</label>
-              <input id="custName" placeholder="เช่น คุณ…"/>
-            </div>
-            <div class="field">
-              <label>เบอร์ติดต่อ</label>
-              <input id="custPhone" placeholder="เช่น 08x-xxx-xxxx"/>
-            </div>
-            <div class="field">
-              <label>วันรับสินค้า</label>
-              <input id="pickupDate" type="date"/>
-            </div>
-            <div class="field">
-              <label>เวลารับ/ส่ง</label>
-              <input id="pickupTime" placeholder="เช่น 15:30"/>
-            </div>
-            <div class="field full">
-              <label>ข้อความบนหน้าเค้ก / หมายเหตุ</label>
-              <textarea id="note" placeholder="เช่น Happy Birthday … / โทนสีชมพู-ครีม / ไม่ใส่ถั่ว / ขอเร่งด่วน ฯลฯ"></textarea>
-            </div>
-          </div>
+        <div style="height:14px"></div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-            <button class="btn primary" id="copyOrderBtn" type="button">คัดลอกข้อความสรุปออเดอร์</button>
-            <button class="btn line" id="openLineWithTextBtn" type="button">เปิด LINE พร้อมข้อความ</button>
+        <div class="feature">
+          <div>
+            <b>แนะนำเวลาลูกค้าทักไลน์</b>
+            <div><span>พิมพ์: “เมนู + วันรับ + งบ + รูปเรฟ” จะปิดออเดอร์เร็วมาก</span></div>
           </div>
-
-          <div class="hint" style="margin-top:10px;">
-            ถ้าปุ่ม “เปิด LINE พร้อมข้อความ” ใช้ไม่ได้บนบางเครื่อง ให้กด “คัดลอก” แล้ววางในแชตแทน
-          </div>
+          <a class="btn btn-primary" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ทักไลน์ตอนนี้</a>
         </div>
+
+        <div class="scallop" aria-hidden="true"></div>
       </div>
     </section>
 
-    <section id="how">
-      <div class="sectionTitle">
-        <h2>วิธีสั่งแบบเร็ว</h2>
-        <div class="hint">สามขั้นตอน จบแบบไม่ต้องเดา</div>
+    <section id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>แกลเลอรี่ (ตัวอย่าง)</h3>
+            <p>เดี๋ยวค่อยเปลี่ยนเป็นรูปจริงของร้าน เพื่อให้เว็บดูแพงแบบถูกที่</p>
+          </div>
+          <div class="pill">ทิป: รูปสัดส่วนใกล้กัน เว็บจะดูโปรขึ้น</div>
+        </div>
+
+        <div class="masonry">
+          <div class="shot big">
+            <img alt="เค้กมินิมอล" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1600&q=80" loading="lazy">
+            <div class="cap">เค้กโทนพาสเทล</div>
+          </div>
+          <div class="shot">
+            <img alt="เค้กชิ้น" src="https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" loading="lazy">
+            <div class="cap">ขนมชิ้น</div>
+          </div>
+          <div class="shot">
+            <img alt="ชีสเค้ก" src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" loading="lazy">
+            <div class="cap">ความนัวแบบคาเฟ่</div>
+          </div>
+          <div class="shot">
+            <img alt="ขนม" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=80" loading="lazy">
+            <div class="cap">โทนสะอาด ถ่ายรูปขึ้น</div>
+          </div>
+          <div class="shot">
+            <img alt="ของหวาน" src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" loading="lazy">
+            <div class="cap">เหมาะเป็นของขวัญ</div>
+          </div>
+        </div>
+
+        <div class="scallop" aria-hidden="true"></div>
       </div>
+    </section>
 
-      <div class="grid">
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">1) เลือกเมนู</div>
-            <div class="tag">Step 1</div>
+    <section id="reviews">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>รีวิวลูกค้า</h3>
+            <p>ใส่รีวิวจริงทีหลังได้ (แนะนำ “สั้นแต่คม”)</p>
           </div>
-          <div class="pDesc">ค้นหาเมนูที่ชอบ แล้วกด “ใส่ตะกร้า” ปรับจำนวนได้ตามต้องการ</div>
         </div>
 
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">2) ใส่รายละเอียด</div>
-            <div class="tag">Step 2</div>
+        <div class="quotes">
+          <div class="quote">
+            <p>“งานน่ารักมาก โทนละมุน ถ่ายรูปสวย รสชาติดี”</p>
+            <div class="who"><span>ลูกค้า</span><span>★★★★★</span></div>
           </div>
-          <div class="pDesc">กรอกวัน-เวลา ข้อความหน้าเค้ก และหมายเหตุ เช่น สี/ธีม/แพ้ถั่ว</div>
+          <div class="quote">
+            <p>“ขายดีสมคำร่ำลือ แพ็กเกจดี เหมาะเป็นของขวัญ”</p>
+            <div class="who"><span>ลูกค้า</span><span>★★★★★</span></div>
+          </div>
+          <div class="quote">
+            <p>“สั่งง่าย ทักไลน์แล้วจบ งานออกมาตรงเรฟ”</p>
+            <div class="who"><span>ลูกค้า</span><span>★★★★★</span></div>
+          </div>
         </div>
 
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">3) ส่งแชตยืนยัน</div>
-            <div class="tag">Step 3</div>
-          </div>
-          <div class="pDesc">กดคัดลอกสรุปออเดอร์ ส่งแชตเพื่อเช็กคิวและยืนยันราคา/ค่าจัดส่ง</div>
-        </div>
+        <div class="scallop" aria-hidden="true"></div>
       </div>
     </section>
 
     <section id="contact">
-      <div class="sectionTitle">
-        <h2>ติดต่อร้าน</h2>
-        <div class="hint">แก้ข้อมูลใน CONFIG ได้ทันที</div>
-      </div>
-
-      <div class="grid">
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">LINE</div>
-            <div class="tag" style="background:rgba(34,197,94,.14)">Chat</div>
-          </div>
-          <div class="pDesc">แชตเพื่อเช็กคิว / ส่งเรฟ / ขอเร่งด่วน</div>
-          <div class="priceRow">
-            <div class="price" id="lineIdText">@yourline</div>
-            <button class="btn small line" id="lineBtn2" type="button">แชตเลย</button>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>สั่งซื้อ / ติดต่อ</h3>
+            <p>ช่องทางหลัก: LINE @cakeonline</p>
           </div>
         </div>
 
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">โทร</div>
-            <div class="tag">Call</div>
+        <div class="subscribe">
+          <div class="card sub-left">
+            <h3 style="font-family:'Fredoka','Kanit',sans-serif;">อยากได้โปร/เมนูใหม่ก่อนใคร</h3>
+            <p>สมัครไว้ก่อน เดี๋ยวเว็บดู “มีชีวิต” ขึ้นทันที</p>
+
+            <form class="sub-form" id="subForm">
+              <input class="input" id="email" type="email" placeholder="อีเมลของคุณ" autocomplete="email" required />
+              <button class="btn btn-primary" type="submit">Subscribe</button>
+            </form>
+
+            <div class="tiny" id="subMsg" aria-live="polite"></div>
           </div>
-          <div class="pDesc">โทรกรณีเร่งด่วน/นัดรับ</div>
-          <div class="priceRow">
-            <div class="price" id="phoneText">08x-xxx-xxxx</div>
-            <a class="btn small" id="telLink" href="#">โทร</a>
+
+          <div class="card sub-right">
+            <div class="pill"><b>LINE:</b> <a href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">@cakeonline</a></div>
+            <div class="pill"><b>สั่งง่าย:</b> ส่ง “เมนู + วันรับ + งบ + รูปเรฟ”</div>
+            <div class="pill"><b>หมายเหตุ:</b> เปลี่ยนรูปจริงทีหลังได้</div>
+            <div class="tiny">ถ้าจะให้เว็บขายของแบบชำระเงินอัตโนมัติได้ เดี๋ยวเพิ่มหน้า Checkout/ชำระเงินให้ได้เช่นกัน</div>
           </div>
         </div>
 
-        <div class="p">
-          <div class="pTop">
-            <div class="pName">ที่อยู่/จุดรับ</div>
-            <div class="tag">Pickup</div>
+        <footer>
+          <div class="container">
+            <div class="foot">
+              <div class="box">
+                <h5>เค้กออนไลน์</h5>
+                <div>โทนพาสเทล • น่ารัก • สั่งง่ายผ่าน LINE</div>
+                <div class="tiny">© <span id="year"></span> Cake Online. All rights reserved.</div>
+              </div>
+              <div class="box">
+                <h5>เมนู</h5>
+                <div><a href="#menu">Top 10</a></div>
+                <div><a href="#gallery">แกลเลอรี่</a></div>
+                <div><a href="#reviews">รีวิว</a></div>
+              </div>
+              <div class="box">
+                <h5>สั่งซื้อ</h5>
+                <div><a href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">LINE @cakeonline</a></div>
+                <div class="tiny">ทิป: ใส่ปุ่มแอดไลน์ไว้ทุกส่วน = ปิดยอดเร็ว</div>
+              </div>
+            </div>
           </div>
-          <div class="pDesc" id="addrText">ระบุสาขา/ห้าง/บูธ เช่น Robinson …</div>
-          <div class="priceRow">
-            <div class="price" id="openHoursText">10:00–20:00</div>
-            <a class="btn small" id="mapLink" href="#" target="_blank" rel="noopener">แผนที่</a>
-          </div>
-        </div>
+        </footer>
+
       </div>
     </section>
-
-    <footer>
-      <div class="card footerCard">
-        <div>
-          <div style="font-weight:1000; color:var(--text);" id="footerName">เค้กออนไลน์</div>
-          <div class="smallprint">ทำสดตามออเดอร์ • ขอสงวนสิทธิ์รับงานตามคิวและความเหมาะสม</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn small" href="#menu">ดูเมนู</a>
-          <a class="btn small primary" href="#order">สั่งเลย</a>
-        </div>
-      </div>
-
-      <div style="margin-top:10px;" class="smallprint">
-        © <span id="year"></span> <span id="footerName2">เค้กออนไลน์</span>. Built as a single-file website.
-      </div>
-    </footer>
   </main>
 
-  <div class="toast" id="toast">คัดลอกแล้ว</div>
+  <!-- Cart Modal (เดโม) -->
+  <div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="ตะกร้าสินค้า">
+    <div class="modal" id="cartModal">
+      <div class="modal-head">
+        <b>ตะกร้าสินค้า (เดโม)</b>
+        <button class="btn btn-ghost btn-sm" id="btnClose" type="button">ปิด</button>
+      </div>
+      <div class="modal-body">
+        <ul class="cart-items" id="cartItems"></ul>
+        <div class="tiny" id="emptyCartHint">ตะกร้าว่างอยู่ ลองกด “ใส่ตะกร้า” จาก Top 10</div>
+      </div>
+      <div class="cart-foot">
+        <div class="total">รวม: <strong id="cartTotal">0</strong> บาท</div>
+        <a class="btn btn-line" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">ไปสั่งผ่าน LINE</a>
+      </div>
+    </div>
+  </div>
 
   <script>
-    /* =========================
-       CONFIG (แก้ตรงนี้)
-    ========================== */
-    const CONFIG = {
-      shopName: "เค้กออนไลน์",
-      tagline: "เค้กวันเกิด • มินิมอล • ส่งไว",
-      todayStatus: "รับออเดอร์วันนี้",
-      heroBadge: "ทำสดตามออเดอร์ • น่ารักแบบไม่ตะโกน",
-      lineId: "@yourline",         // ใส่ LINE ID ของร้าน (แบบมี @)
-      lineLink: "https://line.me/R/ti/p/@yourline", // ลิงก์เพิ่มเพื่อน/แชต
-      phone: "08x-xxx-xxxx",
-      address: "บูธ/สาขา: Robinson … (แก้เป็นที่อยู่จริง)",
-      openHours: "ทุกวัน 10:00–20:00",
-      mapUrl: "https://maps.google.com/?q=Robinson", // ใส่ลิงก์แผนที่
-      promoText: "โปรวันนี้: ลด/ของแถม/ฟรีเขียนข้อความ (แก้ได้เอง)"
-    };
-
-    /* =========================
-       PRODUCTS (แก้เมนูตรงนี้)
-       หมวด: cake | slice | bakery | set
-    ========================== */
-    const PRODUCTS = [
-      { id:"c1", name:"เค้กมินิมอล ครึ่งปอนด์", cat:"cake", price: 450, tag:"ขายดี", desc:"โทนพาสเทล/ครีม แต่งน้อยแต่น่ารัก เขียนข้อความได้" },
-      { id:"c2", name:"เค้กมินิมอล 1 ปอนด์", cat:"cake", price: 650, tag:"แนะนำ", desc:"เหมาะ 4–8 คน ปรับสี/ธีมได้ตามเรฟ" },
-      { id:"c3", name:"เค้กช็อกโกแลตเข้ม", cat:"cake", price: 720, tag:"สายช็อก", desc:"ช็อกโกแลตเข้ม เนื้อฉ่ำ (ปรับความหวานได้)" },
-      { id:"s1", name:"ชีสเค้กชิ้น", cat:"slice", price: 95, tag:"ฮิต", desc:"ชีสเค้กเนียนๆ กินเพลิน (ท็อปปิ้งเลือกได้)" },
-      { id:"s2", name:"เค้กช็อกชิ้น", cat:"slice", price: 85, tag:"เข้ม", desc:"ช็อกโกแลตเนื้อแน่น เหมาะกับกาแฟ" },
-      { id:"b1", name:"ครัวซองต์เนยแท้", cat:"bakery", price: 75, tag:"หอม", desc:"กรอบนอกนุ่มใน อบใหม่ตามรอบ" },
-      { id:"b2", name:"ทิมเบอริง", cat:"bakery", price: 85, tag:"นุ่ม", desc:"นุ่มหนึบ ไส้เลือกได้ตามวัน" },
-      { id:"set1", name:"เซ็ตของขวัญ (เค้กชิ้น+การ์ด)", cat:"set", price: 199, tag:"ของขวัญ", desc:"เหมาะเป็นของฝาก/เซอร์ไพรส์ เพิ่มสติกเกอร์ชื่อได้" }
+    // ====== Data: Top 10 ของร้าน (แก้รูปทีหลังได้ที่ img) ======
+    const products = [
+      { id:"t1", name:"เค้กเบสิค", category:"cakes", tag:"ราคาเริ่มต้น", price:180, best:false,
+        img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t2", name:"เค้กกล่องข้าว", category:"snacks", tag:"ราคาเริ่มต้น", price:120, best:false,
+        img:"https://images.unsplash.com/photo-1505253216365-6c7a6f1f3b95?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t3", name:"เค้กพาสเทล", category:"cakes", tag:"ราคาเริ่มต้น", price:450, best:true,
+        img:"https://images.unsplash.com/photo-1563729784474-d77dbb933a9f?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t4", name:"เค้กป๊อปคุกกี้", category:"cakes", tag:"ราคาเริ่มต้น", price:350, best:true,
+        img:"https://images.unsplash.com/photo-1607478900766-efe13248b125?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t5", name:"เค้กมินิมอล", category:"cakes", tag:"ราคาเริ่มต้น", price:150, best:false,
+        img:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t6", name:"เค้ก Korea", category:"cakes", tag:"ราคาเริ่มต้น", price:220, best:true,
+        img:"https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t7", name:"ชอกบอล (1 กล่อง 6 ลูก)", category:"snacks", tag:"ราคาต่อกล่อง", price:35, best:false,
+        img:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t8", name:"บานอฟฟี่", category:"snacks", tag:"ราคาเริ่มต้น", price:35, best:false,
+        img:"https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t9", name:"คอนเฟลคคาราเมล", category:"snacks", tag:"ราคาเริ่มต้น", price:50, best:false,
+        img:"https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1200&q=80" },
+      { id:"t10", name:"มินิเค้ก", category:"cakes", tag:"ราคาเริ่มต้น", price:60, best:true,
+        img:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80" },
     ];
 
-    /* =========================
-       Helpers
-    ========================== */
-    const el = (id)=>document.getElementById(id);
-    const fmt = (n)=> new Intl.NumberFormat('th-TH').format(n) + " บาท";
-    const toast = (msg)=>{
-      const t = el("toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(()=>t.classList.remove("show"), 1600);
-    };
+    // ====== Render products ======
+    const grid = document.getElementById("productGrid");
+    const chips = Array.from(document.querySelectorAll(".chip"));
 
-    /* =========================
-       Init UI from CONFIG
-    ========================== */
-    function applyConfig(){
-      el("shopName").textContent = CONFIG.shopName;
-      el("footerName").textContent = CONFIG.shopName;
-      el("footerName2").textContent = CONFIG.shopName;
+    function money(n){ return new Intl.NumberFormat("th-TH").format(n); }
+    function labelCategory(cat){ return ({ cakes:"เค้ก", snacks:"ขนมกล่อง/ขนมชิ้น" })[cat] || "อื่น ๆ"; }
 
-      document.title = `${CONFIG.shopName} | สั่งเค้กวันเกิด เค้กมินิมอล ส่งไว`;
-
-      el("todayStatus").textContent = CONFIG.todayStatus;
-      el("heroBadge").textContent = CONFIG.heroBadge;
-      el("openText").textContent = CONFIG.openHours;
-      el("openHoursText").textContent = CONFIG.openHours;
-      el("lineIdText").textContent = CONFIG.lineId;
-      el("phoneText").textContent = CONFIG.phone;
-      el("addrText").textContent = CONFIG.address;
-      el("openHoursText").textContent = CONFIG.openHours;
-
-      el("telLink").href = `tel:${CONFIG.phone.replace(/[^0-9+]/g,'')}`;
-      el("mapLink").href = CONFIG.mapUrl;
-
-      const lineBtns = [el("lineBtn"), el("lineBtn2")];
-      lineBtns.forEach(b=>{
-        b.addEventListener("click", ()=> window.open(CONFIG.lineLink, "_blank", "noopener"));
-      });
-
-      el("year").textContent = new Date().getFullYear();
-    }
-
-    /* =========================
-       Product rendering / filter
-    ========================== */
-    let view = [...PRODUCTS];
-
-    function renderProducts(){
-      const grid = el("productGrid");
+    function renderProducts(filter="all"){
       grid.innerHTML = "";
+      const list = (filter === "all") ? products : products.filter(p => p.category === filter);
 
-      if(view.length === 0){
-        grid.innerHTML = `<div class="p" style="grid-column:1/-1;">
-          <div class="pName">ไม่พบเมนูที่ค้นหา</div>
-          <div class="pDesc">ลองคำอื่น เช่น “มินิมอล”, “ชีส”, “ครัวซอง”</div>
-        </div>`;
-        return;
-      }
-
-      for(const p of view){
-        const catLabel = p.cat === "cake" ? "เค้กปอนด์"
-                        : p.cat === "slice" ? "เค้กชิ้น"
-                        : p.cat === "bakery" ? "เบเกอรี่"
-                        : "เซ็ต";
-        const card = document.createElement("div");
-        card.className = "p";
-        card.innerHTML = `
-          <div class="pTop">
-            <div>
-              <div class="pName">${p.name}</div>
-              <div class="hint" style="margin-top:4px;">หมวด: ${catLabel}</div>
-            </div>
+      list.forEach(p => {
+        const el = document.createElement("article");
+        el.className = "product";
+        el.innerHTML = `
+          ${p.best ? `<div class="best">ขายดี</div>` : ``}
+          <div class="thumb"><img alt="${p.name}" src="${p.img}" loading="lazy"></div>
+          <div class="info">
             <div class="tag">${p.tag}</div>
-          </div>
-          <div class="pDesc">${p.desc}</div>
-          <div class="priceRow">
-            <div class="price">${fmt(p.price)}</div>
-            <div class="pActions">
-              <button class="btn small primary" type="button" data-add="${p.id}">ใส่ตะกร้า</button>
-              <button class="btn small ghost" type="button" data-copy="${p.id}">คัดลอกรายการ</button>
+            <h4>${p.name}</h4>
+            <div class="meta">
+              <span>หมวด: ${labelCategory(p.category)}</span>
+              <span class="price">${money(p.price)}฿</span>
             </div>
+          </div>
+          <div class="row">
+            <a class="btn btn-line btn-sm" href="https://line.me/R/ti/p/@cakeonline" target="_blank" rel="noopener">สั่งผ่าน LINE</a>
+            <button class="btn btn-primary btn-sm" type="button" data-add="${p.id}">ใส่ตะกร้า</button>
           </div>
         `;
-        grid.appendChild(card);
-      }
+        grid.appendChild(el);
+      });
 
       grid.querySelectorAll("[data-add]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          addToCart(btn.getAttribute("data-add"));
-          toast("เพิ่มเข้าตะกร้าแล้ว");
-        });
-      });
-
-      grid.querySelectorAll("[data-copy]").forEach(btn=>{
-        btn.addEventListener("click", async ()=>{
-          const id = btn.getAttribute("data-copy");
-          const p = PRODUCTS.find(x=>x.id===id);
-          const txt = `${CONFIG.shopName} | สนใจ: ${p.name} (${fmt(p.price)})`;
-          await navigator.clipboard.writeText(txt);
-          toast("คัดลอกรายการแล้ว");
-        });
+        btn.addEventListener("click", () => addToCart(btn.dataset.add));
       });
     }
 
-    function applyFilters(){
-      const q = el("q").value.trim().toLowerCase();
-      const cat = el("cat").value;
-      const sort = el("sort").value;
-
-      view = PRODUCTS.filter(p=>{
-        const matchQ = !q || (p.name+p.desc+p.tag).toLowerCase().includes(q);
-        const matchCat = (cat==="all") || (p.cat===cat);
-        return matchQ && matchCat;
+    chips.forEach(ch=>{
+      ch.addEventListener("click", ()=>{
+        chips.forEach(x=>x.classList.remove("active"));
+        ch.classList.add("active");
+        renderProducts(ch.dataset.filter);
       });
+    });
 
-      if(sort==="low") view.sort((a,b)=>a.price-b.price);
-      if(sort==="high") view.sort((a,b)=>b.price-a.price);
-      if(sort==="name") view.sort((a,b)=>a.name.localeCompare(b.name,'th'));
-      if(sort==="pop"){
-        // คงลำดับเดิม (แนะนำ)
-      }
-      renderProducts();
-    }
-
-    /* =========================
-       Cart logic
-    ========================== */
+    // ====== Cart (demo) ======
     const cart = new Map(); // id -> qty
+    const cartCount = document.getElementById("cartCount");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const btnCart = document.getElementById("btnCart");
+    const btnClose = document.getElementById("btnClose");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const emptyCartHint = document.getElementById("emptyCartHint");
 
     function addToCart(id){
       cart.set(id, (cart.get(id) || 0) + 1);
-      renderCart();
+      updateCartUI(true);
     }
-    function decFromCart(id){
-      const q = (cart.get(id) || 0) - 1;
-      if(q <= 0) cart.delete(id); else cart.set(id, q);
-      renderCart();
-    }
-    function incFromCart(id){
-      cart.set(id, (cart.get(id) || 0) + 1);
-      renderCart();
-    }
-    function clearCart(){
-      cart.clear();
-      renderCart();
+    function removeFromCart(id){
+      const q = cart.get(id) || 0;
+      if(q <= 1) cart.delete(id);
+      else cart.set(id, q - 1);
+      updateCartUI();
     }
 
-    function renderCart(){
-      const box = el("cartItems");
-      box.innerHTML = "";
+    function updateCartUI(open=false){
+      let count = 0;
+      cart.forEach(q => count += q);
+      cartCount.textContent = count;
 
+      cartItems.innerHTML = "";
       let total = 0;
 
-      if(cart.size===0){
-        box.innerHTML = `<div class="ci">
-          <div class="left">
-            <div class="name">ยังไม่มีสินค้าในตะกร้า</div>
-            <div class="meta">เลือกเมนูด้านบนแล้วกด “ใส่ตะกร้า”</div>
-          </div>
-        </div>`;
-        el("grandTotal").textContent = fmt(0);
-        return;
-      }
-
-      for(const [id, qty] of cart.entries()){
-        const p = PRODUCTS.find(x=>x.id===id);
-        const line = p.price * qty;
-        total += line;
-
-        const row = document.createElement("div");
-        row.className="ci";
-        row.innerHTML = `
-          <div class="left">
-            <div class="name">${p.name}</div>
-            <div class="meta">${fmt(p.price)} × ${qty} = ${fmt(line)}</div>
-          </div>
-          <div class="qty">
-            <button class="iconBtn" type="button" data-dec="${id}">−</button>
-            <span>${qty}</span>
-            <button class="iconBtn" type="button" data-inc="${id}">+</button>
-          </div>
-        `;
-        box.appendChild(row);
-      }
-
-      el("grandTotal").textContent = fmt(total);
-
-      box.querySelectorAll("[data-dec]").forEach(b=>b.addEventListener("click", ()=>decFromCart(b.getAttribute("data-dec"))));
-      box.querySelectorAll("[data-inc]").forEach(b=>b.addEventListener("click", ()=>incFromCart(b.getAttribute("data-inc"))));
-    }
-
-    /* =========================
-       Order message
-    ========================== */
-    function buildOrderText(){
-      const name = el("custName").value.trim();
-      const phone = el("custPhone").value.trim();
-      const date = el("pickupDate").value;
-      const time = el("pickupTime").value.trim();
-      const note = el("note").value.trim();
-
-      let lines = [];
-      lines.push(`สวัสดีค่ะ/ครับ ขอจองคิวกับร้าน ${CONFIG.shopName}`);
-      lines.push(``);
-
-      if(cart.size===0){
-        lines.push(`(ยังไม่ได้เลือกเมนู)`);
+      if(count === 0){
+        emptyCartHint.style.display = "block";
       }else{
-        lines.push(`รายการที่ต้องการ:`);
-        let total = 0;
-        for(const [id, qty] of cart.entries()){
-          const p = PRODUCTS.find(x=>x.id===id);
-          const sum = p.price * qty;
-          total += sum;
-          lines.push(`- ${p.name} × ${qty} = ${fmt(sum)}`);
-        }
-        lines.push(``);
-        lines.push(`ยอดรวมโดยประมาณ: ${fmt(total)}`);
+        emptyCartHint.style.display = "none";
+        cart.forEach((qty, id)=>{
+          const p = products.find(x=>x.id===id);
+          if(!p) return;
+          total += p.price * qty;
+
+          const li = document.createElement("li");
+          li.className = "cart-item";
+          li.innerHTML = `
+            <img alt="${p.name}" src="${p.img}" loading="lazy">
+            <div class="grow">
+              <div style="font-weight:700">${p.name}${p.best ? " • ขายดี" : ""}</div>
+              <div style="color:rgba(58,42,47,.70); font-size:13px">${money(p.price)}฿</div>
+            </div>
+            <div class="qty" aria-label="จำนวนสินค้า">
+              <button class="iconbtn" type="button" data-minus="${id}" aria-label="ลดจำนวน">−</button>
+              <div style="min-width:18px; text-align:center; font-weight:700">${qty}</div>
+              <button class="iconbtn" type="button" data-plus="${id}" aria-label="เพิ่มจำนวน">+</button>
+            </div>
+          `;
+          cartItems.appendChild(li);
+        });
+
+        cartItems.querySelectorAll("[data-plus]").forEach(b=>{
+          b.addEventListener("click", ()=> addToCart(b.dataset.plus));
+        });
+        cartItems.querySelectorAll("[data-minus]").forEach(b=>{
+          b.addEventListener("click", ()=> removeFromCart(b.dataset.minus));
+        });
       }
 
-      lines.push(``);
-      lines.push(`ข้อมูลลูกค้า:`);
-      lines.push(`- ชื่อ: ${name || "-"}`);
-      lines.push(`- โทร: ${phone || "-"}`);
-      lines.push(`- วันรับ/ส่ง: ${date || "-"} ${time || ""}`.trim());
-      lines.push(`- ข้อความหน้าเค้ก/หมายเหตุ: ${note || "-"}`);
-      lines.push(``);
-      lines.push(`รบกวนเช็กคิว + ยืนยันราคา/ค่าจัดส่งให้ด้วยค่ะ/ครับ`);
-
-      return lines.join("\n");
+      cartTotal.textContent = money(total);
+      if(open) openCart();
     }
 
-    async function copyOrder(){
-      const text = buildOrderText();
-      await navigator.clipboard.writeText(text);
-      toast("คัดลอกสรุปออเดอร์แล้ว");
+    function openCart(){
+      cartOverlay.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+    function closeCart(){
+      cartOverlay.classList.remove("show");
+      document.body.style.overflow = "";
     }
 
-    function openLineWithText(){
-      const text = encodeURIComponent(buildOrderText());
-      // วิธีนี้ใช้ได้ในหลายกรณี แต่ไม่ 100% ทุกเครื่อง
-      const url = `https://line.me/R/msg/text/?${text}`;
-      window.open(url, "_blank", "noopener");
-    }
+    btnCart.addEventListener("click", ()=> { updateCartUI(true); });
+    btnClose.addEventListener("click", closeCart);
+    cartOverlay.addEventListener("click", (e)=> { if(e.target === cartOverlay) closeCart(); });
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && cartOverlay.classList.contains("show")) closeCart(); });
 
-    /* =========================
-       Promo copy
-    ========================== */
-    async function copyPromo(){
-      const txt = `${CONFIG.shopName}\n${CONFIG.tagline}\n${CONFIG.promoText}\nแชตสั่งซื้อ: ${CONFIG.lineId}`;
-      await navigator.clipboard.writeText(txt);
-      toast("คัดลอกข้อความโปรโมชันแล้ว");
-    }
+    // ====== Subscribe (demo) ======
+    const subForm = document.getElementById("subForm");
+    const subMsg = document.getElementById("subMsg");
+    subForm.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      subMsg.textContent = `รับทราบ! (${email}) — เดโม: ตรงนี้ต่อระบบเมลจริงได้`;
+      subForm.reset();
+    });
 
-    /* =========================
-       Wire events
-    ========================== */
-    function wire(){
-      el("q").addEventListener("input", applyFilters);
-      el("cat").addEventListener("change", applyFilters);
-      el("sort").addEventListener("change", applyFilters);
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-      el("clearCartBtn").addEventListener("click", ()=>{
-        clearCart();
-        toast("ล้างตะกร้าแล้ว");
-      });
-
-      el("copyOrderBtn").addEventListener("click", copyOrder);
-      el("openLineWithTextBtn").addEventListener("click", openLineWithText);
-
-      el("copyPromoBtn").addEventListener("click", copyPromo);
-    }
-
-    /* =========================
-       Boot
-    ========================== */
-    applyConfig();
-    wire();
-    applyFilters();
-    renderCart();
+    // Initial render
+    renderProducts("all");
+    updateCartUI(false);
   </script>
 </body>
 </html>
